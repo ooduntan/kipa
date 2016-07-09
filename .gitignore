@@ -1,0 +1,12 @@
+# OSX Stuff
+.DS_Store
+
+# Logs
+logs
+*.log
+
+# Runtime data
+node_modules
+dist/lib
+coverage
+.env
