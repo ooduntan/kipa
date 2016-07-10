@@ -12,7 +12,8 @@
       this.state = {
         user: {},
         emailError: false,
-        passwordError: false,
+        confirmPasswordError: false,
+        passwordError: false
       };
 
       this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -21,6 +22,7 @@
       this.validateEmail = this.validateEmail.bind(this);
       this.confirmPassword = this.confirmPassword.bind(this);
       this.saveUser = this.saveUser.bind(this);
+      this.validatePassword = this.validatePassword.bind(this);
     }
 
     onChangeHandler(event) {
@@ -33,7 +35,9 @@
     }
 
     isFormValid() {
-      if (!this.state.passwordError && !this.state.emailError) {
+      if (!this.state.confirmPasswordError
+        && !this.state.emailError
+        && !this.state.passwordError) {
   			return true;
   		}
 
@@ -54,10 +58,21 @@
       let value = event.target.value;
 
   		if (this.state.user.password === this.state.user.confirmPassword) {
-  		  return this.setState({passwordError: false});
+  		  return this.setState({confirmPasswordError: false});
   		}
 
-  		return this.setState({passwordError: true});
+  		return this.setState({confirmPasswordError: true});
+    }
+
+    validatePassword(event) {
+      const value = event.target.value;
+
+      this.confirmPassword();
+      if (/(\w|\W|\d|\S|\s){6,}/.test(value)) {
+        return this.setState({passwordError: false});
+      }
+      
+      return this.setState({passwordError: true});
     }
 
     saveUser(event) {
@@ -107,7 +122,9 @@
 			        id='password'
 			        label='Password'
 			        newClass='s12 form-spacing'
-			        validateFunction={this.confirmPassword}
+              errorMessage='Password must have six or more characters'
+              inputError={this.state.passwordError}
+			        validateFunction={this.validatePassword}
 			        onChangeEvent={this.onChangeHandler}/>
 		      </div>
 		      <div className='row'>
@@ -118,7 +135,7 @@
 			        label='Confirm Password'
 			        newClass='s12 form-spacing'
 			        errorMessage='Password do not match'
-			        inputError={this.state.passwordError}
+			        inputError={this.state.confirmPasswordError}
 			        validateFunction={this.confirmPassword}
 			        onChangeEvent={this.onChangeHandler}/>
 		      </div>
