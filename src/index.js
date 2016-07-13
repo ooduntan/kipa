@@ -7,8 +7,6 @@ import {Provider} from 'react-redux';
 import routes from './routes/index';
 import configureStore from './store/configureStore';
 import './style/main.css';
-import 'materialize-css';
-import '../node_modules/materialize-css/dist/css/materialize.min.css';
 
 const store = configureStore();
 
