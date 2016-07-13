@@ -1,0 +1,3 @@
+export const CREATE_USER = 'CREATE_USER';
+export const SAVING_USER = 'SAVING_USER';
+export const SAVE_USER_SUCCESS = 'SAVE_USER_SUCCESS';

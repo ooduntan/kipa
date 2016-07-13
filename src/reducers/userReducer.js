@@ -1,10 +1,17 @@
-export default function userReducer(state = {}, action) {
+import * as actionTypes from '../actions/actionType.js';
+import * as initialState from './initialState';
+export default function userReducer(state = initialState.saveUser, action) {
   switch (action.type) {
-    case 'CREATE_USER':
-      console.log(action.data);
-      return state
+    case actionTypes.CREATE_USER:
+      return Object.assign({}, action.data);
+      break;
+    case actionTypes.SAVING_USER:
+      return Object.assign({}, action.data);
+      break;
+    case actionTypes.SAVE_USER_SUCCESS:
+      return Object.assign({}, action.data);
       break;
     default:
-    return state;
+      return state;
   }
 }

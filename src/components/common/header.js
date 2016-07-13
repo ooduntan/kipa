@@ -11,7 +11,7 @@
           <div className="navbar-fixed">
            <nav>
              <div className="nav-wrapper custom-blue">
-               <a href="#!" className="brand-logo">Doccip</a>
+               <a href="#!" className="brand-logo">DocKip</a>
                <a href="#" d ata-activates="mobile-demo" className="button-collapse"><i className="material-icons">menu</i></a>
                <ul className="right hide-on-med-and-down">
                  <li activeClassName='active'><Link to="about">THE APP</Link></li>
