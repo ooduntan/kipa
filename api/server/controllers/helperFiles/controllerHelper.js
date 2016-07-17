@@ -12,7 +12,7 @@
      * userRequirement -- An object of the compulsory and required userdata
      */
     userRequirement: {
-      reqiure: ['firstname', 'lastname', 'email', 'password'],
+      reqiure: ['firstname', 'username', 'lastname', 'email', 'password'],
       fields: ['username', 'password', 'firstname', 'lastname', 'role', 'email']
     },
 

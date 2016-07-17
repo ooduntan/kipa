@@ -1,29 +1,82 @@
-// (function() {
-// 	'use strict';
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
+import SignInForm from './signInForm';
+import {bindActionCreators} from 'redux';
+import {ButtonComponent} from '../common/input';
+import {loginUser} from '../../actions/userAction';
 
-	import React from 'react';
-	import {ButtonComponent} from '../common/input';
+class SignInComponent extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			displayForm: 'block',
+			displayLoader: 'show-element',
+			loginData: {}
+		};
 
-	class SignInComponent extends React.Component {
-		showSignIn(event) {
-			event.preventDefault();
-			alert('I am working very well');
-		}
+		this.onChangeHandler = this.onChangeHandler.bind(this);
+		this.showSignIn = this.showSignIn.bind(this);
+		this.signIn = this.signIn.bind(this);
+	}
 
-		render() {
-			return(
-				<div className='signup-container'>
-					<span>Existing user? Sign in</span>
-					<ButtonComponent
-			  		text='SIGN IN'
-			  		action={this.showSignIn}
-			  		name='sign-in'
-			  		newClass='custom-green custom-signup-btn'/>
-				</div>
-			);
+  showSignIn(event) {
+    event.preventDefault();
+    alert('I am working very well');
+  }
+
+	onChangeHandler(event) {
+		this.state.loginData[event.target.name] = event.target.value;
+		this.setState({loginData: this.state.loginData});
+	}
+
+	signIn(event) {
+		event.preventDefault();
+		this.props.loginAction(this.state.loginData);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.user.shouldRedirect) {
+			this.context.router.push('/dashboard');
 		}
 	}
 
-export default SignInComponent;
+  render() {
+    return (
+      <div
+				style={{display: this.state.displayForm}}
+				className='signup-container'>
+				<div className='signup-wrapper'>
+          <div>Sign in</div>
+          <div className='small-signup-text'>
+            Sign in to create, share and manage documents.
+          </div>
+        </div>
+				<SignInForm
+					changeHandler={this.onChangeHandler}
+					errorMessage={this.props.user.error}
+					signInAction={this.signIn}
+					showLoader={this.props.user.displayLoader}/>
+					<a className='custom-link'
+						onClick={this.showSignIn}>
+						New user? Sign up
+					</a>
+      </div>
+    );
+  }
+}
 
-	// }());
+SignInComponent.contextTypes = {
+	router: PropTypes.object
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    loginAction: bindActionCreators(loginUser, dispatch)
+  }
+}
+
+function mapStateToProps(state, ownProps) {
+  return {user: state.users}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignInComponent);
