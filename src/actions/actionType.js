@@ -1,3 +1,6 @@
 export const CREATE_USER = 'CREATE_USER';
 export const SAVING_USER = 'SAVING_USER';
 export const SAVE_USER_SUCCESS = 'SAVE_USER_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const CHECKING_USER = 'CHECKING_USER';

@@ -28,6 +28,8 @@
       type: String,
       sparse: true,
       unique: true,
+      required: true,
+      lowercase: true,
       trim: true
     },
     password: {

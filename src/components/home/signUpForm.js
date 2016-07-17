@@ -13,7 +13,7 @@ const SignUpForm = ({
   showLoader
 }) => {
   return (
-    <form onSubmit={saveAction} className='col s12'>
+    <form onSubmit={saveAction} className='col s12 form-container-space'>
       <div className='row'>
         <InputComponent
           name='firstname'
@@ -36,11 +36,26 @@ const SignUpForm = ({
           type='email'
           id='email'
           label='Email'
-          newClass='s12
-          form-spacing'
+          newClass='s6 form-spacing'
           errorMessage='Invalid email address'
           inputError={emailHasError}
           validateFunction={emailIsValid}
+          onChangeEvent={changeHandler}/>
+          <InputComponent
+            name='role'
+            type='email'
+            id='role'
+            label='Role'
+            newClass='s6 form-spacing'
+            onChangeEvent={changeHandler}/>
+      </div>
+      <div className='row'>
+        <InputComponent
+          name='username'
+          type='text'
+          id='username'
+          label='User Name'
+          newClass='s6 form-spacing'
           onChangeEvent={changeHandler}/>
       </div>
       <div className='row'>
@@ -67,7 +82,7 @@ const SignUpForm = ({
           validateFunction={matchPassword}
           onChangeEvent={changeHandler}/>
       </div>
-      <div style={{display: showLoader}} className='progress'>
+      <div className={`${showLoader} progress`}>
         <div className='indeterminate'></div>
       </div>
       <ButtonComponent

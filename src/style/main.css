@@ -23,6 +23,43 @@ nav li:hover {
   margin-left: 11%;
 }
 
+.logo-name {
+  font-family: Lobster Two;
+  font-size: 38px;
+  color: #203d73;
+  padding-left: 5%;
+}
+
+.user-info-container {
+  background-color: #f7f7f7;
+  line-height: 1.5em;
+  font-size: 10px;
+  padding: 14px 0px;
+}
+
+.user-image {
+  width: 30%;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.hide-element{
+  display: none;
+}
+
+.custom-loader {
+  width: 95%;
+  margin-left: 2.3%;
+}
+
+.custom-link {
+  color: #ffffff;
+  cursor: pointer;
+  margin-left: 2.3%;
+}
+
 .input-error {
   margin-bottom: 2px !important;
   border-bottom: 1px solid #F44336 !important;;
@@ -36,6 +73,21 @@ nav li:hover {
 
 .custom-blue {
   background-color: #203d73!important;
+}
+
+.custom-blue-text {
+  color: #203d73;
+}
+
+.username-text {
+  font-size: 13px;
+  margin-top: 8px;
+  text-transform: capitalize;
+}
+
+.username-text span {
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 .custom-green {
@@ -58,6 +110,14 @@ nav li:hover {
   margin-top: 2px !important;
 }
 
+.form-container-space {
+  margin-bottom: 14px;
+}
+
+.error-span-position {
+  margin-left: 2%;
+}
+
 .signup-wrapper {
   font-size: 34px;
   font-weight: 300;
@@ -65,6 +125,10 @@ nav li:hover {
   font-weight: 300;
   margin-left: 4%;
   margin-top: 32px;
+}
+
+.submit-button-spacing {
+  margin-top: 2%;
 }
 
 .small-signup-text {

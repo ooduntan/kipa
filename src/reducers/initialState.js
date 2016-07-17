@@ -1,1 +1,5 @@
-export const saveUser = {success: false, displayLoader: 'none'};
+export const saveUser = {
+  success: false,
+  displayLoader: 'hide-element',
+  shouldRedirect: false
+};

@@ -123,7 +123,7 @@
      * @param  {Object} userData    [user data]
      */
     verifyUser: function(responseObj, userData) {
-      var search = { username: userData.username };
+      var search = { username: userData.username.toLowerCase() };
       var _this = this;
 
       userService.findUsers(search, function(bool, result) {
@@ -148,7 +148,7 @@
         if (isMatched) {
           var token = twoWayCrypt.encrypt(auth.createToken(userData));
 
-          helper.dataResponder(responseObj, isMatched, token, 'X-API-Key', 402);
+          helper.dataResponder(responseObj, isMatched, token, 'token', 402);
         } else {
           var result = { failed: 'Oops!!! Invalid Username/Password' };
 
@@ -181,8 +181,6 @@
           if (bool && typeof(cleanUserData) === 'object') {
             _this.verifyUser(respondObj, cleanUserData);
           } else {
-            console.log(bool);
-            console.log(cleanUserData);
             var message = { failed: 'Oops!!! I got wrong user details' };
 
             helper.messageResponder(respondObj, false, message, 400);

@@ -1,8 +1,4 @@
-// (function() {
-// 	'use strict';
-
 import React from 'react';
-import 'babel-polyfill';
 import {connect} from 'react-redux';
 import * as userAction from '../../actions/userAction';
 import {bindActionCreators} from 'redux';
@@ -89,11 +85,10 @@ class SignUpComponent extends React.Component {
 
   render() {
     if (this.props.users.success) {
-      console.log('I got here but this is not working');
       Materialize.toast('Account successfully created', 4000)
     }
     return (
-      <div>
+      <div className='hide-element'>
         <div className='signup-wrapper'>
           <div>Sign up for free</div>
           <div className='small-signup-text'>
@@ -112,6 +107,10 @@ class SignUpComponent extends React.Component {
             showLoader={this.props.users.displayLoader}
             matchPassword={this.confirmPassword}/>
         </div>
+        <a className='custom-link'
+          onClick={this.showSignIn}>
+          Existing user? Sign in
+        </a>
       </div>
     );
   }
@@ -124,10 +123,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log(state);
   return {users: state.users}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpComponent);
-
-// }());

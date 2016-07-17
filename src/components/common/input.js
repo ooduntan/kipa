@@ -65,26 +65,39 @@
 		inputError: PropTypes.bool
 	}
 
-	class ButtonComponent extends React.Component {
-		render() {
+	const ButtonComponent = ({name, text, action, newClass}) => {
 			return(
 				<button
-				className={`btn waves-effect waves-light ${this.props.newClass}`}
+				className={`btn waves-effect waves-light ${newClass}`}
 				type='submit'
-				onClick={this.props.action}
-				name={this.props.name}>
-					{this.props.text}
+				onClick={action}
+				name={name}>
+					{text}
 			</button>
 			);
 		}
-	}
 
 	ButtonComponent.propTypes = {
 		name: PropTypes.string.isRequired,
 		text: PropTypes.string.isRequired,
 		action: PropTypes.func,
 		newClass: PropTypes.string
-	 }
+	}
+
+	const SelectComponent = (roles) => {
+
+		return (
+			<div class='input-field col s6'>
+				<select>
+					<option value='' disabled selected>Choose your role</option>
+					{roles.map((role) => {
+						<option value={role.role}>{role.role}</option>
+					})}
+				</select>
+			 <label>Role</label>
+			</div>
+		);
+	}
 
 	export { InputComponent, ButtonComponent };
 

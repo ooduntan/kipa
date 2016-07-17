@@ -54,7 +54,7 @@
      */
     login: function(req, res) {
       var userData = {};
-      if (req.body.email && req.body.password) {
+      if (req.body.username && req.body.password) {
         userData.username = req.body.username;
         userData.password = req.body.password;
         userHelper.validateAndCheckUser(res, userData);
@@ -135,7 +135,7 @@
       helper.getData(res, searchQuery, userService.findUsers, 'user');
     },
 
-  
+
     logout: function(res, req) {
       var message = { failed: 'You have logged out successfully!!!' };
 
