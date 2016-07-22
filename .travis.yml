@@ -3,10 +3,5 @@ node_js:
   - "6"
 services:
   - mongodb
-before_script:
-  - npm run seedData
 script:
-  - npm test
-after_success:
-  - npm install codeclimate-test-reporter -g
-  - npm run coverage
+  - npm start
