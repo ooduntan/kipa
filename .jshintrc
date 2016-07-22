@@ -18,7 +18,7 @@
     "plusplus": false,
     "quotmark": "single",
     "undef": false,
-    "strict": true,
+    "strict": false,
     "maxparams": 3,
     "maxdepth": 3,
     "maxstatements": false,

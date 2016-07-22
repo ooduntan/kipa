@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react';
 import {InputComponent, ButtonComponent} from '../common/input';
 
-const SignInForm = ({changeHandler,
+const SignInForm = ({
+  changeHandler,
   signInAction,
   displayForm,
   showLoader,
@@ -40,7 +41,7 @@ const SignInForm = ({changeHandler,
   );
 }
 
-SignInForm.prototype = {
+SignInForm.propTypes = {
   changeHandler: PropTypes.func.isRequired,
   signInAction: PropTypes.func.isRequired,
   showLoader: PropTypes.string,

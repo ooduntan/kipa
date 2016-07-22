@@ -9,4 +9,4 @@ export default function configureStore (intialState) {
     intialState,
     applyMiddleware(thunk, reactImmutableStateInvariant())
   );
-};
+}

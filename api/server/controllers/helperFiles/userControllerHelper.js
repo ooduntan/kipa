@@ -147,8 +147,13 @@
       oneWayencrypt.comparePass(pass, userData.password, function(isMatched) {
         if (isMatched) {
           var token = twoWayCrypt.encrypt(auth.createToken(userData));
+          var result = {
+            token: token,
+            userData: userData
+          };
 
-          helper.dataResponder(responseObj, isMatched, token, 'token', 402);
+          delete result.userData.password;
+          helper.dataResponder(responseObj, isMatched, result, 'result', 402);
         } else {
           var result = { failed: 'Oops!!! Invalid Username/Password' };
 
