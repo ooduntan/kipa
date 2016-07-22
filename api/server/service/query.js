@@ -4,7 +4,7 @@
   module.exports = {
 
     /**
-     * saveQuery - Save data into any collection 
+     * saveQuery - Save data into any collection
      * @param  {Object}   modelObj [The model Object to be use]
      * @param  {Object}   data     [Data to be saved]
      * @param  {Function} cb       [Passes result to callback]
@@ -23,7 +23,8 @@
      * @param  {Function} cb          [Passes result to callback]
      */
     findQuery: function(modelObj, searchQuery, cb) {
-      modelObj.find(searchQuery, function(err, data) {
+      modelObj.find(searchQuery)
+      .exec(function(err, data) {
         return err ? cb(false, err) : cb(true, data);
       });
     },

@@ -38,14 +38,15 @@ export function checkingUser() {
 }
 
 export function checkLoginResult(loginResult) {
-  if (loginResult.token) {
-    window.localStorage.setItem('token', loginResult.token);
+  if (loginResult.result.token) {
+    window.localStorage.setItem('token', loginResult.result.token);
     return {
       type: actionTypes.LOGIN_SUCCESS,
       data: {
         error: '',
         shouldRedirect: true,
-        displayLoader: 'hide-element'
+        displayLoader: 'hide-element',
+        userData: loginResult.result.userData
       }
     };
   }
@@ -74,7 +75,7 @@ export function loginUser(userData) {
   return (dispatch) => {
     dispatch(checkingUser());
     const url = '/api/users/login';
-    return api.postRequest(userData, url, null, function(apiResult) {
+     api.apiRequest(userData, 'post', url, function(apiResult) {
       dispatch(checkLoginResult(apiResult));
     });
   };

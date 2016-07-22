@@ -19,8 +19,7 @@ export default function userReducer(state = initialState.saveUser, action) {
       return Object.assign({}, action.data);
       break;
     case actionTypes.LOGIN_SUCCESS:
-      console.log(Object.assign({}, action.data, {displayLoader: 'hide-element'}));
-      return Object.assign({}, action.data);
+      return Object.assign({}, state, action.data);
       break;
     default:
       return state;

@@ -36,7 +36,7 @@
       type: String
     },
     role: {
-      type: String,
+      type: Number,
       default: 1,
     }
   });

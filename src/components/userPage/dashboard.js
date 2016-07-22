@@ -1,50 +1,52 @@
-import React from 'react';
-import userImage from '../../images/testImage.jpg';
+import React, {PropTypes, Component} from 'react';
+import {Link} from 'react-router'
+import SideNav from './sideNav';
+import * as documentActions from '../../actions/documentAction';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import UserContentPage from './userContentPage';
 
-class Dashboard extends React.Component {
+class Dashboard extends Component {
+  constructor(context) {
+    super();
+  }
+
+  componentWillMount() {
+    this.props.documentAction.getComponentResources(this.props.currentUser);
+  }
+
+	componentWillReceiveProps(nextProps) {
+    //  console.log(this.props);
+    // console.log(nextProps);
+  }
+
   render() {
     return (
-      <div>
-        <ul id="nav-mobile" className="side-nav fixed">
-          <li>
-            <div className='logo-name font-effect-mitosis left-align'>DocKip</div>
-          </li>
-          <li>
-            <div className='user-info-container'>
-              <div>
-                <img className='user-image' src={userImage}/>
-              </div>
-              <div className='username-text center-align'><span>Oduntan,</span> Oluwatobiloba Steohen</div>
-              <div className=' center-align'>Tobolowoski</div>
-              <div className='custom-blue-text center-align'>stephen.oduntan@andela.com</div>
-            </div>
-          </li>
-          <li className="bold"><a href="about.html" className="waves-effect waves-teal">About</a></li>
-          <li className="bold"><a href="getting-started.html" className="waves-effect waves-teal">Getting Started</a></li>
-          <li className="no-padding">
-            <ul className="collapsible collapsible-accordion">
-              <li className="bold"><a className="collapsible-header  waves-effect waves-teal">CSS</a>
-                <div className="collapsible-body">
-                  <ul>
-                    <li><a href="color.html">Color</a></li>
-                    <li><a href="grid.html">Grid</a></li>
-                    <li><a href="helpers.html">Helpers</a></li>
-                    <li><a href="media-css.html">Media</a></li>
-                    <li><a href="sass.html">Sass</a></li>
-                    <li><a href="shadow.html">Shadow</a></li>
-                    <li><a href="table.html">Table</a></li>
-                    <li><a href="typography.html">Typography</a></li>
-                  </ul>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li className="bold"><a href="http://materializecss.com/mobile.html" className="waves-effect waves-teal">Mobile</a></li>
-          <li className="bold"><a href="showcase.html" className="waves-effect waves-teal">Showcase</a></li>
-        </ul>
+      <div className='row'>
+        <SideNav
+          userData={this.props.currentUser}/>
+        <UserContentPage
+          userDocs={this.props.userDocs.doc}/>
       </div>
     );
   }
 }
 
-export default Dashboard;
+Dashboard.contextTypes = {
+  router: PropTypes.object
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    documentAction: bindActionCreators(documentActions, dispatch)
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    currentUser: state.users.userData,
+    userDocs: state.docStates
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

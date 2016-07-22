@@ -8,7 +8,7 @@
   var utility = {
 
     /**
-     * queryBuilder Builds the search query 
+     * queryBuilder Builds the search query
      * @param  {Object} query [The parameter of the search query]
      * @return {Object}       [Returns the search query]
      */
@@ -42,17 +42,28 @@
      */
     makeSearchQuery: function(value, key) {
       if (key === 'date' || key === 'edit') {
-        return { $gt: new Date(value), $lt: new Date(value).addDays(1) };
-      } else if (key === 'before') {
-        return { $lt: new Date(value) };
-      } else if (key === 'after') {
-        return { $gt: new Date(value).addDays(1) };
-      } else if (key === 'q') {
+        return {
+          $gt: new Date(value),
+          $lt: new Date(value).addDays(1)
+        };
+      }
+      if (key === 'before') {
+        return {
+          $lt: new Date(value)
+        };
+      }
+      if (key === 'after') {
+        return {
+          $gt: new Date(value).addDays(1)
+        };
+      }
+      if (key === 'q') {
         var searchExp = new RegExp(value, 'i');
-        return [
-          { 'title': searchExp },
-          { 'content': searchExp }
-        ];
+        return [{
+          'title': searchExp
+        }, {
+          'content': searchExp
+        }];
       }
 
       return value;
@@ -67,7 +78,9 @@
      * @param  {Object} docData [Document data]
      */
     saveDoc: function(res, docData) {
-      var result = { success: docData.title + ' created!' };
+      var result = {
+        success: docData.title + ' created!'
+      };
       docService.saveDoc(docData, function(bool, message) {
         result.failed = message;
         helper.messageResponder(res, bool, result, 401);
@@ -97,13 +110,15 @@
      * @param  {Object} userData [User information: Check the user permission
      */
     removeDoc: function(res, id, userData) {
-      docService.findAndRemove({ _id: id }, userData, function(bool, message) {
+      docService.findAndRemove({
+        _id: id
+      }, userData, function(bool, message) {
         helper.dataResponder(res, bool, message, 'doc', 401);
       });
     },
 
     /**
-     * checkOwnerAccess -- Check the access type of the dovument 
+     * checkOwnerAccess -- Check the access type of the dovument
      * agaisnt the user data
      * @param  {Object} responseObj [Response Object]
      * @param  {Object} userData    [User information]
@@ -113,7 +128,9 @@
       if (this.canView(userData, doc)) {
         helper.dataResponder(responseObj, true, doc, 'doc', 200);
       } else {
-        var message = { failed: 'Access denied!' };
+        var message = {
+          failed: 'Access denied!'
+        };
         helper.messageResponder(responseObj, false, message, 403);
       }
     },
@@ -136,7 +153,7 @@
      * canView - Check if a user can view a document
      * @param  {Object} userData [The user data/Info]
      * @param  {Object} docData  [The document data]
-     * @return {Boolean}          [True if user can view docuemnt 
+     * @return {Boolean}          [True if user can view docuemnt
      * and false otherwise]
      */
     canView: function(userData, docData) {

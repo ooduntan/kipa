@@ -1,11 +1,11 @@
-import React, {PropTypes} from 'react';
+import React, {PropTypes, Component} from 'react';
 import {connect} from 'react-redux';
 import SignInForm from './signInForm';
 import {bindActionCreators} from 'redux';
 import {ButtonComponent} from '../common/input';
 import {loginUser} from '../../actions/userAction';
 
-class SignInComponent extends React.Component {
+class SignInComponent extends Component {
 	constructor() {
 		super();
 		this.state = {
