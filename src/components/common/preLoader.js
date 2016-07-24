@@ -1,15 +1,12 @@
 import React, {PropTypes} from 'react';
 
-const Preloader = ({showLoader}) => {
-  let displayLoader = {display: 'block'};
+const Preloader = ({showLoader, size, position}) => {
 
-  if (showLoader) {
-    displayLoader = {display: 'none'}
-  }
-  
+  let displayLoader = showLoader ?  {display: 'none'} : {display: 'block'};
+
   return (
-    <div style={displayLoader}>
-      <div className='preloader-wrapper big active custom-spin'>
+    <div className={position} style={displayLoader}>
+      <div className={`preloader-wrapper ${size} active custom-spin`}>
         <div className='spinner-layer spinner-blue-only custom-spin-color'>
           <div className='circle-clipper left'>
             <div className='circle'></div>
@@ -25,7 +22,9 @@ const Preloader = ({showLoader}) => {
 }
 
 Preloader.propTypes = {
-  showLoader: PropTypes.string.isRequired
+  showLoader: PropTypes.string.isRequired,
+  position: PropTypes.string,
+  size: PropTypes.string.isRequired
 }
 
 export default Preloader;

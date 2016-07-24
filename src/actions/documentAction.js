@@ -42,6 +42,35 @@ export function getDocsSuccess(docs) {
   };
 }
 
+export function savingDoc() {
+  return {
+    type: actionTypes.CREATING_DOC,
+    data: {
+      success: false
+    }
+  };
+}
+
+export function updateStoreWithNewDoc(docData) {
+  console.log(docData);
+  return {
+    type: actionTypes.UPDATE_STORE_WITH_NEW_DOC,
+    data: {
+      newDoc: [docData.newDoc],
+      successState: true
+    }
+  };
+}
+
+export function createDocSuccess() {
+  return {
+    type: actionTypes.CREATE_DOC_SUCCESS,
+    data: {
+      success: true
+    }
+  };
+}
+
 export function getsharedDocument(userData) {
   return (dispatch) => {
      dispatch(gettingUserDocs());
@@ -51,6 +80,17 @@ export function getsharedDocument(userData) {
       return dispatch(getUserDocs(userData._id));
     });
  };
+}
+
+export function createDoc(docData, formObj) {
+  return (dispatch) =>{
+    dispatch(savingDoc());
+    const url = 'api/documents/';
+    return apiRequest(docData, 'post', url, function(apiResult) {
+      formObj.reset();
+       dispatch(updateStoreWithNewDoc(apiResult));
+    });
+  };
 }
 
 export function getUserDocs(userId) {

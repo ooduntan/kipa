@@ -5,30 +5,38 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as documentAction from '../../actions/documentAction';
 import documentCover from '../../images/coverPlaceHolder.jpg';
-import Preloader from '../common/Preloader';
+import NewDocumentForm from './addDocument';
+import Preloader from '../common/preloader';
 
 class UserContentPage extends Component {
   constructor() {
     super();
-    this.populateCard = this.populateCard.bind(this);
-  }
+    this.state = {
+      docData: {
+        title: '',
+        content: '',
+        access: ''
+      }
+    };
 
-  componentWillMount() {
+    this.populateCard = this.populateCard.bind(this);
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.saveNewDocument = this.saveNewDocument.bind(this);
+    this.onClickCheckbox = this.onClickCheckbox.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('I just recieved new props');
-    console.log(nextProps);
+    const {success} = this.props.stateProp.userDocs;
+    if (!success) $('#modal1').closeModal();
   }
 
   showPageContent() {
-    const {sharedDocs, success, docs, header} = this.props.docStates.userDocs;
+    const {sharedDocs, success, docs, header} = this.props.stateProp.userDocs;
     switch (header) {
       case 'MY DOCUMENTS':
         return this.populateCard(docs, success);
         break;
       case 'SHARED DOCUMENTS':
-        console.log('call from shared docs');
         return this.populateCard(sharedDocs.doc, success);
         break;
       case 'EDIT PROFILE':
@@ -48,9 +56,39 @@ class UserContentPage extends Component {
     return <div>This is edit page</div>
   }
 
+  onClickCheckbox(event) {
+    let role = event.target.value;
+    let access = this.state.docData.access;
+
+    if (event.target.checked) {
+      this.state.docData.access += ' ' + role
+      return this.setState({
+       docData: this.state.docData
+     });
+    }
+
+    this.state.docData.access = access.replace(' ' + role, '')
+     return this.setState({
+      docData: this.state.docData
+    });
+  }
+
+  saveNewDocument(event) {
+    event.preventDefault();
+    const {docData} = this.state;
+    docData.access = docData.access.trim().replace(' ', ',')
+    console.log(docData);
+
+    this.props.userActions.createDoc(docData, event.currentTarget);
+  }
+
+  onChangeHandler(event) {
+    this.state.docData[event.target.name] = event.target.value;
+    this.setState({docData: this.state.docData});
+  }
+
   populateCard(cardData, successState){
     if (successState && cardData.length > 0) {
-      console.log(cardData);
       return cardData.map((eachDocs) => {
         const {_id, title, creator, createdAt, content} = eachDocs;
         return (
@@ -73,16 +111,26 @@ class UserContentPage extends Component {
       <div className='content-container'>
         <div
           className='headerClass'>
-          {this.props.docStates.userDocs.header}
+          {this.props.stateProp.userDocs.header}
         </div>
         <Preloader
-          showLoader={this.props.docStates.userDocs.success}/>
+          size='big'
+          showLoader={this.props.stateProp.userDocs.success}/>
         {this.showPageContent()}
         <div className='fab'>
-          <a onClick={this.fabClick} className='btn-floating btn-large waves-effect waves-light'>
+          <a onClick={this.fabClick}
+            className='btn-floating
+            btn-large waves-effect waves-light'>
             <i className='material-icons'>add</i>
           </a>
         </div>
+        <NewDocumentForm
+          docRoles={this.props.stateProp.role}
+          changeHandler={this.onChangeHandler}
+          CheckboxHandler={this.onClickCheckbox}
+          submitAction={this.saveNewDocument}
+          showLoader={this.props.stateProp.userDocs.success}
+          />
       </div>
     );
   }
@@ -100,9 +148,10 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    docStates: {
+    stateProp: {
       currentUser: state.users.userData,
-      userDocs: state.docStates
+      userDocs: state.docStates,
+      role: state.roleState.roles
     }
   }
 }
