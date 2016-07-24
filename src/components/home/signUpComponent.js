@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as userAction from '../../actions/userAction';
 import {bindActionCreators} from 'redux';
-import SignUpForm from './SignUpForm';
+import SignUpForm from './signUpForm';
 
 class SignUpComponent extends React.Component {
   constructor() {
@@ -123,7 +123,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state, ownProps) {
-  return {users: state.users}
+  return {
+    users: state.users
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpComponent);

@@ -76,7 +76,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state, ownProps) {
-  return {user: state.users}
+  return {
+		user: state.users
+	}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignInComponent);

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router'
 
-const Header = ({ndfknf, dkfjkjdf})=> {
+const Header = ()=> {
     return (
       <div className="navbar-fixed">
         <nav>

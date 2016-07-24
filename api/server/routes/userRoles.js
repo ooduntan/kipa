@@ -1,4 +1,4 @@
-(function(argument) {
+(function() {
   'use strict';
 
   var role = require('../controllers/rolesController');

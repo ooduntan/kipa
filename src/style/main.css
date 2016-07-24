@@ -27,6 +27,28 @@ nav li:hover {
   left: 47%;
 }
 
+.custom-checkox {
+  float: left;
+  border-bottom: 1px solid #9e9e9e;
+  padding-top: 10px;
+  width: 50%;
+}
+
+.custom-checkox .grey-text {
+  font-size: 0.8rem;
+}
+
+.custom-checkox p {
+  float: left;
+  margin-bottom: 2px;
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+.custom-checkox label {
+  padding-left: 23px;
+}
+
 .custom-spin-color {
   border-color: #203d73;
 }
@@ -59,17 +81,35 @@ nav li:hover {
 .content-container {
   margin-left: 19%;
 }
+
+.custom-create-btn {
+  background-color: #375a86;
+  margin-right: 2%;
+}
+
+.custom-create-btn:hover {
+  background-color: #034496;
+}
+
+.custom-create-btn:focus {
+  background-color: #034496;
+}
+
+.custom-icon:hover {
+  color: #203d73;
+}
+
 .custom-icon {
   font-size: 20px;
   display: block;
-  background-color: rgba(181, 181, 181, 0.28);
-  border: 1px solid #a9a4a4;
+  color: rgba(156, 156, 156, 0.63);
   float: left;
   margin-right: 5px;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-.delete-color {
+.delete-color:hover {
   color: #b52f2f;
 }
 
@@ -82,14 +122,14 @@ nav li:hover {
   height: 64px;
   line-height: 64px;
   padding: 0 30px;
-  }
+}
 
 .action-card-custom {
   padding: 5px !important;
   height: 36px;
 }
 
-.fab{
+.fab {
   position: fixed;
   bottom: 33px;
   right: 33px;
@@ -125,7 +165,7 @@ nav li:hover {
   display: block;
 }
 
-.hide-element{
+.hide-element {
   display: none;
 }
 
@@ -142,8 +182,8 @@ nav li:hover {
 
 .input-error {
   margin-bottom: 2px !important;
-  border-bottom: 1px solid #F44336 !important;;
-  box-shadow: 0 1px 0 0 #F44336 !important;;
+  border-bottom: 1px solid #F44336 !important;
+  box-shadow: 0 1px 0 0 #F44336 !important;
 }
 
 .activator {

@@ -1,5 +1,3 @@
-'use strict';
-
 import * as actionTypes from './actionType.js';
 import * as api from '../utils/apiRequest';
 
@@ -75,7 +73,7 @@ export function loginUser(userData) {
   return (dispatch) => {
     dispatch(checkingUser());
     const url = '/api/users/login';
-     api.apiRequest(userData, 'post', url, function(apiResult) {
+    api.apiRequest(userData, 'post', url, function(apiResult) {
       dispatch(checkLoginResult(apiResult));
     });
   };

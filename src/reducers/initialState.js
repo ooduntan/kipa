@@ -11,3 +11,7 @@ export const userDocs = {
   success: false,
   header: 'MY DOCUMENTS'
 };
+
+export const roles = {
+  roles: []
+};

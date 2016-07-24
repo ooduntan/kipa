@@ -9,9 +9,9 @@
   });
 
   // Loads all the routes in the app to the router object
+  router.use('/api', require('./userRoles'));
   router.use('/api', require('./user'));
   router.use('/api', require('./document'));
-  router.use('/api', require('./userRoles'));
 
   module.exports = router;
 

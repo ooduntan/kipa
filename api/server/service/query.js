@@ -11,8 +11,8 @@
      */
     saveQuery: function(modelObj, data, cb) {
       var newModelObj = new modelObj(data);
-      newModelObj.save(function(err) {
-        return err ? cb(false, err) : cb(true, err);
+      newModelObj.save(function(err, savedData) {
+        return err ? cb(false, err) : cb(true, savedData);
       });
     },
 
