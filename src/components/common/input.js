@@ -3,24 +3,19 @@ import React, {PropTypes} from 'react';
 class InputComponent extends React.Component {
   constructor() {
     super();
+
     this.state = {
       inputClassName: '',
       errorMessage: ''
     };
-
-    this.onChangeHandler = this.onChangeHandler.bind(this);
-  }
-
-  onChangeHandler(event) {
-    this.props.onChangeEvent(event);
-    if (typeof(this.props.validateFunction) === 'function') {
-      this.props.validateFunction(event);
-    }
   }
 
   componentWillReceiveProps(porp) {
     if (porp.inputError) {
-      this.setState({inputClassName: 'input-error', errorMessage: this.props.errorMessage});
+      this.setState({
+        inputClassName: 'input-error',
+        errorMessage: this.props.errorMessage
+      });
     } else {
       this.setState({inputClassName: '', errorMessage: ''});
     }
@@ -29,8 +24,21 @@ class InputComponent extends React.Component {
   render() {
     return (
       <div className={`input-field col ${this.props.newClass}`}>
-        <input id={this.props.id} type={this.props.type} ref={this.props.name} name={this.props.name} className={`validate ${this.state.inputClassName}`} onChange={this.onChangeHandler} required/>
-        <label htmlFor={this.props.id}>{this.props.label}</label>
+        <input
+          id={this.props.id}
+          type={this.props.type}
+          ref={this.props.name}
+          name={this.props.name}
+          value={this.props.value}
+          onKeyUp={this.props.validateFunction}
+          className={`validate ${this.state.inputClassName}`}
+          onChange={this.props.onChangeEvent}
+          required/>
+        <label
+          className={this.props.labelClass}
+          htmlFor={this.props.id}>
+          {this.props.label}
+        </label>
         <span className='error-span'>{this.state.errorMessage}</span>
       </div>
     );
@@ -51,7 +59,10 @@ InputComponent.propTypes = {
 
 const ButtonComponent = ({name, text, action, newClass}) => {
   return (
-    <button className={`btn waves-effect waves-light ${newClass}`} type='submit' onClick={action} name={name}>
+    <button
+      className={`btn waves-effect waves-light ${newClass}`}
+      type='submit' onClick={action}
+      name={name}>
       {text}
     </button>
   );
@@ -67,7 +78,7 @@ ButtonComponent.propTypes = {
 const File = ({name, changeHandler}) => {
   return (
     <div className='file-field input-field'>
-      <div className='btn'>
+      <div className='btn custom-create-btn'>
         <span>File</span>
         <input
           onChange={changeHandler}
@@ -84,15 +95,18 @@ const File = ({name, changeHandler}) => {
   );
 }
 
-const TextArea = ({name, onChangeEvent}) => {
+const TextArea = ({name, value, labelClass, onChangeEvent}) => {
   return (
     <div className='input-field col s12'>
       <textarea
         id='textarea1'
         name={name}
         className='materialize-textarea'
-        onChange={onChangeEvent}></textarea>
-      <label htmlForl='textarea1'>Document Content</label>
+        value={value}
+        onChange={onChangeEvent}>{value}</textarea>
+      <label
+        className={labelClass}
+        htmlForl='textarea1'>Document Content</label>
     </div>
   );
 }
@@ -101,20 +115,20 @@ const CheckBox = ({data, name, onClickEvent}) => {
   return(
     <div className='custom-checkox'>
       <div className='grey-text'>Privilege</div>
-    {data.map((item) => {
-      return(
-        <p>
-          <input
-            name={name}
-            onClick={onClickEvent}
-            value={item._id}
-            type='checkbox'
-            id={item._id} />
-          <label htmlFor={item._id}>{item.role}</label>
-        </p>
-      );
-    })}
-  </div>
+      {data.map((item) => {
+        return(
+          <p>
+            <input
+              name={name}
+              onClick={onClickEvent}
+              value={item._id}
+              type='checkbox'
+              id={`${name}${item._id}`} />
+            <label htmlFor={`${name}${item._id}`}>{item.role}</label>
+          </p>
+        );
+      })}
+    </div>
   );
 }
 

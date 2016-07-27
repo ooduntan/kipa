@@ -1,7 +1,16 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 
-const CardGroup = ({cardCorver, cardTitle, cardCreator, docDate, cardContent}) => {
+const CardGroup = ({
+  id,
+  cardCorver,
+  cardTitle,
+  cardCreator,
+  docDate,
+  editCard,
+  deleteCard,
+  docIndex,
+  cardContent}) => {
   return (
     <div className='card hoverable document-cards'>
       <div className='card-image waves-effect waves-block waves-light'>
@@ -18,10 +27,15 @@ const CardGroup = ({cardCorver, cardTitle, cardCreator, docDate, cardContent}) =
         </p>
       </div>
       <div className='card-action action-card-custom'>
-        <i className='material-icons delete-color modal-trigger custom-icon'>
+        <i
+          id={`${docIndex}`}
+          onClick={deleteCard}
+          className='material-icons delete-color modal-trigger custom-icon'>
           delete
         </i>
         <i
+          id={docIndex}
+          onClick={editCard}
           className='material-icons modal-trigger custom-icon'>
           edit
         </i>

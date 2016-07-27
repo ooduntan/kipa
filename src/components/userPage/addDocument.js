@@ -8,19 +8,20 @@ import {
   CheckBox,
   File
 } from '../common/input';
-
 const NewDocumentForm = ({
-  changeHandler,
   CheckboxHandler,
+  changeHandler,
   submitAction,
   showLoader,
+  modalData,
   docRoles
 }) => {
+  let {docData: {title, content}, labelClass} = modalData;
   return(
-    <form onSubmit={submitAction}>
+    <form id={modalData.actionText} onSubmit={submitAction}>
       <div id='modal1' className='modal modal-fixed-footer'>
         <div className='modal-content'>
-          <h4>Create new document</h4>
+          <h4 className='custom-blue-text'>{modalData.title}</h4>
           <div className='row'>
             <File
               onChangeEvent={changeHandler}
@@ -33,15 +34,19 @@ const NewDocumentForm = ({
               id='title'
               label='Title'
               newClass='s6'
+              labelClass={labelClass}
+              value={title}
               onChangeEvent={changeHandler}/>
             <CheckBox
-              data={docRoles}
-              name='role'
-              onClickEvent={CheckboxHandler}/>
+                data={docRoles}
+                name='role'
+                onClickEvent={CheckboxHandler}/>
           </div>
           <div className='row'>
             <TextArea
               name='content'
+              labelClass={labelClass}
+              value={content}
               onChangeEvent={changeHandler}/>
           </div>
         </div>
@@ -52,7 +57,7 @@ const NewDocumentForm = ({
             showLoader={showLoader}
             />
           <button
-            className='btn custom-create-btn'>CREATE</button>
+            className='btn custom-create-btn'>{modalData.actionText}</button>
         </div>
       </div>
     </form>

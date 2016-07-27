@@ -52,7 +52,6 @@ export function savingDoc() {
 }
 
 export function updateStoreWithNewDoc(docData) {
-  console.log(docData);
   return {
     type: actionTypes.UPDATE_STORE_WITH_NEW_DOC,
     data: {
@@ -60,6 +59,50 @@ export function updateStoreWithNewDoc(docData) {
       successState: true
     }
   };
+}
+
+export function prepareModalForEdit(docData) {
+  return {
+    type: actionTypes.PREPARING_MODAL,
+    data: {
+      modalData:{
+        title: 'Edit Document',
+        actionText: 'Update',
+        labelClass: 'active',
+        docData: docData
+      }
+    }
+  };
+}
+
+export function prepareModalNewDoc() {
+  return {
+    type: actionTypes.PREPARING_MODAL,
+    data: {
+      modalData:{
+        title: 'Create new document',
+        actionText: 'Create',
+        labelClass: '',
+        docData: {}
+      }
+    }
+  };
+}
+
+export function docDeleted(docsInState) {
+  return {
+    type: actionTypes.DELETE_DOC_SUCCESS,
+    data: {
+      docs: docsInState
+    }
+  };
+}
+
+export function deletingDoc() {
+  return {
+
+  }
+  // body...
 }
 
 export function createDocSuccess() {
@@ -80,6 +123,15 @@ export function getsharedDocument(userData) {
       return dispatch(getUserDocs(userData._id));
     });
  };
+}
+
+export function deleteDocAction(docId, docsInState) {
+  return (dispatch) => {
+    const url = 'api/documents/' + docId;
+    return apiRequest(null, 'delete', url, function(apiResult) {
+       dispatch(docDeleted(docsInState, apiResult));
+    });
+  };
 }
 
 export function createDoc(docData, formObj) {

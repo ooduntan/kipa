@@ -35,25 +35,36 @@ export function checkingUser() {
   };
 }
 
-export function checkLoginResult(loginResult) {
-  if (loginResult.result.token) {
-    window.localStorage.setItem('token', loginResult.result.token);
-    return {
-      type: actionTypes.LOGIN_SUCCESS,
-      data: {
-        error: '',
-        shouldRedirect: true,
-        displayLoader: 'hide-element',
-        userData: loginResult.result.userData
-      }
-    };
-  }
+export function loginSuccess(loginResult) {
+  return {
+    type: actionTypes.LOGIN_SUCCESS,
+    data: {
+      shouldRedirect: true,
+      displayLoader: 'hide-element',
+      userData: loginResult.result.userData
+    }
+  };
+}
 
+export function loginFailed(loginResult) {
   return {
     type: actionTypes.LOGIN_FAIL,
     data: {
       error: loginResult.message,
       displayLoader: 'hide-element'
+    }
+  };
+}
+
+export function checkLoginResult(loginData) {
+  return (dispatch) => {
+    if (loginData.message) {
+      dispatch(loginFailed(loginData));
+    }
+
+    if (loginData.result.token) {
+      window.localStorage.setItem('token', loginData.result.token);
+      dispatch(loginSuccess(loginData));
     }
   };
 }
@@ -73,7 +84,7 @@ export function loginUser(userData) {
   return (dispatch) => {
     dispatch(checkingUser());
     const url = '/api/users/login';
-    api.apiRequest(userData, 'post', url, function(apiResult) {
+    return api.apiRequest(userData, 'post', url, function(apiResult) {
       dispatch(checkLoginResult(apiResult));
     });
   };
