@@ -4,25 +4,45 @@ import SideNav from './sideNav';
 import * as documentActions from '../../actions/documentAction';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import Header from '../common/header';
 import UserContentPage from './userContentPage';
 
 class Dashboard extends Component {
   constructor(context) {
     super();
+
+    this.logout = this.logout.bind(this);
   }
 
   componentWillMount() {
-    this.props.documentAction.getComponentResources(this.props.currentUser);
+    if (!window.localStorage.getItem('token')) {
+      this.context.router.push('/');
+    } else {
+      this.props.documentAction.getComponentResources(this.props.currentUser);
+
+    }
   }
 
 	componentWillReceiveProps(nextProps) {
-    //  console.log(this.props);
-    // console.log(nextProps);
+    if (nextProps.userDocs.redirect) {
+      this.context.router.push('/');
+    }
+  }
+
+  logout(event) {
+    event.preventDefault();
+    window.localStorage.removeItem('token');
+    this.context.router.push('/');
+
+    console.log('this is where this should be and it should alway');
   }
 
   render() {
     return (
       <div className='row'>
+        <Header
+          clickEvent={this.logout}
+          status='LOGOUT'/>
         <SideNav
           userData={this.props.currentUser}/>
         <UserContentPage

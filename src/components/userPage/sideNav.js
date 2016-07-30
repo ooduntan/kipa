@@ -16,7 +16,9 @@ class SideNav extends Component {
   }
 
   render() {
-    const {name, username, role, email} = this.props.userData;
+    const {userData, docStateUser} = this.props;
+    const currentUser = Object.keys(userData).length ? userData : docStateUser;
+    const {name, username, role, email} = currentUser;
     return (
       <ul id='nav-mobile' className='side-nav fixed'>
         <li>
@@ -31,7 +33,9 @@ class SideNav extends Component {
               <span>{name.lastname},</span> {name.firstname}
             </div>
             <div className=' center-align'>{username}</div>
-            <div className=' center-align'>{role}</div>
+            <div className=' center-align'>
+              {this.props.roles[role - 1].role}
+            </div>
             <div className='custom-blue-text center-align'>{email}</div>
           </div>
         </li>
@@ -65,8 +69,11 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
+  console.log(state);
   return {
-    userData: state.users.userData
+    userData: state.users.userData,
+    docStateUser: state.docStates.userData,
+    roles: state.roleState.roles
   }
 }
 

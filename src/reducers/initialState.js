@@ -1,15 +1,17 @@
-export const saveUser = {
+export const initialState = {
   success: false,
   error: '',
   displayLoader: 'hide-element',
   shouldRedirect: false,
-  userData: {}
-};
-
-export const userDocs = {
+  userData: {},
+  displayFeedBack: 'none',
+  feedBack:'Oops!!! An error occured.',
+  feedBackColor: '#dd0404',
+  editPreLoader: true,
+  editFormState: true,
   docs: [],
   sharedDocs: [],
-  success: false,
+  docSuccess: false,
   modalData: {
     title: 'Create new document',
     actionText: 'Create',
@@ -20,9 +22,7 @@ export const userDocs = {
       access: ''
     }
   },
-  header: 'MY DOCUMENTS'
-};
-
-export const roles = {
+  redirect: false,
+  header: 'MY DOCUMENTS',
   roles: []
 };

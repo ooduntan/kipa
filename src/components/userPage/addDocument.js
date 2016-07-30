@@ -1,22 +1,24 @@
+import TinyMCE from 'react-tinymce';
 import React, {PropTypes} from 'react';
 import Preloader from '../common/preloader';
 import {
   InputComponent,
   ButtonComponent,
   SelectComponent,
-  TextArea,
   CheckBox,
   File
 } from '../common/input';
 const NewDocumentForm = ({
   CheckboxHandler,
   changeHandler,
+  tinymceEvent,
   submitAction,
   showLoader,
   modalData,
   docRoles
 }) => {
   let {docData: {title, content}, labelClass} = modalData;
+  console.log(content);
   return(
     <form id={modalData.actionText} onSubmit={submitAction}>
       <div id='modal1' className='modal modal-fixed-footer'>
@@ -34,7 +36,6 @@ const NewDocumentForm = ({
               id='title'
               label='Title'
               newClass='s6'
-              labelClass={labelClass}
               value={title}
               onChangeEvent={changeHandler}/>
             <CheckBox
@@ -43,11 +44,14 @@ const NewDocumentForm = ({
                 onClickEvent={CheckboxHandler}/>
           </div>
           <div className='row'>
-            <TextArea
-              name='content'
-              labelClass={labelClass}
-              value={content}
-              onChangeEvent={changeHandler}/>
+            <TinyMCE
+               content={content}
+               config={{
+                 plugins: 'link image code',
+                 toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+               }}
+               onChange={tinymceEvent}
+             />
           </div>
         </div>
         <div className='modal-footer'>

@@ -1,5 +1,5 @@
 import * as actionTypes from './actionType.js';
-import * as api from '../utils/apiRequest';
+import {apiRequest} from '../utils/apiRequest';
 
 export function createUser(user) {
   return {
@@ -41,8 +41,62 @@ export function loginSuccess(loginResult) {
     data: {
       shouldRedirect: true,
       displayLoader: 'hide-element',
-      userData: loginResult.result.userData
+      userData: loginResult
     }
+  };
+}
+
+export function activateSubmit() {
+  return {
+    type: actionTypes.ACTIVATE_SUBMIT_BUTTON,
+    data: {
+      editFormState: false
+    }
+  };
+}
+
+export function userUpdataSuccess(newUserData) {
+  return {
+    type: actionTypes.UPDATED_USER_DATA,
+    data: {
+      editPreLoader: true,
+      userData: newUserData.user,
+      feedBack: 'Updated!!!',
+      displayFeedBack: 'block',
+      feedBackColor: '#26a69a'
+    }
+  };
+}
+
+export function userUpdateFailed() {
+  return {
+    type: actionTypes.UPDATE_FAILED,
+    data: {
+      editPreLoader: true,
+      feedBack: 'Oops!!! An error occured.',
+      displayFeedBack: 'block',
+      editPreLoader: true,
+      feedBackColor: '#dd0404'
+    }
+  };
+}
+
+export function updatingUserData() {
+  return {
+    type: actionTypes.UPDATING_USER_DATA,
+    data: {
+      editPreLoader: false
+    }
+  };
+}
+
+export function updatedUserData(newUserData) {
+  return (dispatch) => {
+    if (newUserData.user) {
+      return dispatch(userUpdataSuccess(newUserData));
+    }
+
+    return dispatch(userUpdateFailed());
   };
 }
 
@@ -64,8 +118,18 @@ export function checkLoginResult(loginData) {
 
     if (loginData.result.token) {
       window.localStorage.setItem('token', loginData.result.token);
-      dispatch(loginSuccess(loginData));
+      dispatch(loginSuccess(loginData.result.userData));
     }
+  };
+}
+
+export function updateUserData(newUserData, id) {
+  return (dispatch) => {
+    dispatch(updatingUserData());
+    const url = '/api/users/' + id;
+    return apiRequest(newUserData, 'put', url, function(apiResult) {
+        dispatch(updatedUserData(apiResult));
+      });
   };
 }
 
@@ -73,9 +137,9 @@ export function saveUserData(user) {
   return (dispatch) => {
     dispatch(savingUser());
     const url = '/api/users/';
-    return api.postRequest(user, url, null, function(apiResult) {
+    return apiRequest(user, 'post', url, function(apiResult) {
       dispatch(createUser(apiResult));
-      dispatch(saveUserSuccess());
+      dispatch(saveUserSuccess(newUserData));
     });
   };
 }
@@ -84,7 +148,7 @@ export function loginUser(userData) {
   return (dispatch) => {
     dispatch(checkingUser());
     const url = '/api/users/login';
-    return api.apiRequest(userData, 'post', url, function(apiResult) {
+    return apiRequest(userData, 'post', url, function(apiResult) {
       dispatch(checkLoginResult(apiResult));
     });
   };

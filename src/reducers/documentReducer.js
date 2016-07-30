@@ -1,9 +1,7 @@
 import * as actionTypes from '../actions/actionType.js';
-import {
-  userDocs
-} from './initialState';
+import {initialState} from './initialState';
 
-export default function userReducer(state = userDocs, action) {
+export default function userReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.CHECK_USER_DOCS:
       return Object.assign({}, state, action.data);
@@ -27,8 +25,10 @@ export default function userReducer(state = userDocs, action) {
       return Object.assign({}, state, {
         docs: [...action.data.newDoc, ...state.docs]
       }, {
-        success: action.data.successState
+        docSuccess: action.data.successState
       });
+    case actionTypes.REDIRECT_USER:
+      return Object.assign({}, state, action.data);
     default:
       return state;
   }

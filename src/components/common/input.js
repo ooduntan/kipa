@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import {Button, Input, Card, Row, Col, Dropdown, NavItem} from 'react-materialize';
 
 class InputComponent extends React.Component {
   constructor() {
@@ -22,6 +23,8 @@ class InputComponent extends React.Component {
   }
 
   render() {
+    const labelClass = this.props.value ? 'active' : '';
+
     return (
       <div className={`input-field col ${this.props.newClass}`}>
         <input
@@ -35,7 +38,7 @@ class InputComponent extends React.Component {
           onChange={this.props.onChangeEvent}
           required/>
         <label
-          className={this.props.labelClass}
+          className={labelClass}
           htmlFor={this.props.id}>
           {this.props.label}
         </label>
@@ -73,6 +76,19 @@ ButtonComponent.propTypes = {
   text: PropTypes.string.isRequired,
   action: PropTypes.func,
   newClass: PropTypes.string
+}
+
+const DropDown = () => {
+  return(
+    <Dropdown trigger={
+        <Button>FILTER</Button>
+      }>
+      <NavItem>Date</NavItem>
+      <NavItem>Access</NavItem>
+      <NavItem divider />
+      <NavItem>three</NavItem>
+    </Dropdown>
+  );
 }
 
 const File = ({name, changeHandler}) => {
@@ -132,21 +148,31 @@ const CheckBox = ({data, name, onClickEvent}) => {
   );
 }
 
-const SelectComponent = ({selectData, onChangeEvent, name}) => {
-  $('select').material_select();
-
+const SelectComponent = ({selectData, selecetedValue, onChangeEvent, name}) => {
   return(
-    <div className='input-field col s6'>
-      <select
+    <Row>
+      <Input
         name={name}
-        onChange={onChangeEvent}>
-        <option value='' disabled selected>Choose your role</option>
-        {selectData.map((item) => {
-          return (<option key={item._id} value={item._id}>{item.role}</option>)
+        onChange={onChangeEvent}
+        s={12}
+        type='select'
+        label='Roles'>
+        <option disabled>Choose your role</option>
+        {
+          selectData.map((item) => {
+          let select = selecetedValue === item._id ? 'selected' :false;
+
+          return(
+            <option
+              selected={select}
+              key={item._id}
+              value={item.role}>
+              {item.role}
+            </option>
+          );
         })}
-      </select>
-      <label>Roles</label>
-    </div>
+      </Input>
+    </Row>
   );
 
 }

@@ -1,28 +1,32 @@
 import * as actionTypes from './actionType.js';
-import {apiRequest} from '../utils/apiRequest';
+import {
+  apiRequest
+} from '../utils/apiRequest';
 
 export function getUserDocs() {
   return {
     type: actionTypes.GET_USER_DOCS,
-    data: {looding: true}
+    data: {
+      looding: true
+    }
   };
-}
-
-export function ValidateUser() {
-  console.log('I validated the user');
 }
 
 export function showMenuContent(nextView) {
   return {
     type: actionTypes.CHANGE_CONTENT,
-    data: { header: nextView.replace('_', ' ') }
+    data: {
+      header: nextView.replace('_', ' ')
+    }
   };
 }
 
 export function getSharedDocSuccess(sharedDocs) {
   return {
     type: actionTypes.SHARED_DOCUMENTS,
-    data: {sharedDocs}
+    data: {
+      sharedDocs
+    }
   };
 }
 
@@ -36,7 +40,7 @@ export function getDocsSuccess(docs) {
   return {
     type: actionTypes.USER_DOCS_SUCCESS,
     data: {
-      success: true,
+      docSuccess: true,
       docs: docs.doc
     }
   };
@@ -46,7 +50,7 @@ export function savingDoc() {
   return {
     type: actionTypes.CREATING_DOC,
     data: {
-      success: false
+      docSuccess: false
     }
   };
 }
@@ -65,7 +69,7 @@ export function prepareModalForEdit(docData) {
   return {
     type: actionTypes.PREPARING_MODAL,
     data: {
-      modalData:{
+      modalData: {
         title: 'Edit Document',
         actionText: 'Update',
         labelClass: 'active',
@@ -79,7 +83,7 @@ export function prepareModalNewDoc() {
   return {
     type: actionTypes.PREPARING_MODAL,
     data: {
-      modalData:{
+      modalData: {
         title: 'Create new document',
         actionText: 'Create',
         labelClass: '',
@@ -98,10 +102,19 @@ export function docDeleted(docsInState) {
   };
 }
 
+export function sharedDocsDeleted(docsInState) {
+  return {
+    type: actionTypes.DELETE_DOC_SUCCESS,
+    data: {
+      sharedDocs: docsInState
+    }
+  };
+}
+
 export function deletingDoc() {
   return {
 
-  }
+  };
   // body...
 }
 
@@ -109,38 +122,55 @@ export function createDocSuccess() {
   return {
     type: actionTypes.CREATE_DOC_SUCCESS,
     data: {
-      success: true
+      docSuccess: true
     }
+  };
+}
+
+export function updateUserStore(userData) {
+  return {
+    type: actionTypes.UPDATE_USER_STORE,
+    data: {userData}
+  };
+}
+
+export function InvalidUser() {
+  return {
+    type: actionTypes.REDIRECT_USER,
+    data: {redirect: true}
   };
 }
 
 export function getsharedDocument(userData) {
   return (dispatch) => {
-     dispatch(gettingUserDocs());
-    const url ='api/documents?role=' + userData.role;
+    dispatch(gettingUserDocs());
+    const url = 'api/documents?role=' + userData.role;
     return apiRequest(null, 'get', url, function(apiResult) {
       dispatch(getSharedDocSuccess(apiResult));
       return dispatch(getUserDocs(userData._id));
     });
- };
+  };
 }
 
-export function deleteDocAction(docId, docsInState) {
+export function deleteDocAction(docId, docsInState, pageName) {
   return (dispatch) => {
     const url = 'api/documents/' + docId;
     return apiRequest(null, 'delete', url, function(apiResult) {
-       dispatch(docDeleted(docsInState, apiResult));
+      if (pageName === 'SHARED DOCUMENTS') {
+        return dispatch(sharedDocsDeleted(docsInState, apiResult));
+      }
+      return dispatch(docDeleted(docsInState, apiResult));
     });
   };
 }
 
 export function createDoc(docData, formObj) {
-  return (dispatch) =>{
+  return (dispatch) => {
     dispatch(savingDoc());
     const url = 'api/documents/';
     return apiRequest(docData, 'post', url, function(apiResult) {
       formObj.reset();
-       dispatch(updateStoreWithNewDoc(apiResult));
+      dispatch(updateStoreWithNewDoc(apiResult));
     });
   };
 }
@@ -155,9 +185,22 @@ export function getUserDocs(userId) {
   };
 }
 
+export function ValidateUser() {
+  return (dispatch) => {
+    const url = 'api/users/getData';
+    return apiRequest(null, 'get', url, function(apiResult) {
+      if (apiResult.user) {
+        dispatch(updateUserStore(apiResult.user));
+        return dispatch(getComponentResources(apiResult.user));
+      }
+      return dispatch(InvalidUser());
+    });
+  };
+}
+
 export function getComponentResources(userData) {
   return (dispatch) => {
-    if (userData) {
+    if (Object.keys(userData).length) {
       return dispatch(getsharedDocument(userData));
     }
     return dispatch(ValidateUser());

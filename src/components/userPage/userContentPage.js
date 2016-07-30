@@ -2,11 +2,14 @@ import React, {PropTypes, Component} from 'react';
 import {Link} from 'react-router';
 import CardGroup from './cardDisplay';
 import {connect} from 'react-redux';
+import {DropDown} from '../common/input';
+import moment from 'moment';
 import {bindActionCreators} from 'redux';
 import * as documentAction from '../../actions/documentAction';
 import documentCover from '../../images/coverPlaceHolder.jpg';
 import NewDocumentForm from './addDocument';
 import Preloader from '../common/preloader';
+import EditComponent from './editPage';
 
 class UserContentPage extends Component {
   constructor() {
@@ -23,6 +26,7 @@ class UserContentPage extends Component {
     this.fabClick = this.fabClick.bind(this);
     this.deleteDoc = this.deleteDoc.bind(this);
     this.populateCard = this.populateCard.bind(this);
+    this.OnchangeTinymce = this.OnchangeTinymce.bind(this);
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.saveNewDocument = this.saveNewDocument.bind(this);
     this.onClickCheckbox = this.onClickCheckbox.bind(this);
@@ -30,19 +34,18 @@ class UserContentPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps, 'this is the next props i am geting');
-    const {success} = this.props.stateProp.userDocs;
-    if (!success) $('#modal1').closeModal();
+    const {docSuccess} = this.props.stateProp.userDocs;
+    if (!docSuccess) $('#modal1').closeModal();
   }
 
   showPageContent() {
-    const {sharedDocs, success, docs, header} = this.props.stateProp.userDocs;
+    const {sharedDocs, docSuccess, docs, header} = this.props.stateProp.userDocs;
     switch (header) {
       case 'MY DOCUMENTS':
-        return this.populateCard(docs, success);
+        return this.populateCard(docs, docSuccess);
         break;
       case 'SHARED DOCUMENTS':
-        return this.populateCard(sharedDocs.doc, success);
+        return this.populateCard(sharedDocs.doc, docSuccess);
         break;
       case 'EDIT PROFILE':
         return this.displayEditPage();
@@ -66,7 +69,7 @@ class UserContentPage extends Component {
   }
 
   displayEditPage() {
-    return <div>This is edit page</div>
+    return <EditComponent/>
   }
 
   onClickCheckbox(event) {
@@ -102,7 +105,6 @@ class UserContentPage extends Component {
 
   submitEditedDoc() {
     console.log(this.state.docData);
-    alert('this is working');
   }
 
   modalSubmitAction(event) {
@@ -126,25 +128,42 @@ class UserContentPage extends Component {
 
   deleteDoc(event) {
     const docIndex = event.target.id;
-    const selectedDocumentData = this.props.stateProp.userDocs.docs[docIndex];
-    const docId = selectedDocumentData._id;
     const {docs} = this.props.stateProp.userDocs;
+    const {userDocs} = this.props.stateProp
+    let selectedDocumentData;
+    let docId;
+    console.log(userDocs);
+    if (userDocs.header === 'SHARED DOCUMENTS') {
+      selectedDocumentData = userDocs.sharedDocs.doc[docIndex];
+      const docId = selectedDocumentData._id;
+      const {doc} = userDocs.sharedDocs;
+      doc.splice(docIndex, 1);
+      this.props.userActions.deleteDocAction(docId, doc, userDocs.header);
+      return;
+    }
+    selectedDocumentData = userDocs.docs[docIndex];
+    docId = selectedDocumentData._id;
 
     docs.splice(docIndex, 1);
-    this.props.userActions.deleteDocAction(docId, docs);
+    this.props.userActions.deleteDocAction(docId, docs, userDocs.header);
+  }
+
+  OnchangeTinymce(event) {
+    const value = event.target.getContent({format: 'raw'});
+    this.state.docData.content =  value;
+    console.log(this.state);
   }
 
   onChangeHandler(event) {
     event.preventDefault();
     const {name, value} = event.target;
     const existingData = this.props.stateProp.userDocs.modalData.docData;
-    console.log(existingData, 'this is modal data');
-    if (this.state.docData.title.length) this.state.docData = existingData;
-      console.log(this.state.docData, '1st occurence');
-      this.state.docData[name] = value;
-      this.setState({docData: this.state.docData});
-      console.log(this.state.docData, '2nd occurence');
-
+    if (this.state.docData.title.length) {
+      this.state.docData = existingData;
+    }
+    this.state.docData[name] = value;
+    this.setState({docData: this.state.docData});
+    console.log(this.state);
     // if (existingData.title.length) {
     //   console.log(existingData[name], 'this is doc name');
     //   this.state.docData[name] = existingData[name] + value;
@@ -172,7 +191,7 @@ class UserContentPage extends Component {
             cardCorver={documentCover}
             cardTitle={title}
             cardCreator={creator}
-            docDate={createdAt}
+            docDate={moment(createdAt).fromNow()}
             editCard={this.editDoc}
             deleteCard={this.deleteDoc}
             cardContent={content}/>
@@ -192,7 +211,10 @@ class UserContentPage extends Component {
         <div className='headerClass'>
           {this.props.stateProp.userDocs.header}
         </div>
-        <Preloader size='big' showLoader={this.props.stateProp.userDocs.success}/> {this.showPageContent()}
+        <Preloader
+          size='big'
+          showLoader={this.props.stateProp.userDocs.docSuccess}/>
+        {this.showPageContent()}
         <div className='fab'>
           <a onClick={this.fabClick} className='btn-floating
             btn-large waves-effect waves-light'>
@@ -204,9 +226,10 @@ class UserContentPage extends Component {
           changeHandler={this.onChangeHandler}
           CheckboxHandler={this.onClickCheckbox}
           submitAction={this.modalSubmitAction}
+          tinymceEvent={this.OnchangeTinymce}
           modalData={this.props.stateProp.userDocs.modalData}
           showLoader={this.props.stateProp.userDocs.success}/>
-        
+
       </div>
     );
   }
@@ -223,7 +246,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  console.log(state, 'this thei mapstatet to porps')
   return {
     stateProp: {
       currentUser: state.users.userData,

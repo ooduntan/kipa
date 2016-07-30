@@ -1,14 +1,11 @@
 import React, {PropTypes} from 'react';
-import Header from './common/header';
 
-class Home extends React.Component {
-  render() {
-    return (
-      <div>
-        <Header/> {this.props.children}
-      </div>
-    );
-  }
+const Home = ({children}) => {
+  return (
+    <div>
+      {children}
+    </div>
+  );
 }
 
 Home.propTypes = {

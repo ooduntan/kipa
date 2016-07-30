@@ -5,8 +5,10 @@ export function apiRequest(data, type, url, callBack) {
     .set('token', localStorage.getItem('token'))
     .set('Accept', 'application/json')
     .end(function(res, result) {
-      console.log(result);
-      console.log(data);
-      return callBack(result.body);
+      if (result) {
+        return callBack(result.body);
+      }
+
+      return callBack(result);
     });
 }
