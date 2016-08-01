@@ -65,29 +65,13 @@ export function updateStoreWithNewDoc(docData) {
   };
 }
 
-export function prepareModalForEdit(docData) {
+export function preparePageForEdit(docData, owner) {
   return {
-    type: actionTypes.PREPARING_MODAL,
+    type: actionTypes.PREPARE_EDIT_PAGE,
     data: {
-      modalData: {
-        title: 'Edit Document',
-        actionText: 'Update',
-        labelClass: 'active',
-        docData: docData
-      }
-    }
-  };
-}
-
-export function prepareModalNewDoc() {
-  return {
-    type: actionTypes.PREPARING_MODAL,
-    data: {
-      modalData: {
-        title: 'Create new document',
-        actionText: 'Create',
-        labelClass: '',
-        docData: {}
+      editDocumentData: {
+        docData: docData,
+        ownerPage: owner
       }
     }
   };
@@ -107,6 +91,15 @@ export function sharedDocsDeleted(docsInState) {
     type: actionTypes.DELETE_DOC_SUCCESS,
     data: {
       sharedDocs: docsInState
+    }
+  };
+}
+
+export function updatingDocData() {
+  return {
+    type: actionTypes.UPDATING_DOC_DATA,
+    data: {
+      editPreLoader: false
     }
   };
 }
@@ -134,6 +127,14 @@ export function updateUserStore(userData) {
   };
 }
 
+export function editDocSuccess() {
+  // UPdate the store very well and this will work as expected
+  return {
+    type: actionTypes.UPDATED_DOCUMENT_DATA,
+    data: {editSuccess: true}
+  };
+}
+
 export function InvalidUser() {
   return {
     type: actionTypes.REDIRECT_USER,
@@ -152,14 +153,15 @@ export function getsharedDocument(userData) {
   };
 }
 
-export function deleteDocAction(docId, docsInState, pageName) {
+export function deleteDocAction(docId) {
   return (dispatch) => {
     const url = 'api/documents/' + docId;
     return apiRequest(null, 'delete', url, function(apiResult) {
-      if (pageName === 'SHARED DOCUMENTS') {
-        return dispatch(sharedDocsDeleted(docsInState, apiResult));
-      }
-      return dispatch(docDeleted(docsInState, apiResult));
+      return dispatch(getComponentResources({}));
+      // if (pageName === 'SHARED DOCUMENTS') {
+      //   return dispatch(sharedDocsDeleted(docsInState, apiResult));
+      // }
+      // return dispatch(docDeleted(docsInState, apiResult));
     });
   };
 }
@@ -182,6 +184,17 @@ export function getUserDocs(userId) {
     return apiRequest(null, 'get', url, function(apiResult) {
       dispatch(getDocsSuccess(apiResult));
     });
+  };
+}
+
+export function upadateDocument(newDocData, docId) {
+  return (dispatch) => {
+    dispatch(updatingDocData());
+    const url = '/api/documents/' + docId;
+    return apiRequest(newDocData, 'put', url, function(apiResult) {
+        dispatch(getComponentResources({}));
+        dispatch(editDocSuccess());
+      });
   };
 }
 

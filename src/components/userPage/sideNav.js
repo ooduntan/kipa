@@ -8,17 +8,11 @@ import * as documentAction from '../../actions/documentAction';
 class SideNav extends Component {
   constructor() {
     super();
-    this.changeUserContent = this.changeUserContent.bind(this);
-  }
-
-  changeUserContent(e) {
-    this.props.docAction.showMenuContent(e.currentTarget.id);
   }
 
   render() {
-    const {userData, docStateUser} = this.props;
-    const currentUser = Object.keys(userData).length ? userData : docStateUser;
-    const {name, username, role, email} = currentUser;
+    const {name, username, role, email} = this.props.userData;
+
     return (
       <ul id='nav-mobile' className='side-nav fixed'>
         <li>
@@ -39,19 +33,19 @@ class SideNav extends Component {
             <div className='custom-blue-text center-align'>{email}</div>
           </div>
         </li>
-        <li id='MY_DOCUMENTS' onClick={this.changeUserContent} className='bold'>
+        <li id='MY_DOCUMENTS' onClick={this.props.navigator} className='bold'>
             <div className='custom-div waves-effect'>
               <i className='sidebar-icon-position material-icons'>description</i>
               <span>My Documents</span>
             </div>
         </li>
-        <li onClick={this.changeUserContent} id='SHARED_DOCUMENTS' className='bold'>
+        <li onClick={this.props.navigator} id='SHARED_DOCUMENTS' className='bold'>
           <div className='custom-div waves-effect'>
             <i className='sidebar-icon-position material-icons'>group_work</i>
             <span>Shared Documents</span>
           </div>
         </li>
-        <li id='EDIT_PROFILE' onClick={this.changeUserContent} className='bold'>
+        <li id='EDIT_PROFILE' onClick={this.props.navigator} className='bold'>
           <div className='custom-div waves-effect'>
             <i className='sidebar-icon-position material-icons'>mode_edit</i>
             <span>Edit Profile</span>
@@ -69,7 +63,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     userData: state.users.userData,
     docStateUser: state.docStates.userData,

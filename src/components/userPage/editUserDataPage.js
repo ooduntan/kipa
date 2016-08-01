@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import EditForm from './editForm';
+import EditUserForm from './editUserForm';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as userAction from '../../actions/userAction';
 
 
-class EditComponent extends Component {
+class EditUserComponent extends Component {
   constructor() {
     super();
     this.state = {
@@ -53,8 +53,8 @@ class EditComponent extends Component {
     } = this.props.currentUser;
 
     return(
-      <EditForm
-        preloader={this.props.currentUser.editPreLoader}
+      <EditUserForm
+        preloader={this.props.userData.editPreLoader}
         userData={userData}
         submitAction={this.onSubmitEditForm}
         selectData={this.props.roles}
@@ -71,7 +71,7 @@ class EditComponent extends Component {
 function mapStateToProps(state) {
   return {
     currentUser: state.users,
-    userData: state.docStates.userData,
+    userData: state.docStates,
     roles: state.roleState.roles
   }
 }
@@ -82,4 +82,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(EditUserComponent);

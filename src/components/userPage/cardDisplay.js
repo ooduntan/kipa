@@ -4,13 +4,26 @@ import {Link} from 'react-router';
 const CardGroup = ({
   id,
   cardCorver,
+  cardType,
   cardTitle,
   cardCreator,
   docDate,
   editCard,
   deleteCard,
   docIndex,
+  currentUserId,
   cardContent}) => {
+    let deleteButton;
+
+    if (cardCreator === currentUserId) {
+      deleteButton = (
+        <i id={id}
+          onClick={deleteCard}
+          className='material-icons delete-color modal-trigger custom-icon'>
+          delete
+        </i>);
+    }
+
   return (
     <div className='card hoverable document-cards'>
       <div className='card-image waves-effect waves-block waves-light'>
@@ -27,14 +40,9 @@ const CardGroup = ({
         </p>
       </div>
       <div className='card-action action-card-custom'>
+        {deleteButton}
         <i
-          id={`${docIndex}`}
-          onClick={deleteCard}
-          className='material-icons delete-color modal-trigger custom-icon'>
-          delete
-        </i>
-        <i
-          id={docIndex}
+          id={`${cardType}__${docIndex}`}
           onClick={editCard}
           className='material-icons modal-trigger custom-icon'>
           edit

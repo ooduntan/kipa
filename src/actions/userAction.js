@@ -75,7 +75,6 @@ export function userUpdateFailed() {
       editPreLoader: true,
       feedBack: 'Oops!!! An error occured.',
       displayFeedBack: 'block',
-      editPreLoader: true,
       feedBackColor: '#dd0404'
     }
   };

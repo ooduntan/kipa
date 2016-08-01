@@ -19,7 +19,7 @@ export default function userReducer(state = initialState, action) {
       return Object.assign({}, state, action.data);
     case actionTypes.DELETE_DOC_SUCCESS:
       return Object.assign({}, state, action.data);
-    case actionTypes.PREPARING_MODAL:
+    case actionTypes.PREPARE_EDIT_PAGE:
       return Object.assign({}, state, action.data);
     case actionTypes.UPDATE_STORE_WITH_NEW_DOC:
       return Object.assign({}, state, {
@@ -27,6 +27,10 @@ export default function userReducer(state = initialState, action) {
       }, {
         docSuccess: action.data.successState
       });
+    case actionTypes.UPDATING_DOC_DATA:
+      return Object.assign({}, state, action.data);
+    case actionTypes.UPDATED_DOCUMENT_DATA:
+      return Object.assign({}, state, action.data);
     case actionTypes.REDIRECT_USER:
       return Object.assign({}, state, action.data);
     default:

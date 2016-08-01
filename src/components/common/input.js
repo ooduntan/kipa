@@ -127,14 +127,24 @@ const TextArea = ({name, value, labelClass, onChangeEvent}) => {
   );
 }
 
-const CheckBox = ({data, name, onClickEvent}) => {
+const CheckBox = ({data, name, extraClass, checkedData, onClickEvent}) => {
   return(
     <div className='custom-checkox'>
       <div className='grey-text'>Privilege</div>
       {data.map((item) => {
+        let checked;
+
+        if (checkedData) {
+          let roleId = item._id.toString();
+          checked = checkedData.indexOf(roleId) >= 0 ? 'checked' : false;
+        } else {
+          checked = false;
+        }
+
         return(
           <p>
             <input
+              defaultChecked={checked}
               name={name}
               onClick={onClickEvent}
               value={item._id}

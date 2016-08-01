@@ -1,58 +1,44 @@
 import TinyMCE from 'react-tinymce';
 import React, {PropTypes} from 'react';
+import {CheckBox} from '../common/input';
 import Preloader from '../common/preloader';
-import {
-  InputComponent,
-  ButtonComponent,
-  SelectComponent,
-  CheckBox,
-  File
-} from '../common/input';
+import {Input, Row} from 'react-materialize';
 const NewDocumentForm = ({
   CheckboxHandler,
   changeHandler,
   tinymceEvent,
   submitAction,
   showLoader,
-  modalData,
   docRoles
 }) => {
-  let {docData: {title, content}, labelClass} = modalData;
-  console.log(content);
   return(
-    <form id={modalData.actionText} onSubmit={submitAction}>
+    <form onSubmit={submitAction}>
       <div id='modal1' className='modal modal-fixed-footer'>
         <div className='modal-content'>
-          <h4 className='custom-blue-text'>{modalData.title}</h4>
-          <div className='row'>
-            <File
-              onChangeEvent={changeHandler}
-              name='documentCover'/>
-          </div>
-          <div className='row'>
-            <InputComponent
+          <h4 className='custom-blue-text'>Create new document</h4>
+          <Row>
+            <Input
+              s={6}
               name='title'
-              type='text'
-              id='title'
               label='Title'
-              newClass='s6'
-              value={title}
-              onChangeEvent={changeHandler}/>
+              validate
+              onChange={changeHandler}/>
             <CheckBox
                 data={docRoles}
                 name='role'
+                extraClass='custom-checkox'
                 onClickEvent={CheckboxHandler}/>
-          </div>
-          <div className='row'>
+            </Row>
+          <Row>
             <TinyMCE
-               content={content}
                config={{
+                 forced_root_block: false,
                  plugins: 'link image code',
                  toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
                }}
                onChange={tinymceEvent}
              />
-          </div>
+         </Row>
         </div>
         <div className='modal-footer'>
           <Preloader
@@ -61,7 +47,7 @@ const NewDocumentForm = ({
             showLoader={showLoader}
             />
           <button
-            className='btn custom-create-btn'>{modalData.actionText}</button>
+            className='btn custom-create-btn'>Create</button>
         </div>
       </div>
     </form>

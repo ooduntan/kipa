@@ -12,6 +12,7 @@ class Dashboard extends Component {
     super();
 
     this.logout = this.logout.bind(this);
+    this.changeUserContent = this.changeUserContent.bind(this);
   }
 
   componentWillMount() {
@@ -19,7 +20,6 @@ class Dashboard extends Component {
       this.context.router.push('/');
     } else {
       this.props.documentAction.getComponentResources(this.props.currentUser);
-
     }
   }
 
@@ -29,12 +29,18 @@ class Dashboard extends Component {
     }
   }
 
+  changeUserContent(location) {
+    if (typeof location === 'object') {
+      location = location.currentTarget.id;
+    }
+
+    this.props.documentAction.showMenuContent(location);
+  }
+
   logout(event) {
     event.preventDefault();
     window.localStorage.removeItem('token');
     this.context.router.push('/');
-
-    console.log('this is where this should be and it should alway');
   }
 
   render() {
@@ -44,8 +50,10 @@ class Dashboard extends Component {
           clickEvent={this.logout}
           status='LOGOUT'/>
         <SideNav
+          navigator={this.changeUserContent}
           userData={this.props.currentUser}/>
         <UserContentPage
+          navigator={this.changeUserContent}
           userDocs={this.props.userDocs.doc}/>
       </div>
     );

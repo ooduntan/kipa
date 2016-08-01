@@ -29,7 +29,17 @@ nav li:hover {
 .card-title {
   word-wrap: break-word;
 }
-
+.left-padding {
+  padding-left: 0.75rem;
+}
+.edit-docs-checkbox {
+  margin-bottom: 34px;
+  margin-left: 11px;
+}
+.edit-doc-form{
+  width: 75%;
+  margin-left: 22px;
+}
 .custom-create-btn:disabled, .custom-create-btn:disabled:hover {
   background-color: rgba(158, 158, 158, 0.35);
   color: #979794;
@@ -97,10 +107,17 @@ nav li:hover {
   background-color: #375a86;
   margin-right: 18px !important;
 }
-.custom-create-btn:hover {
+.custom-update-btn {
+  background-color: #375a86;
+  margin-top: 17px;
+}
+.custom-create-btn:hover,
+.custom-update-btn:hover,
+.custom-create-btn:focus,
+.custom-update-btn:focus {
   background-color: #034496;
 }
-.custom-create-btn:focus {
+.custom-update-btn:focus, .custom-update-btn:fu {
   background-color: #034496;
 }
 .custom-icon:hover {

@@ -12,16 +12,15 @@ export const initialState = {
   docs: [],
   sharedDocs: [],
   docSuccess: false,
-  modalData: {
-    title: 'Create new document',
-    actionText: 'Create',
-    labelClass: '',
+  editDocumentData: {
     docData: {
       title: '',
       content: '',
       access: ''
-    }
+    },
+    ownerPage: '',
   },
+  editSuccess: false,
   redirect: false,
   header: 'MY DOCUMENTS',
   roles: []

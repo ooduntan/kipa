@@ -9,7 +9,9 @@ import * as documentAction from '../../actions/documentAction';
 import documentCover from '../../images/coverPlaceHolder.jpg';
 import NewDocumentForm from './addDocument';
 import Preloader from '../common/preloader';
-import EditComponent from './editPage';
+import EditUserComponent from './editUserDataPage';
+import EditDocument from './EditDocument';
+
 
 class UserContentPage extends Component {
   constructor() {
@@ -27,10 +29,11 @@ class UserContentPage extends Component {
     this.deleteDoc = this.deleteDoc.bind(this);
     this.populateCard = this.populateCard.bind(this);
     this.OnchangeTinymce = this.OnchangeTinymce.bind(this);
+    this.showPageContent = this.showPageContent.bind(this);
     this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.saveNewDocument = this.saveNewDocument.bind(this);
     this.onClickCheckbox = this.onClickCheckbox.bind(this);
     this.modalSubmitAction = this.modalSubmitAction.bind(this);
+    this.displayEditDocPage = this.displayEditDocPage.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -42,13 +45,16 @@ class UserContentPage extends Component {
     const {sharedDocs, docSuccess, docs, header} = this.props.stateProp.userDocs;
     switch (header) {
       case 'MY DOCUMENTS':
-        return this.populateCard(docs, docSuccess);
+        return this.populateCard(docs, docSuccess, 'owned');
         break;
       case 'SHARED DOCUMENTS':
-        return this.populateCard(sharedDocs.doc, docSuccess);
+        return this.populateCard(sharedDocs.doc, docSuccess, 'shared');
+        break;
+      case 'EDIT DOCUMENT':
+        return this.displayEditDocPage();
         break;
       case 'EDIT PROFILE':
-        return this.displayEditPage();
+        return this.displayEditUserPage();
         break;
       default:
 
@@ -64,19 +70,23 @@ class UserContentPage extends Component {
         access: ''
       }
     });
-    this.props.userActions.prepareModalNewDoc();
     $('#modal1').openModal();
   }
 
-  displayEditPage() {
-    return <EditComponent/>
+  displayEditUserPage() {
+    return (<EditUserComponent/>);
+  }
+
+  displayEditDocPage() {
+    return (<EditDocument
+      redirect={this.props.navigator}
+      />);
   }
 
   onClickCheckbox(event) {
-    console.log(this.state.docData, 'kjdkjdkdfk');
     let role = event.target.value;
     let access = this.state.docData.access;
-    console.log(role);
+
     if (event.target.checked) {
       this.state.docData.access += ' ' + role;
       return this.setState({docData: this.state.docData});
@@ -86,12 +96,11 @@ class UserContentPage extends Component {
     return this.setState({docData: this.state.docData});
   }
 
-  saveNewDocument(event) {
+  modalSubmitAction(event) {
     event.preventDefault();
     const {docData} = this.state;
-    docData.access = docData.access.trim();
-    docData.access = docData.access.replace(/\s/g, ',');
 
+    docData.access = docData.access.trim().replace(/\s/g, ',');
     this.setState({
       docData: {
         title: '',
@@ -103,88 +112,46 @@ class UserContentPage extends Component {
     this.props.userActions.createDoc(docData, event.currentTarget);
   }
 
-  submitEditedDoc() {
-    console.log(this.state.docData);
-  }
-
-  modalSubmitAction(event) {
-    event.preventDefault();
-    const {actionText} = this.props.stateProp.userDocs.modalData;
-
-    if (actionText === 'Create') {
-      return this.saveNewDocument(event);
-    }
-
-    return this.submitEditedDoc(event);
-  }
-
   editDoc(event) {
     const {id} = event.target;
-    const selectedDocumentData = this.props.stateProp.userDocs.docs[id];
-    this.props.userActions.prepareModalForEdit(selectedDocumentData);
-    $('#modal1').openModal();
+    const {userDocs} = this.props.stateProp;
+    let selectedDocumentData;
+    let cardData = id.split('__');
+
+    if (cardData[0] === 'owned') {
+      selectedDocumentData = userDocs.docs[cardData[1]];
+    } else {
+      selectedDocumentData = userDocs.sharedDocs.doc[cardData[1]];
+    }
+
+    this.props.userActions.preparePageForEdit(selectedDocumentData, cardData[0]);
+    this.props.userActions.showMenuContent('EDIT DOCUMENT');
     // this.props.userActions.editDocAction(event.target.id)
   }
 
   deleteDoc(event) {
-    const docIndex = event.target.id;
-    const {docs} = this.props.stateProp.userDocs;
-    const {userDocs} = this.props.stateProp
-    let selectedDocumentData;
-    let docId;
-    console.log(userDocs);
-    if (userDocs.header === 'SHARED DOCUMENTS') {
-      selectedDocumentData = userDocs.sharedDocs.doc[docIndex];
-      const docId = selectedDocumentData._id;
-      const {doc} = userDocs.sharedDocs;
-      doc.splice(docIndex, 1);
-      this.props.userActions.deleteDocAction(docId, doc, userDocs.header);
-      return;
-    }
-    selectedDocumentData = userDocs.docs[docIndex];
-    docId = selectedDocumentData._id;
-
-    docs.splice(docIndex, 1);
-    this.props.userActions.deleteDocAction(docId, docs, userDocs.header);
+    const docId = event.target.id;
+    this.props.userActions.deleteDocAction(docId);
   }
 
   OnchangeTinymce(event) {
-    const value = event.target.getContent({format: 'raw'});
+    const value = event.target.getContent();
     this.state.docData.content =  value;
-    console.log(this.state);
   }
 
   onChangeHandler(event) {
     event.preventDefault();
     const {name, value} = event.target;
-    const existingData = this.props.stateProp.userDocs.modalData.docData;
-    if (this.state.docData.title.length) {
-      this.state.docData = existingData;
-    }
     this.state.docData[name] = value;
-    this.setState({docData: this.state.docData});
-    console.log(this.state);
-    // if (existingData.title.length) {
-    //   console.log(existingData[name], 'this is doc name');
-    //   this.state.docData[name] = existingData[name] + value;
-    //   console.log(this.state.docData);
-    //   this.setState({docData: this.state.docData});
-    //   console.log(this.state.docData, 'Previous');
-    // } else {
-    //   const {docData} = this.state;
-    //   console.log(this.state.docData, '1st occurence');
-    //   docData[name] = value;
-    //   this.setState({docData: docData});
-    //   console.log(this.state.docData, '2nd occurence');
-    // }
   }
 
-  populateCard(cardData, successState) {
+  populateCard(cardData, successState, cardType) {
     if (successState && cardData.length) {
       return cardData.map((eachDocs, index) => {
         const {_id, title, creator, createdAt, content} = eachDocs;
         return (
           <CardGroup
+            cardType={cardType}
             key={_id}
             id={_id}
             docIndex={index}
@@ -193,6 +160,7 @@ class UserContentPage extends Component {
             cardCreator={creator}
             docDate={moment(createdAt).fromNow()}
             editCard={this.editDoc}
+            currentUserId={this.props.stateProp.currentUser._id}
             deleteCard={this.deleteDoc}
             cardContent={content}/>
         );
@@ -205,7 +173,6 @@ class UserContentPage extends Component {
   }
 
   render() {
-    // const
     return (
       <div className='content-container'>
         <div className='headerClass'>
@@ -227,8 +194,7 @@ class UserContentPage extends Component {
           CheckboxHandler={this.onClickCheckbox}
           submitAction={this.modalSubmitAction}
           tinymceEvent={this.OnchangeTinymce}
-          modalData={this.props.stateProp.userDocs.modalData}
-          showLoader={this.props.stateProp.userDocs.success}/>
+          showLoader={this.props.stateProp.userDocs.docSuccess}/>
 
       </div>
     );

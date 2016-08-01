@@ -1,4 +1,12 @@
-import {Button, Input, Card, Row, Col, Dropdown, NavItem} from 'react-materialize';
+import {
+  Button,
+  Input,
+  Card,
+  Row,
+  Col,
+  Dropdown,
+  NavItem
+} from 'react-materialize';
 import React from 'react';
 import Preloader from '../common/preloader';
 import {
@@ -9,7 +17,7 @@ import {
   File
 } from '../common/input';
 
-const EditForm = ({
+const EditUserForm = ({
   preloader,
   submitAction,
   changeHandler,
@@ -20,7 +28,6 @@ const EditForm = ({
   feedBackColor,
   formSubmit
 }) => {
-  console.log(formSubmit, 'this is edit component');
   const {name: {firstname, lastname}, email, role, username, _id} = userData;
   return(
     <div className='edit-form-container'>
@@ -64,13 +71,13 @@ const EditForm = ({
             defaultValue={email}
             onChange={changeHandler} />
         </Row>
-        <div className='row'>
+        <Row>
           <SelectComponent
             name='role'
             selectData={selectData}
             selecetedValue={role}
             onChangeEvent={changeHandler}/>
-        </div>
+        </Row>
         <span
           style={{display: displayFeedBack, color: feedBackColor}}
           className='edit-user-error'>{feedBack}</span>
@@ -86,4 +93,4 @@ const EditForm = ({
   );
 };
 
-export default EditForm;
+export default EditUserForm;
