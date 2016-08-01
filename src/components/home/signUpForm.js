@@ -1,7 +1,8 @@
-import {InputComponent, ButtonComponent} from '../common/input';
+import {InputComponent, ButtonComponent, SelectComponent} from '../common/input';
 import React, {PropTypes} from 'react';
 
 const SignUpForm = ({
+  roles,
   changeHandler,
   saveAction,
   emailHasError,
@@ -12,6 +13,7 @@ const SignUpForm = ({
   matchPassword,
   showLoader
 }) => {
+  console.log(roles);
   return (
     <form onSubmit={saveAction} className='col s12 form-container-space'>
       <div className='row'>
@@ -41,13 +43,13 @@ const SignUpForm = ({
           inputError={emailHasError}
           validateFunction={emailIsValid}
           onChangeEvent={changeHandler}/>
-          <InputComponent
-            name='role'
-            type='email'
-            id='role'
-            label='Role'
-            newClass='s6 form-spacing'
-            onChangeEvent={changeHandler}/>
+        <SelectComponent
+          addedClass='custom-select row'
+          name='role'
+          size='s6'
+          selecetedValue='1'
+          selectData={roles}
+          onChangeEvent={changeHandler}/>
       </div>
       <div className='row'>
         <InputComponent
@@ -55,7 +57,7 @@ const SignUpForm = ({
           type='text'
           id='username'
           label='User Name'
-          newClass='s6 form-spacing'
+          newClass='s12 form-spacing'
           onChangeEvent={changeHandler}/>
       </div>
       <div className='row'>

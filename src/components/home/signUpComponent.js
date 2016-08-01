@@ -22,11 +22,19 @@ class SignUpComponent extends React.Component {
     this.confirmPassword = this.confirmPassword.bind(this);
     this.saveUser = this.saveUser.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
+    this.toggleDisplay = this.toggleDisplay.bind(this);
+  }
+
+  toggleDisplay(event) {
+    event.preventDefault();
+    this.props.toggleSignUp(this.refs.signUpComponent);
   }
 
   onChangeHandler(event) {
+    console.log(event);
     this.state.user[event.target.name] = event.target.value;
     this.setState({user: this.state.user});
+    console.log(this.state);
   }
 
   isValidEmail(value) {
@@ -88,7 +96,7 @@ class SignUpComponent extends React.Component {
       Materialize.toast('Account successfully created', 4000)
     }
     return (
-      <div className='hide-element'>
+      <div ref='signUpComponent' className='hide-element'>
         <div className='signup-wrapper'>
           <div>Sign up for free</div>
           <div className='small-signup-text'>
@@ -105,13 +113,14 @@ class SignUpComponent extends React.Component {
             passwordHasError={this.state.passwordError}
             matchPasswordError={this.state.confirmPasswordError}
             showLoader={this.props.users.displayLoader}
+            roles={this.props.roles}
             matchPassword={this.confirmPassword}/>
-        </div>
         <a className='custom-link'
-          onClick={this.showSignIn}>
+          onClick={this.toggleDisplay}>
           Existing user? Sign in
         </a>
       </div>
+    </div>
     );
   }
 }
@@ -124,7 +133,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, ownProps) {
   return {
-    users: state.users
+    users: state.users,
+    roles: state.roleState.roles
   }
 }
 

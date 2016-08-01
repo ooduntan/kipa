@@ -1,21 +1,28 @@
 import React, {Component, PropTypes} from 'react';
 import Header from '../common/header';
+import Footer from '../common/footer';
 import HomeContent from './content';
 
 class Homepage extends Component {
   constructor() {
     super();
+
+    this.toggleSignUp = this.toggleSignUp.bind(this);
   }
 
-  toggleSignUp(event) {
-    event.preventDefault();
-    console.log('this is working as expected');
+  toggleSignUp(dom) {
+    $(dom).slideUp( 'slow', function() {
+      if (dom.className === 'signup-container') {
+         return $('.' + dom.className).prev().slideDown('fast');
+      }
+
+      return $('.' + dom.className).next().slideDown('fast');
+    });
   }
 
   componentWillMount() {
     if (window.localStorage.getItem('token')) {
       this.context.router.push('/dashboard');
-      console.log('the problem iss form here');
     }
   }
 
@@ -24,9 +31,11 @@ class Homepage extends Component {
       <div>
         <Header
           clickEvent={this.toggleSignUp}
-          status='SIGN UP'
           />
-        <HomeContent/>
+        <HomeContent
+          toggleSignUp={this.toggleSignUp}
+          />
+        <Footer/>
       </div>
     );
   }

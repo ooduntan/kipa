@@ -15,14 +15,9 @@ class SignInComponent extends Component {
 		};
 
 		this.onChangeHandler = this.onChangeHandler.bind(this);
-		this.showSignIn = this.showSignIn.bind(this);
 		this.signIn = this.signIn.bind(this);
+		this.toggleSignIn = this.toggleSignIn.bind(this);
 	}
-
-  showSignIn(event) {
-    event.preventDefault();
-    alert('I am working very well');
-  }
 
 	onChangeHandler(event) {
 		this.state.loginData[event.target.name] = event.target.value;
@@ -34,6 +29,11 @@ class SignInComponent extends Component {
 		this.props.loginAction(this.state.loginData);
 	}
 
+	toggleSignIn(event) {
+		event.preventDefault();
+		this.props.toggleSignUp(this.refs.signInContainer);
+	}
+
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.user.shouldRedirect) {
 			this.context.router.push('/dashboard');
@@ -42,7 +42,7 @@ class SignInComponent extends Component {
 
   render() {
     return (
-      <div
+      <div ref='signInContainer'
 				style={{display: this.state.displayForm}}
 				className='signup-container'>
 				<div className='signup-wrapper'>
@@ -56,10 +56,10 @@ class SignInComponent extends Component {
 					errorMessage={this.props.user.error}
 					signInAction={this.signIn}
 					showLoader={this.props.user.displayLoader}/>
-					<a className='custom-link'
-						onClick={this.showSignIn}>
-						New user? Sign up
-					</a>
+				<a className='custom-link'
+					onClick={this.toggleSignIn}>
+					New user? Sign up
+				</a>
       </div>
     );
   }

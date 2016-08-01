@@ -74,6 +74,8 @@ const EditUserForm = ({
         <Row>
           <SelectComponent
             name='role'
+            addedClass='row'
+            size={6}
             selectData={selectData}
             selecetedValue={role}
             onChangeEvent={changeHandler}/>

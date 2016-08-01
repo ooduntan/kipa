@@ -2,11 +2,21 @@ import React, {PropTypes} from 'react';
 import {Link} from 'react-router'
 
 const Header = ({clickEvent, status}) => {
+  let logoutTag = '';
+  if (status) {
+    logoutTag = (
+      <li activeClassName='active'>
+      <Link onClick={clickEvent} to="#">
+        {status}
+      </Link>
+    </li>
+  );
+  }
   return(
     <div className="navbar-fixed">
       <nav>
         <div className="nav-wrapper custom-blue">
-          <a href="#!" className="brand-logo">DocKip</a>
+          <div className='logo-name left white-text font-effect-mitosis left-align'> DocKip </div>
           <a href="#" d ata-activates="mobile-demo" className="button-collapse">
             <i className="material-icons">menu</i>
           </a>
@@ -17,11 +27,7 @@ const Header = ({clickEvent, status}) => {
             <li activeClassName='active'>
               <Link to="the-app" activeClassName='active'>HOW IT WORKS</Link>
             </li>
-            <li activeClassName='active'>
-              <Link onClick={clickEvent} to="#">
-                {status}
-              </Link>
-            </li>
+            {logoutTag}
           </ul>
           <ul className="side-nav" id="mobile-demo">
             <li>

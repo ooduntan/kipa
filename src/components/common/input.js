@@ -158,13 +158,13 @@ const CheckBox = ({data, name, extraClass, checkedData, onClickEvent}) => {
   );
 }
 
-const SelectComponent = ({selectData, selecetedValue, onChangeEvent, name}) => {
+const SelectComponent = ({selectData, size, addedClass, selecetedValue, onChangeEvent, name}) => {
   return(
-    <Row>
+    <Row className={addedClass}>
       <Input
         name={name}
         onChange={onChangeEvent}
-        s={12}
+        s={size}
         type='select'
         label='Roles'>
         <option disabled>Choose your role</option>

@@ -16,7 +16,10 @@ class SideNav extends Component {
     return (
       <ul id='nav-mobile' className='side-nav fixed'>
         <li>
-          <div className='logo-name font-effect-mitosis left-align'> DocKip </div>
+          <div
+            className='logo-name custom-blue-text font-effect-mitosis left-align'>
+            DocKip
+          </div>
         </li>
         <li>
           <div className='user-info-container'>

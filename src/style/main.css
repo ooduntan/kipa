@@ -22,6 +22,10 @@ nav li:hover {
 .custom-spin {
   left: 47%;
 }
+.custom-select .col {
+  margin-top: 2px;
+  width: 50%;
+}
 .edit-form-container {
   width: 60%;
   margin: auto;
@@ -248,6 +252,7 @@ nav li:hover {
 }
 .form-container-space {
   margin-bottom: 14px;
+  padding-left: 0.5px !important;
 }
 .error-span-position {
   margin-left: 2%;
@@ -280,6 +285,18 @@ nav li:hover {
   color: #dd0404;
   margin-left: 12px;
 }
+.footer-text {
+  margin: 0 103px;
+  line-height: 94px;
+  text-align: center;
+  border-bottom: 1px solid #cbcbcb;
+  height: 86px;
+  color: #686868;
+  font-size: 36px;
+}
+.footer-links {
+  line-height: 36px;
+}
 .custom-btn {
   width: 96%;
   margin-left: 2%;
@@ -290,6 +307,12 @@ nav li:hover {
   margin-top: 16px;
   width: 95%;
   font-weight: 300;
+}
+.footer {
+  text-align: center;
+  color: #707070;
+  height: 164px;
+  background-color: #f1f1f1;
 }
 .row {
   margin-bottom: 5px !important;
