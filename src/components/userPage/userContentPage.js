@@ -24,15 +24,16 @@ class UserContentPage extends Component {
       }
     };
 
-    this.editDoc = this.editDoc.bind(this);
-    this.fabClick = this.fabClick.bind(this);
-    this.deleteDoc = this.deleteDoc.bind(this);
-    this.populateCard = this.populateCard.bind(this);
-    this.OnchangeTinymce = this.OnchangeTinymce.bind(this);
-    this.showPageContent = this.showPageContent.bind(this);
-    this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.onClickCheckbox = this.onClickCheckbox.bind(this);
-    this.modalSubmitAction = this.modalSubmitAction.bind(this);
+    this.editDoc            = this.editDoc.bind(this);
+    this.fabClick           = this.fabClick.bind(this);
+    this.deleteDoc          = this.deleteDoc.bind(this);
+    this.populateCard       = this.populateCard.bind(this);
+    this.confirmDelete      = this.confirmDelete.bind(this);
+    this.OnchangeTinymce    = this.OnchangeTinymce.bind(this);
+    this.showPageContent    = this.showPageContent.bind(this);
+    this.onChangeHandler    = this.onChangeHandler.bind(this);
+    this.onClickCheckbox    = this.onClickCheckbox.bind(this);
+    this.modalSubmitAction  = this.modalSubmitAction.bind(this);
     this.displayEditDocPage = this.displayEditDocPage.bind(this);
   }
 
@@ -70,7 +71,7 @@ class UserContentPage extends Component {
         access: ''
       }
     });
-    $('#modal1').openModal();
+    $('#modal2').openModal();
   }
 
   displayEditUserPage() {
@@ -126,17 +127,34 @@ class UserContentPage extends Component {
 
     this.props.userActions.preparePageForEdit(selectedDocumentData, cardData[0]);
     this.props.userActions.showMenuContent('EDIT DOCUMENT');
-    // this.props.userActions.editDocAction(event.target.id)
   }
 
   deleteDoc(event) {
-    const docId = event.target.id;
+    event.preventDefault();
+    const {_id: docId} = this.props.stateProp.userDocs.deleteDoc
     this.props.userActions.deleteDocAction(docId);
+    $('#modal1').closeModal();
   }
 
   OnchangeTinymce(event) {
     const value = event.target.getContent();
     this.state.docData.content =  value;
+  }
+
+  confirmDelete(event) {
+    const {userDocs} = this.props.stateProp;
+    let id = event.target.id;
+    let selectedDocumentData;
+    let docTypeAndId = id.split('__');
+
+    if (docTypeAndId[0] === 'owned') {
+      selectedDocumentData = userDocs.docs[docTypeAndId[1]];
+    } else {
+      selectedDocumentData = userDocs.sharedDocs.doc[docTypeAndId[1]];
+    }
+
+    this.props.userActions.createModalData(selectedDocumentData);
+    $('#modal1').openModal();
   }
 
   onChangeHandler(event) {
@@ -162,9 +180,10 @@ class UserContentPage extends Component {
             editCard={this.editDoc}
             currentUserId={this.props.stateProp.currentUser._id}
             deleteCard={this.deleteDoc}
+            confirmDelete={this.confirmDelete}
             cardContent={content}/>
         );
-      })
+      });
     }
 
     return (
@@ -173,6 +192,7 @@ class UserContentPage extends Component {
   }
 
   render() {
+    const {deleteDoc: {title, content}} = this.props.stateProp.userDocs;
     return (
       <div className='content-container'>
         <div className='headerClass'>
@@ -195,6 +215,17 @@ class UserContentPage extends Component {
           submitAction={this.modalSubmitAction}
           tinymceEvent={this.OnchangeTinymce}
           showLoader={this.props.stateProp.userDocs.docSuccess}/>
+        <div id='modal1' className='modal modal-fixed-footer'>
+            <div className='modal-content'>
+              <h4 className='custom-blue-text'>Are you sure you want to detele: {title}?</h4>
+              <p>{content}</p>
+          </div>
+          <div className='modal-footer'>
+            <a onClick={this.deleteDoc}
+              className='delete-doc-modal modal-action waves-effect waves-red btn-flat'>Yes</a>
+            <a className='close-delete-modal modal-action modal-close waves-effect waves-green btn-flat'>No</a>
+          </div>
+        </div>
 
       </div>
     );

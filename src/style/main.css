@@ -19,6 +19,22 @@ nav li:hover {
   margin-top: 14%;
   margin-left: 11%;
 }
+.custom-nav-bar {
+  margin-left: 5.4% !important;
+  float: left;
+  width: 41%;
+}
+.custom-nav-bar input {
+  height: 65px !important;
+  margin-bottom: 0px;
+}
+.delete-doc-modal:hover {
+  background-color: rgba(205, 10, 10, 0.82);
+  color: white;
+}
+.close-delete-modal:hover {
+  background-color: #e2e2e2;
+}
 .custom-spin {
   left: 47%;
 }

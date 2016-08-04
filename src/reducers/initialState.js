@@ -20,6 +20,7 @@ export const initialState = {
     },
     ownerPage: '',
   },
+  deleteDoc: {},
   editSuccess: false,
   redirect: false,
   header: 'MY DOCUMENTS',

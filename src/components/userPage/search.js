@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import Header from '../common/header';
 import UserContentPage from './userContentPage';
 
-class Dashboard extends Component {
+class Search extends Component {
   constructor(context) {
     super();
 
@@ -20,7 +20,7 @@ class Dashboard extends Component {
     event.preventDefault();
     if (event.key === 'Enter') {
       let searchValue = event.target.value;
-      
+
     }
   }
 
@@ -70,7 +70,7 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.contextTypes = {
+Search.contextTypes = {
   router: PropTypes.object
 }
 
@@ -87,4 +87,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

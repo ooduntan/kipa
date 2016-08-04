@@ -10,6 +10,7 @@ const CardGroup = ({
   docDate,
   editCard,
   deleteCard,
+  confirmDelete,
   docIndex,
   currentUserId,
   cardContent}) => {
@@ -17,11 +18,12 @@ const CardGroup = ({
 
     if (cardCreator === currentUserId) {
       deleteButton = (
-        <i id={id}
-          onClick={deleteCard}
+        <i id={`${cardType}__${docIndex}`}
+          onClick={confirmDelete}
           className='material-icons delete-color modal-trigger custom-icon'>
           delete
-        </i>);
+        </i>
+      );
     }
 
   return (

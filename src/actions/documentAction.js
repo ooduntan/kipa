@@ -135,10 +135,47 @@ export function editDocSuccess() {
   };
 }
 
+export function searchingDocument() {
+  return {
+    type: actionTypes.SEARCHING_DOCUMENT,
+    data: {}
+  };
+}
+
+export function searchCompleted(searchResult) {
+  return {
+    type: actionTypes.SEARCH_COMPLETED,
+    data: {
+      search: searchResult
+    }
+  };
+}
+
 export function InvalidUser() {
   return {
     type: actionTypes.REDIRECT_USER,
     data: {redirect: true}
+  };
+}
+
+export function createModalData(selectedDoc) {
+  return {
+    type: actionTypes.CREATE_MODAL_FOR_DELETE,
+    data: {
+      deleteDoc: selectedDoc
+    }
+  }
+}
+
+export function searchDocument(searchTerm) {
+  return (dispatch) => {
+    // Complete this fucntion
+    dispatch(searchingDocument());
+    const url = 'api/document?q=' +  searchTerm;
+    return apiRequest(null, 'get', url, function (searchResult) {
+      // Complete this function
+      dispatch(searchCompleted(searchResult));
+    });
   };
 }
 
@@ -158,10 +195,6 @@ export function deleteDocAction(docId) {
     const url = 'api/documents/' + docId;
     return apiRequest(null, 'delete', url, function(apiResult) {
       return dispatch(getComponentResources({}));
-      // if (pageName === 'SHARED DOCUMENTS') {
-      //   return dispatch(sharedDocsDeleted(docsInState, apiResult));
-      // }
-      // return dispatch(docDeleted(docsInState, apiResult));
     });
   };
 }

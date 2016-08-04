@@ -13,7 +13,7 @@ const NewDocumentForm = ({
 }) => {
   return(
     <form onSubmit={submitAction}>
-      <div id='modal1' className='modal modal-fixed-footer'>
+      <div id='modal2' className='modal modal-fixed-footer'>
         <div className='modal-content'>
           <h4 className='custom-blue-text'>Create new document</h4>
           <Row>
