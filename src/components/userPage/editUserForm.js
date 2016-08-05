@@ -55,12 +55,19 @@ const EditUserForm = ({
         </Row>
         <Row>
           <Input
-            s={12}
+            s={6}
             name='username'
             label='Username'
             validate
             defaultValue={username}
             onChange={changeHandler}/>
+          <SelectComponent
+            name='role'
+            addedClass='row'
+            size={6}
+            selectData={selectData}
+            selecetedValue={role}
+            onChangeEvent={changeHandler}/>
         </Row>
         <Row>
           <Input
@@ -71,15 +78,7 @@ const EditUserForm = ({
             defaultValue={email}
             onChange={changeHandler} />
         </Row>
-        <Row>
-          <SelectComponent
-            name='role'
-            addedClass='row'
-            size={6}
-            selectData={selectData}
-            selecetedValue={role}
-            onChangeEvent={changeHandler}/>
-        </Row>
+
         <span
           style={{display: displayFeedBack, color: feedBackColor}}
           className='edit-user-error'>{feedBack}</span>

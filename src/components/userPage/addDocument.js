@@ -13,11 +13,12 @@ const NewDocumentForm = ({
 }) => {
   return(
     <form onSubmit={submitAction}>
-      <div id='modal2' className='modal modal-fixed-footer'>
+      <div id='createModal' className='modal modal-fixed-footer'>
         <div className='modal-content'>
           <h4 className='custom-blue-text'>Create new document</h4>
           <Row>
             <Input
+              required
               s={6}
               name='title'
               label='Title'
@@ -32,6 +33,7 @@ const NewDocumentForm = ({
           <Row>
             <TinyMCE
                config={{
+                 height : '160',
                  forced_root_block: false,
                  plugins: 'link image code',
                  toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-const Preloader = ({showLoader, size, position}) => {
+const Preloader = ({showLoader, size, position, vAlign}) => {
 
   let displayLoader = showLoader ?  {display: 'none'} : {display: 'block'};
 

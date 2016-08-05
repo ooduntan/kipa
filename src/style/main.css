@@ -46,6 +46,9 @@ nav li:hover {
   width: 60%;
   margin: auto;
 }
+.page-preloader {
+  margin-top: 14%;
+}
 .card-title {
   word-wrap: break-word;
 }
@@ -58,7 +61,7 @@ nav li:hover {
 }
 .edit-doc-form{
   width: 75%;
-  margin-left: 22px;
+  margin-left: 11px;
 }
 .custom-create-btn:disabled, .custom-create-btn:disabled:hover {
   background-color: rgba(158, 158, 158, 0.35);
@@ -111,6 +114,9 @@ nav li:hover {
 .user-icon i {
   font-size: 120px;
   color: rgba(26, 57, 115, 0.82);
+}
+.side-nav a {
+  padding: 0 !important;
 }
 .sidebar-icon-position {
   float: left;

@@ -56,6 +56,7 @@ export function savingDoc() {
 }
 
 export function updateStoreWithNewDoc(docData) {
+  console.log(docData, 'action logger');
   return {
     type: actionTypes.UPDATE_STORE_WITH_NEW_DOC,
     data: {
@@ -65,14 +66,11 @@ export function updateStoreWithNewDoc(docData) {
   };
 }
 
-export function preparePageForEdit(docData, owner) {
+export function preparePageForEdit(docData) {
   return {
     type: actionTypes.PREPARE_EDIT_PAGE,
     data: {
-      editDocumentData: {
-        docData: docData,
-        ownerPage: owner
-      }
+      editDocumentData: docData
     }
   };
 }
@@ -120,34 +118,18 @@ export function createDocSuccess() {
   };
 }
 
-export function updateUserStore(userData) {
+export function updateStoreWithUserData(userData) {
+  console.log(userData, 'form the action');
   return {
-    type: actionTypes.UPDATE_USER_STORE,
+    type: actionTypes.UPDATE_STORE_WITH_USER_DATA,
     data: {userData}
   };
 }
 
 export function editDocSuccess() {
-  // UPdate the store very well and this will work as expected
   return {
     type: actionTypes.UPDATED_DOCUMENT_DATA,
     data: {editSuccess: true}
-  };
-}
-
-export function searchingDocument() {
-  return {
-    type: actionTypes.SEARCHING_DOCUMENT,
-    data: {}
-  };
-}
-
-export function searchCompleted(searchResult) {
-  return {
-    type: actionTypes.SEARCH_COMPLETED,
-    data: {
-      search: searchResult
-    }
   };
 }
 
@@ -164,25 +146,26 @@ export function createModalData(selectedDoc) {
     data: {
       deleteDoc: selectedDoc
     }
-  }
-}
-
-export function searchDocument(searchTerm) {
-  return (dispatch) => {
-    // Complete this fucntion
-    dispatch(searchingDocument());
-    const url = 'api/document?q=' +  searchTerm;
-    return apiRequest(null, 'get', url, function (searchResult) {
-      // Complete this function
-      dispatch(searchCompleted(searchResult));
-    });
   };
 }
+
+// export function searchDocument(searchTerm) {
+//   return (dispatch) => {
+//     // Complete this fucntion
+//     dispatch(searchingDocument());
+//     const url = 'api/document?q=' +  searchTerm;
+//     return apiRequest(null, 'get', url, function (searchResult) {
+//       // Complete this function
+//       dispatch(searchCompleted(searchResult));
+//     });
+//   };
+// }
 
 export function getsharedDocument(userData) {
   return (dispatch) => {
     dispatch(gettingUserDocs());
-    const url = 'api/documents?role=' + userData.role;
+    console.log('asdkjksak');
+    const url = '/api/documents?role=' + userData.role;
     return apiRequest(null, 'get', url, function(apiResult) {
       dispatch(getSharedDocSuccess(apiResult));
       return dispatch(getUserDocs(userData._id));
@@ -192,7 +175,7 @@ export function getsharedDocument(userData) {
 
 export function deleteDocAction(docId) {
   return (dispatch) => {
-    const url = 'api/documents/' + docId;
+    const url = '/api/documents/' + docId;
     return apiRequest(null, 'delete', url, function(apiResult) {
       return dispatch(getComponentResources({}));
     });
@@ -202,7 +185,7 @@ export function deleteDocAction(docId) {
 export function createDoc(docData, formObj) {
   return (dispatch) => {
     dispatch(savingDoc());
-    const url = 'api/documents/';
+    const url = '/api/documents/';
     return apiRequest(docData, 'post', url, function(apiResult) {
       formObj.reset();
       dispatch(updateStoreWithNewDoc(apiResult));
@@ -213,7 +196,7 @@ export function createDoc(docData, formObj) {
 export function getUserDocs(userId) {
   return (dispatch) => {
     dispatch(gettingUserDocs());
-    const url = 'api/users/' + userId + '/documents';
+    const url = '/api/users/' + userId + '/documents';
     return apiRequest(null, 'get', url, function(apiResult) {
       dispatch(getDocsSuccess(apiResult));
     });
@@ -233,10 +216,10 @@ export function upadateDocument(newDocData, docId) {
 
 export function ValidateUser() {
   return (dispatch) => {
-    const url = 'api/users/getData';
+    const url = '/api/users/getData';
     return apiRequest(null, 'get', url, function(apiResult) {
       if (apiResult.user) {
-        dispatch(updateUserStore(apiResult.user));
+        dispatch(updateStoreWithUserData(apiResult.user));
         return dispatch(getComponentResources(apiResult.user));
       }
       return dispatch(InvalidUser());
@@ -244,11 +227,24 @@ export function ValidateUser() {
   };
 }
 
+export function updatePageWithEditData(docId) {
+  return (dispatch) => {
+    const url = '/api/documents/' + docId;
+    return apiRequest(null, 'get', url, function (apiResult) {
+      return dispatch(preparePageForEdit(apiResult.doc));
+    });
+  };
+}
+
 export function getComponentResources(userData) {
   return (dispatch) => {
+    console.log(userData);
+
     if (Object.keys(userData).length) {
+      console.log('i came here');
       return dispatch(getsharedDocument(userData));
     }
+
     return dispatch(ValidateUser());
   };
 }

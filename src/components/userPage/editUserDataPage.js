@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import EditUserForm from './editUserForm';
 import {connect} from 'react-redux';
+import SideNav from './sideNav';
+import Header from '../common/header';
 import {bindActionCreators} from 'redux';
 import * as userAction from '../../actions/userAction';
 
@@ -52,18 +54,28 @@ class EditUserComponent extends Component {
       editFormState
     } = this.props.currentUser;
 
+    console.log(this.props);
+
     return(
-      <EditUserForm
-        preloader={this.props.userData.editPreLoader}
-        userData={userData}
-        submitAction={this.onSubmitEditForm}
-        selectData={this.props.roles}
-        changeHandler={this.OnChangeHandler}
-        displayFeedBack={displayFeedBack}
-        feedBack={feedBack}
-        feedBackColor={feedBackColor}
-        formSubmit={editFormState}
-      />
+      <div>
+        <Header/>
+        <SideNav
+          roles={this.props.roles}
+          userData={userData}/>
+        <div className='content-container'>
+          <div className='headerClass'>Edit Profile</div>
+          <EditUserForm
+            preloader={this.props.userData.editPreLoader}
+            userData={userData}
+            submitAction={this.onSubmitEditForm}
+            selectData={this.props.roles}
+            changeHandler={this.OnChangeHandler}
+            displayFeedBack={displayFeedBack}
+            feedBack={feedBack}
+            feedBackColor={feedBackColor}
+            formSubmit={editFormState}/>
+        </div>
+        </div>
     );
   }
 }

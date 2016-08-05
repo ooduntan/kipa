@@ -4,7 +4,6 @@ import {Link} from 'react-router';
 const CardGroup = ({
   id,
   cardCorver,
-  cardType,
   cardTitle,
   cardCreator,
   docDate,
@@ -18,7 +17,7 @@ const CardGroup = ({
 
     if (cardCreator === currentUserId) {
       deleteButton = (
-        <i id={`${cardType}__${docIndex}`}
+        <i id={docIndex}
           onClick={confirmDelete}
           className='material-icons delete-color modal-trigger custom-icon'>
           delete
@@ -44,7 +43,7 @@ const CardGroup = ({
       <div className='card-action action-card-custom'>
         {deleteButton}
         <i
-          id={`${cardType}__${docIndex}`}
+          id={docIndex}
           onClick={editCard}
           className='material-icons modal-trigger custom-icon'>
           edit

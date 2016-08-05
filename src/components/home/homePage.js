@@ -22,7 +22,7 @@ class Homepage extends Component {
 
   componentWillMount() {
     if (window.localStorage.getItem('token')) {
-      this.context.router.push('/dashboard');
+      this.context.router.push('/owned-docs');
     }
   }
 

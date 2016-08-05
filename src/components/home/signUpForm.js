@@ -13,7 +13,6 @@ const SignUpForm = ({
   matchPassword,
   showLoader
 }) => {
-  console.log(roles);
   return (
     <form onSubmit={saveAction} className='col s12 form-container-space'>
       <div className='row'>

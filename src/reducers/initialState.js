@@ -13,15 +13,17 @@ export const initialState = {
   sharedDocs: [],
   docSuccess: false,
   editDocumentData: {
-    docData: {
-      title: '',
-      content: '',
-      access: ''
-    },
-    ownerPage: '',
+    title: '',
+    content: '',
+    access: ''
   },
-  deleteDoc: {},
+  deleteDoc: {
+    title: '',
+    content: '',
+    access: ''
+  },
   editSuccess: false,
+  search: [],
   redirect: false,
   header: 'MY DOCUMENTS',
   roles: []

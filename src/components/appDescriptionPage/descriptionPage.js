@@ -1,6 +1,3 @@
-// (function() {
-//   'use strict';
-
 import React from 'react';
 
 class Description extends React.Component {
@@ -14,5 +11,3 @@ class Description extends React.Component {
 }
 
 export default Description;
-
-// }());

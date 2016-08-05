@@ -35,6 +35,8 @@ export default function userReducer(state = initialState, action) {
       return Object.assign({}, state, action.data);
     case actionTypes.CREATE_MODAL_FOR_DELETE:
       return Object.assign({}, state, action.data);
+    case actionTypes.SEARCHING_DOCUMENT:
+      return Object.assign({}, state, action.data);
     default:
       return state;
   }

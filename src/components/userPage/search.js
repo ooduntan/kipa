@@ -1,70 +1,51 @@
-import React, {PropTypes, Component} from 'react';
-import {Link} from 'react-router'
 import SideNav from './sideNav';
-import * as documentActions from '../../actions/documentAction';
+import {Link} from 'react-router';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import Header from '../common/header';
+import {bindActionCreators} from 'redux';
 import UserContentPage from './userContentPage';
+import React, {PropTypes, Component} from 'react';
+import * as searchAction from '../../actions/searchAction';
 
 class Search extends Component {
-  constructor(context) {
+  constructor() {
     super();
 
-    this.logout = this.logout.bind(this);
-    this.searchDoc = this.searchDoc.bind(this);
-    this.changeUserContent = this.changeUserContent.bind(this);
-  }
-
-  searchDoc(event) {
-    event.preventDefault();
-    if (event.key === 'Enter') {
-      let searchValue = event.target.value;
-
+    this.state = {
+      searchTerm: ''
     }
+    this.dispatchSearchFunction = this.dispatchSearchFunction.bind(this);
   }
 
-  componentWillMount() {
-    if (!window.localStorage.getItem('token')) {
-      this.context.router.push('/');
-    } else {
-      this.props.documentAction.getComponentResources(this.props.currentUser);
+  dispatchSearchFunction(event) {
+    const {value, key} = event.target.value;
+    const {role} = this.props.currentUser;
+
+    if (key === 'Enter') {
+      //this.props.searchActions.searchDocument(q, role);
     }
+    this.state.searchTerm = value;
+    console.log(this.state);
   }
 
-	componentWillReceiveProps(nextProps) {
-    if (nextProps.userDocs.redirect) {
-      this.context.router.push('/');
-    }
-  }
-
-  changeUserContent(location) {
-    if (typeof location === 'object') {
-      location = location.currentTarget.id;
-    }
-
-    this.props.documentAction.showMenuContent(location);
-  }
-
-  logout(event) {
-    event.preventDefault();
-    window.localStorage.removeItem('token');
-    this.context.router.push('/');
+  componentDidMount() {
+    const {role} = this.props.currentUser;
+    const {query: {q}} = this.props.location;
+    this.props.searchActions.searchDocument(q, role);
   }
 
   render() {
+    const {query: {q}, state: {logout}} = this.props.location;
     return (
       <div className='row'>
         <Header
-          searchFunction={this.searchDoc}
-          clickEvent={this.logout}
+          searchFunction={this.dispatchSearchFunction}
+          clickEvent={logout}
           status='LOGOUT'/>
         <SideNav
-          navigator={this.changeUserContent}
+          header={`Search ${q}`}
+          docs={this.userDocs.search}
           userData={this.props.currentUser}/>
-        <UserContentPage
-          navigator={this.changeUserContent}
-          userDocs={this.props.userDocs.doc}/>
       </div>
     );
   }
@@ -76,7 +57,7 @@ Search.contextTypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    documentAction: bindActionCreators(documentActions, dispatch)
+    searchActions: bindActionCreators(searchAction, dispatch)
   }
 }
 

@@ -10,7 +10,7 @@ export function getDocsSuccess(rolesData) {
 
 export function getRoles() {
   return (dispatch) => {
-    const url = 'api/role';
+    const url = '/api/role';
     apiRequest(null, 'get', url, (apiResult) => {
        dispatch(getDocsSuccess(apiResult));
     });

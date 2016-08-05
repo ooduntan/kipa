@@ -17,6 +17,8 @@ export default function userReducer(state = initialState, action) {
       return Object.assign({}, state, action.data);
     case actionTypes.UPDATING_USER_DATA:
       return Object.assign({}, state, action.data);
+    case actionTypes.UPDATE_STORE_WITH_USER_DATA:
+      return Object.assign({}, state, action.data);
     case actionTypes.UPDATE_USER_STORE:
       return Object.assign({}, state, action.data);
     case actionTypes.UPDATE_FAILED:

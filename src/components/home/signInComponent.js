@@ -36,7 +36,7 @@ class SignInComponent extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.user.shouldRedirect) {
-			this.context.router.push('/dashboard');
+			this.context.router.push('/owned-docs');
 		}
 	}
 
