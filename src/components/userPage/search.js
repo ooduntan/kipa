@@ -2,50 +2,73 @@ import SideNav from './sideNav';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import Header from '../common/header';
+import DeleteModal from './deleteModal';
 import {bindActionCreators} from 'redux';
 import UserContentPage from './userContentPage';
 import React, {PropTypes, Component} from 'react';
 import * as searchAction from '../../actions/searchAction';
+import {DocController} from '../common/documentController';
 
 class Search extends Component {
   constructor() {
     super();
 
-    this.state = {
-      searchTerm: ''
-    }
-    this.dispatchSearchFunction = this.dispatchSearchFunction.bind(this);
   }
 
-  dispatchSearchFunction(event) {
-    const {value, key} = event.target.value;
-    const {role} = this.props.currentUser;
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps, 'You should have all the answers');
+    const {docSuccess, refreshed, updateSearch} = nextProps.stateProp.userDocs;
+    const {userData: {role}} = nextProps.stateProp.userState;
+    const {query: {q}} = nextProps.location;
 
-    if (key === 'Enter') {
-      //this.props.searchActions.searchDocument(q, role);
+    if ((!docSuccess && refreshed) || updateSearch) {
+      this.props.searchActions.searchDocument(q, role);
     }
-    this.state.searchTerm = value;
-    console.log(this.state);
+
   }
 
-  componentDidMount() {
-    const {role} = this.props.currentUser;
-    const {query: {q}} = this.props.location;
-    this.props.searchActions.searchDocument(q, role);
+  prepareStoreForEdit(event) {
+    const {id} = event.target;
+    let selectedDocumentData = this.props.stateProp.userDocs.search[id];
+
+    this.props.documentAction.preparePageForEdit(selectedDocumentData);
+    this.context.router.push({
+      pathname: '/docs/edit/search/' + selectedDocumentData._id
+    });
   }
 
   render() {
-    const {query: {q}, state: {logout}} = this.props.location;
+    const {query: {q}} = this.props.location;
+    const {
+      userDocs: {
+        search,
+        deleteDoc
+      },
+      userState: {userData},
+      roles: {roles}
+    } = this.props.stateProp;
+
+    console.log(this.props, 'this is our props');
+
     return (
       <div className='row'>
         <Header
-          searchFunction={this.dispatchSearchFunction}
-          clickEvent={logout}
-          status='LOGOUT'/>
+          signInEvent={this.props.logoutEvent}
+          status={true}/>
         <SideNav
-          header={`Search ${q}`}
-          docs={this.userDocs.search}
-          userData={this.props.currentUser}/>
+          roles={roles}
+          userData={userData}/>
+        <UserContentPage
+          header={`Found ${search.length} Result(s) for ${q}`}
+          doc={search}
+          cardType='search'
+          deleteEvent={this.props.confirmDelete}
+          userId={userData._id}
+          editCard={this.prepareStoreForEdit}
+          />
+          <DeleteModal
+            docData={deleteDoc}
+            deleteEvent={this.props.deleteDoc}/>
       </div>
     );
   }
@@ -62,10 +85,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  return {
-    currentUser: state.users.userData,
-    userDocs: state.docStates
-  };
+  return{}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(DocController(Search));

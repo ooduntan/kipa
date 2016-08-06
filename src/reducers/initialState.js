@@ -10,7 +10,9 @@ export const initialState = {
   editPreLoader: true,
   editFormState: true,
   docs: [],
-  sharedDocs: [],
+  sharedDocs: {
+    doc: []
+  },
   docSuccess: false,
   editDocumentData: {
     title: '',
@@ -26,5 +28,8 @@ export const initialState = {
   search: [],
   redirect: false,
   header: 'MY DOCUMENTS',
-  roles: []
+  roles: [],
+  refreshed: true,
+  updateSearch: false,
+  searchTerm: ''
 };

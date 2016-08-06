@@ -5,6 +5,7 @@ import SideNav from './sideNav';
 import Header from '../common/header';
 import {bindActionCreators} from 'redux';
 import * as docActions from '../../actions/documentAction';
+import {DocController} from '../common/documentController';
 
 class EditDocument extends Component {
   constructor() {
@@ -54,43 +55,24 @@ class EditDocument extends Component {
     }
   }
 
-  editDoc(event) {
-    const {id} = event.target;
-    const {userDocs} = this.props.stateProp;
-    let selectedDocumentData;
-    let cardData = id.split('__');
-
-    if (cardData[0] === 'owned') {
-      selectedDocumentData = userDocs.docs[cardData[1]];
-    } else {
-      selectedDocumentData = userDocs.sharedDocs.doc[cardData[1]];
-    }
-
-    this.props.documentAction
-      .preparePageForEdit(selectedDocumentData, cardData[0]);
-    this.props.documentAction.showMenuContent('EDIT DOCUMENT');
-  }
-
   componentWillMount() {
+    // debugger;
     const {type, id} = this.props.params;
-    const {userData} = this.props.userState;
-    let seletedDoc = this.props.docState.editDocumentData;
+    const {userData} = this.props.stateProp.userState;
+    let seletedDoc = this.props.stateProp.userDocs.editDocumentData;
 
-    if (!Object.keys(userData).length) {
-      console.log(this.props);
+    this.props.actions.updatePageWithEditData(this.props.params.id);
 
-      this.props.actions.updatePageWithEditData(this.props.params.id);
-      this.props.actions.getComponentResources(this.props.userState.userData);
-
-    }
     const {title, access, content} = seletedDoc;
     this.setState({title, content, access});
-    console.log(this.props, 'this is from the component will mount ');
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('i recieved props', nextProps);
-    const {editSuccess, editDocumentData} = nextProps.docState;
+    const {
+      editSuccess,
+      editDocumentData,
+      searchTerm
+    } = nextProps.stateProp.userDocs;
 
     this.state = {
       title : editDocumentData.title,
@@ -107,26 +89,50 @@ class EditDocument extends Component {
         this.context.router.push('/shared-docs');
       }
 
+      if (this.props.params.type === 'search') {
+        this.props.actions.updateSearch();
+        this.context.router.push({
+          pathname : '/search',
+          query: {q: searchTerm}
+        });
+      }
+
     }
   }
 
   render() {
+    console.log(this.props, 'this is the component');
+    const {
+      userState: {
+        userData,
+      },
+      userDocs: {
+        editPreLoader,
+        editDocumentData
+      },
+      roles: {roles}
+    } = this.props.stateProp;
+
+    console.log(editDocumentData, 'i am still testing');
+
     return (
       <div>
-        <Header/>
+        <Header
+          signInEvent={this.props.logoutEvent}
+          status={true}/>
         <SideNav
-          roles={this.props.roles}
-          userData={this.props.userState.userData}/>
+          roles={roles}
+          userData={userData}/>
         <div className='content-container'>
           <div className='headerClass'>Edit Document</div>
           <EditDocumentForm
-            preloader={this.props.userState.editPreLoader}
-            docRoles={this.props.roles}
+            preloader={editPreLoader}
+            docRoles={roles}
             submitAction={this.submitForm}
             checkboxHandler={this.onClickCheckBox}
             changeHandler={this.onChangeHandler}
             tinymceEvent={this.textEditorChangeEvent}
-            formDefaultData={this.props.docState.editDocumentData}
+            formDefaultData={editDocumentData}
             />
         </div>
     </div>
@@ -142,15 +148,11 @@ EditDocument.contextTypes = {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(docActions, dispatch)
-  }
+  };
 }
 
 function mapStateToProps(state) {
-  return {
-    docState: state.docStates,
-    userState: state.users,
-    roles: state.roleState.roles
-  }
+  return
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditDocument)
+export default connect(mapStateToProps, mapDispatchToProps)(DocController(EditDocument));

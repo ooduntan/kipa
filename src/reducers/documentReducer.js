@@ -27,6 +27,10 @@ export default function userReducer(state = initialState, action) {
       }, {
         docSuccess: action.data.successState
       });
+    case actionTypes.UPDATE_SEARCH_RESULT:
+      return Object.assign({}, state, action.data);
+    case actionTypes.SEARCH_COMPLETED:
+      return Object.assign({}, state, action.data);
     case actionTypes.UPDATING_DOC_DATA:
       return Object.assign({}, state, action.data);
     case actionTypes.UPDATED_DOCUMENT_DATA:

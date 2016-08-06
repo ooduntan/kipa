@@ -1,64 +1,45 @@
 import React, {PropTypes, Component} from 'react';
-import {Link} from 'react-router'
+import {Link} from 'react-router';
+import SearchField from './searchField';
+import Logout from './logout'
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as searchAction from '../../actions/searchAction';
 
 class Header extends Component {
   constructor() {
     super();
 
-    this.logout =this.logout.bind(this);
     this.searchDoc = this.searchDoc.bind(this);
-  }
-
-  logout(event) {
-    event.preventDefault();
-    window.localStorage.removeItem('token');
-    this.context.router.push('/');
   }
 
   searchDoc(event) {
     let searchValue = event.target.value;
+    const {role} = this.props.userData
+
     if (event.key === 'Enter') {
+      this.props.searchActions.searchDocument(searchValue, role);
       this.context.router.push({
-        pathname: 'search',
+        pathname: '/search',
         query: {q: searchValue},
-        state: {logout: this.logout}
       });
+
       return;
     }
   }
 
    render() {
-     let logoutTag, search = '';
-     if (status) {
-       search = (
-           <div className='input-field custom-nav-bar'>
-             <input
-               id='search'
-               placeholder='Search'
-               type='search'
-               onKeyPress={this.searchDoc}
-               required/>
-             <label for='search'><i className='material-icons'>search</i></label>
-             <i className='material-icons'>close</i>
-           </div>
-       );
-       logoutTag = (
-         <li activeClassName='active'>
-           <Link onClick={this.logout} to='#'>
-             {status}
-           </Link>
-         </li>
-       );
-     }
+     const {status, signInEvent} = this.props;
+
      return(
        <div className='navbar-fixed'>
          <nav>
            <div className='nav-wrapper custom-blue'>
              <div className='logo-name left white-text font-effect-mitosis left-align'> DocKip </div>
-             <a href='#' d ata-activates='mobile-demo' className='button-collapse'>
+             <Link to='/' data-activates='mobile-demo' className='button-collapse'>
                <i className='material-icons'>menu</i>
-             </a>
-             {search}
+             </Link>
+             {status ? <SearchField searchEvent={this.searchDoc}/> : ''}
              <ul className='right hide-on-med-and-down'>
                <li activeClassName='active'>
                  <Link to='about' activeClassName='active'>THE APP</Link>
@@ -66,7 +47,7 @@ class Header extends Component {
                <li activeClassName='active'>
                  <Link to='the-app' activeClassName='active'>HOW IT WORKS</Link>
                </li>
-               {logoutTag}
+               {status ? <Logout status={status} logoutEvent={signInEvent}/> : ''}
              </ul>
              <ul className='side-nav' id='mobile-demo'>
                <li>
@@ -96,4 +77,17 @@ Header.contextTypes = {
   router: PropTypes.object
 }
 
-export default Header;
+function mapDispatchToProps(dispatch) {
+  return {
+    searchActions: bindActionCreators(searchAction, dispatch)
+  }
+}
+
+function mapStateToProps(state) {
+  console.log(state, 'this our porps');
+  return{
+    userData: state.users.userData
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

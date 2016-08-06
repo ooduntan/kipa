@@ -41,7 +41,8 @@ export function getDocsSuccess(docs) {
     type: actionTypes.USER_DOCS_SUCCESS,
     data: {
       docSuccess: true,
-      docs: docs.doc
+      docs: docs.doc,
+      editSuccess: false
     }
   };
 }
@@ -70,7 +71,7 @@ export function preparePageForEdit(docData) {
   return {
     type: actionTypes.PREPARE_EDIT_PAGE,
     data: {
-      editDocumentData: docData
+      editDocumentData: docData,
     }
   };
 }
@@ -119,7 +120,6 @@ export function createDocSuccess() {
 }
 
 export function updateStoreWithUserData(userData) {
-  console.log(userData, 'form the action');
   return {
     type: actionTypes.UPDATE_STORE_WITH_USER_DATA,
     data: {userData}
@@ -129,7 +129,24 @@ export function updateStoreWithUserData(userData) {
 export function editDocSuccess() {
   return {
     type: actionTypes.UPDATED_DOCUMENT_DATA,
-    data: {editSuccess: true}
+    data: {
+      editPreLoader: true,
+      editSuccess: true,
+      editDocumentData: {
+        title: '',
+        content: '',
+        access: ''
+      }
+    }
+  };
+}
+
+export function updateSearch() {
+  return {
+    type: actionTypes.UPDATE_SEARCH_RESULT,
+    data: {
+      updateSearch: true
+    }
   };
 }
 
@@ -149,22 +166,9 @@ export function createModalData(selectedDoc) {
   };
 }
 
-// export function searchDocument(searchTerm) {
-//   return (dispatch) => {
-//     // Complete this fucntion
-//     dispatch(searchingDocument());
-//     const url = 'api/document?q=' +  searchTerm;
-//     return apiRequest(null, 'get', url, function (searchResult) {
-//       // Complete this function
-//       dispatch(searchCompleted(searchResult));
-//     });
-//   };
-// }
-
 export function getsharedDocument(userData) {
   return (dispatch) => {
     dispatch(gettingUserDocs());
-    console.log('asdkjksak');
     const url = '/api/documents?role=' + userData.role;
     return apiRequest(null, 'get', url, function(apiResult) {
       dispatch(getSharedDocSuccess(apiResult));
@@ -238,8 +242,6 @@ export function updatePageWithEditData(docId) {
 
 export function getComponentResources(userData) {
   return (dispatch) => {
-    console.log(userData);
-
     if (Object.keys(userData).length) {
       console.log('i came here');
       return dispatch(getsharedDocument(userData));

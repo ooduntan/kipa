@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import SideNav from './sideNav';
 import Header from '../common/header';
 import {bindActionCreators} from 'redux';
+import {DocController} from '../common/documentController';
 import * as userAction from '../../actions/userAction';
 
 
@@ -28,7 +29,7 @@ class EditUserComponent extends Component {
     event.preventDefault();
     let updatedUserData = {};
     const {userData} = this.state;
-    const {userData: {_id}} = this.props.currentUser;
+    const {userData: {_id}} = this.props.stateProp.userState;
 
     for (let key in userData) {
       if (userData[key].length) updatedUserData[key] = userData[key];
@@ -47,51 +48,53 @@ class EditUserComponent extends Component {
 
   render() {
     const {
-      userData,
-      feedBack,
-      displayFeedBack,
-      feedBackColor,
-      editFormState
-    } = this.props.currentUser;
-
-    console.log(this.props);
+      userState: {
+        userData,
+        feedBack,
+        displayFeedBack,
+        feedBackColor,
+        editPreLoader,
+        editFormState
+      },
+      roles: {roles}
+    } = this.props.stateProp;
 
     return(
       <div>
-        <Header/>
+        <Header
+          signInEvent={this.props.logoutEvent}
+          status={true}/>
         <SideNav
-          roles={this.props.roles}
+          roles={roles}
           userData={userData}/>
         <div className='content-container'>
           <div className='headerClass'>Edit Profile</div>
           <EditUserForm
-            preloader={this.props.userData.editPreLoader}
+            preloader={editPreLoader}
             userData={userData}
             submitAction={this.onSubmitEditForm}
-            selectData={this.props.roles}
+            selectData={roles}
             changeHandler={this.OnChangeHandler}
             displayFeedBack={displayFeedBack}
             feedBack={feedBack}
             feedBackColor={feedBackColor}
             formSubmit={editFormState}/>
         </div>
-        </div>
+       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    currentUser: state.users,
-    userData: state.docStates,
-    roles: state.roleState.roles
-  }
-}
-
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     userActions: bindActionCreators(userAction, dispatch)
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditUserComponent);
+const mapStateToProps = (state) => {
+  return {
+
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DocController(EditUserComponent));

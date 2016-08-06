@@ -30,7 +30,8 @@ class Homepage extends Component {
     return (
       <div>
         <Header
-          clickEvent={this.toggleSignUp}
+          status={false}
+          signInEvent={this.toggleSignUp}
           />
         <HomeContent
           toggleSignUp={this.toggleSignUp}

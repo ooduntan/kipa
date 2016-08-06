@@ -8,6 +8,7 @@ const CardGroup = ({
   cardCreator,
   docDate,
   editCard,
+  cardType,
   deleteCard,
   confirmDelete,
   docIndex,
@@ -42,12 +43,11 @@ const CardGroup = ({
       </div>
       <div className='card-action action-card-custom'>
         {deleteButton}
-        <i
-          id={docIndex}
-          onClick={editCard}
-          className='material-icons modal-trigger custom-icon'>
-          edit
-        </i>
+        <Link to={`/docs/edit/${cardType}/${id}`}>
+          <i className='material-icons modal-trigger custom-icon'>
+            edit
+          </i>
+        </Link>
       </div>
       <div className='card-reveal'>
         <span className='card-title grey-text text-darken-4'>{cardTitle}
