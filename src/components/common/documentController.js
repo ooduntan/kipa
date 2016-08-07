@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import * as documentActions from '../../actions/documentAction';
 
@@ -16,14 +16,15 @@ export const DocController = (ChildComponent) => {
         searchTerm: ''
       };
 
-      this.logout                 = this.logout.bind(this);
-      this.fabClick               = this.fabClick.bind(this);
-      this.deleteDoc              = this.deleteDoc.bind(this);
-      this.confirmDelete          = this.confirmDelete.bind(this);
-      this.OnchangeTinymce        = this.OnchangeTinymce.bind(this);
-      this.onChangeHandler        = this.onChangeHandler.bind(this);
-      this.onClickCheckbox        = this.onClickCheckbox.bind(this);
-      this.modalSubmitAction      = this.modalSubmitAction.bind(this);
+      this.logout            = this.logout.bind(this);
+      this.fabClick          = this.fabClick.bind(this);
+      this.deleteDoc         = this.deleteDoc.bind(this);
+      this.confirmDelete     = this.confirmDelete.bind(this);
+      this.OnchangeTinymce   = this.OnchangeTinymce.bind(this);
+      this.onChangeHandler   = this.onChangeHandler.bind(this);
+      this.addMoreDocument   = this.addMoreDocument.bind(this);
+      this.onClickCheckbox   = this.onClickCheckbox.bind(this);
+      this.modalSubmitAction = this.modalSubmitAction.bind(this);
     }
 
     logout(event) {
@@ -109,6 +110,24 @@ export const DocController = (ChildComponent) => {
       }
     }
 
+    addMoreDocument(MethodName) {
+      const _this = this;
+      const {userData: {_id}} = this.props.stateProp.userState;
+
+      $(window).scroll(function() {
+        const winObj = $(window);
+        const docObj =  $(document);
+        const {userData: {_id}} = _this.props.stateProp.userState;
+        const {docs, fullOwnedDoc, lazyLoading} = _this.props.stateProp.userDocs;
+
+        if(winObj.scrollTop() + winObj.height() === docObj.height()) {
+          if (!fullOwnedDoc && !lazyLoading && docs.length > 9) {
+            _this.props.documentAction.addOwnedDocs(docs.length, _id);
+          }
+        }
+      });
+    }
+
     componentWillReceiveProps(nextProps) {
       const {docSuccess} = this.props.stateProp.userDocs;
 
@@ -128,9 +147,14 @@ export const DocController = (ChildComponent) => {
         modalSubmitAction={this.modalSubmitAction}
         onClickCheckbox={this.onClickCheckbox}
         logoutEvent={this.logout}
+        lazyLoader={this.addMoreDocument}
         fabClick={this.fabClick}
          {...this.props}/>
     }
+  }
+
+  ParentComponent.contextTypes = {
+    router: PropTypes.object
   }
 
   function mapDispatchToProps(dispatch) {

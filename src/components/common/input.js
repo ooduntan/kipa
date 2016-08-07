@@ -142,7 +142,7 @@ const CheckBox = ({data, name, extraClass, checkedData, onClickEvent}) => {
         }
 
         return(
-          <p>
+          <p key={item._id}>
             <input
               defaultChecked={checked}
               name={name}

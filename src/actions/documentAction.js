@@ -57,7 +57,6 @@ export function savingDoc() {
 }
 
 export function updateStoreWithNewDoc(docData) {
-  console.log(docData, 'action logger');
   return {
     type: actionTypes.UPDATE_STORE_WITH_NEW_DOC,
     data: {
@@ -166,6 +165,34 @@ export function createModalData(selectedDoc) {
   };
 }
 
+export function addingMoreDocToStore() {
+  return {
+    type: actionTypes.ADDING_MORE_DOC_TO_STORE,
+    data: {lazyLoading: true}
+  };
+}
+
+export function updatedStoreWithMoreDocs(result) {
+  return {
+    type: actionTypes.ADD_MORE_DOC_TO_STORE,
+    data: {
+      docs: result.doc,
+      lazyLoading: false
+    }
+  };
+}
+
+export function fetchedAllDocs() {
+  return {
+    type: actionTypes.FETCHED_ALL_OWNED_DOCS,
+    data: {
+      fullOwnedDoc: true,
+      lazyLoading: false
+
+    }
+  };
+}
+
 export function getsharedDocument(userData) {
   return (dispatch) => {
     dispatch(gettingUserDocs());
@@ -173,6 +200,20 @@ export function getsharedDocument(userData) {
     return apiRequest(null, 'get', url, function(apiResult) {
       dispatch(getSharedDocSuccess(apiResult));
       return dispatch(getUserDocs(userData._id));
+    });
+  };
+}
+
+export function addOwnedDocs(offset, userId) {
+  return (dispatch) => {
+    dispatch(addingMoreDocToStore());
+    const url = '/api/users/' + userId + '/documents/?offset=' + offset;
+    return apiRequest(null, 'get', url, function(apiResult) {
+      if (apiResult.doc.length) {
+        return dispatch(updatedStoreWithMoreDocs(apiResult));
+      }
+
+      return dispatch(fetchedAllDocs());
     });
   };
 }
@@ -243,7 +284,6 @@ export function updatePageWithEditData(docId) {
 export function getComponentResources(userData) {
   return (dispatch) => {
     if (Object.keys(userData).length) {
-      console.log('i came here');
       return dispatch(getsharedDocument(userData));
     }
 

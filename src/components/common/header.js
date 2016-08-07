@@ -84,7 +84,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  console.log(state, 'this our porps');
   return{
     userData: state.users.userData
   }

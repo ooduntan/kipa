@@ -59,6 +59,9 @@ nav li:hover {
   margin-bottom: 34px;
   margin-left: 11px;
 }
+.username {
+  text-transform: capitalize;
+}
 .edit-doc-form{
   width: 75%;
   margin-left: 11px;

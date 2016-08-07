@@ -26,6 +26,8 @@ export const initialState = {
   },
   editSuccess: false,
   search: [],
+  lazyLoading: false,
+  fullOwnedDoc: false,
   redirect: false,
   header: 'MY DOCUMENTS',
   roles: [],

@@ -13,7 +13,14 @@ import documentCover from '../../images/coverPlaceHolder.jpg';
 import EditDocument from './editDocument';
 
 
-const UserContentPage = ({doc, header, cardType, editCard, deleteEvent, userId}) => {
+const UserContentPage = ({
+  lazyLoading,
+  doc,
+  header,
+  cardType,
+  editCard,
+  deleteEvent,
+  userId}) => {
   let cards = '';
 
   if (doc.length) {
@@ -46,7 +53,11 @@ const UserContentPage = ({doc, header, cardType, editCard, deleteEvent, userId})
         <div className='headerClass'>
           {header}
         </div>
-        {cards}
+        <div style={{clear: 'both', overflow: 'auto'}}>
+          {cards}
+        </div>
+        <Preloader
+          showLoader={lazyLoading}/>
       </div>
     );
   //}

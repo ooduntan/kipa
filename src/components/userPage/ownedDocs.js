@@ -14,6 +14,9 @@ import DeleteModal from './deleteModal';
 class OwnDocument extends Component {
   constructor() {
     super();
+    this.state = {
+      dispatched: false
+    };
 
     this.prepareStoreForEdit = this.prepareStoreForEdit.bind(this);
   }
@@ -28,12 +31,24 @@ class OwnDocument extends Component {
     });
   }
 
+  componentWillReceiveProps(nextPorp, prevProps) {
+    const _this = this;
+    this.props.lazyLoader('addOwnedDocs');
+  }
+
+  componentWillUnmount() {
+    $(window).unbind('scroll', this.props.lazyLoader);
+    console.log(this.props.lazyLoader);
+    // this.props.lazyloader.unbind();
+  }
+
   render() {
     const {
       userDocs: {
         docSuccess,
         deleteDoc,
-        docs
+        docs,
+        lazyLoading
       },
       roles: {roles},
       userState: {userData}
@@ -51,6 +66,7 @@ class OwnDocument extends Component {
           header='My Documents'
           doc={docs}
           cardType='owned'
+          lazyLoading={!lazyLoading}
           deleteEvent={this.props.confirmDelete}
           userId={userData._id}
           editCard={this.prepareStoreForEdit}

@@ -16,7 +16,7 @@ const CardGroup = ({
   cardContent}) => {
     let deleteButton;
 
-    if (cardCreator === currentUserId) {
+    if (cardCreator._id === currentUserId) {
       deleteButton = (
         <i id={docIndex}
           onClick={confirmDelete}
@@ -27,7 +27,7 @@ const CardGroup = ({
     }
 
   return (
-    <div className='card hoverable document-cards'>
+    <div key={id} className='card hoverable document-cards'>
       <div className='card-image waves-effect waves-block waves-light'>
         <img className='activator' src={cardCorver}/>
       </div>
@@ -37,7 +37,7 @@ const CardGroup = ({
           {cardTitle}
         </span>
         <p>
-          <span>Created by: {cardCreator} | </span>
+          <span>Created by: <span className='username'>{cardCreator.username}</span> | </span>
           <span className='grey-text'>{docDate}</span>
         </p>
       </div>

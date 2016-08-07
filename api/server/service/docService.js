@@ -58,6 +58,7 @@
       docModel.find(query)
         .skip(parseInt(offset, 10))
         .limit(parseInt(limitNumber, 10))
+        .populate('creator', 'username')
         .sort('-' + sortBy)
         .exec(function(err, docs) {
           return cb(true, docs);
