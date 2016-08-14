@@ -1,26 +1,36 @@
 import React, {PropTypes, Component} from 'react';
 import {Link} from 'react-router';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import userImage from '../../images/testImage.jpg';
-import * as documentAction from '../../actions/documentAction';
+import Preloader from '../common/loader';
 
-class SideNav extends Component {
-  constructor() {
-    super();
-    this.changeUserContent = this.changeUserContent.bind(this);
-  }
+const SideNav = ({userData}) => {
+  if (!Object.keys(userData).length) {
+    return (
+      <Preloader
+        size='big'
+        position='page-preloader'
+        showLoader={false}/>
+    );
+  } else {
+    const {
+      name: {
+        firstname,
+        lastname
+      },
+      username,
+      role: {
+        role
+      },
+      email
+    } = userData;
 
-  changeUserContent(e) {
-    this.props.docAction.showMenuContent(e.currentTarget.id);
-  }
-
-  render() {
-    const {name, username, role, email} = this.props.userData;
     return (
       <ul id='nav-mobile' className='side-nav fixed'>
         <li>
-          <div className='logo-name font-effect-mitosis left-align'> DocKip </div>
+          <div
+            className='logo-name custom-blue-text font-effect-mitosis left-align'>
+            DocKip
+          </div>
         </li>
         <li>
           <div className='user-info-container'>
@@ -28,46 +38,46 @@ class SideNav extends Component {
               <img className='user-image' src={userImage}/>
             </div>
             <div className='username-text center-align'>
-              <span>{name.lastname},</span> {name.firstname}
+              <span>{lastname},</span> {firstname}
             </div>
-            <div className=' center-align'>{username}</div>
-            <div className=' center-align'>{role}</div>
+            <div className='center-align'>{username}</div>
+            <div className='center-align'>
+              {role}
+            </div>
             <div className='custom-blue-text center-align'>{email}</div>
           </div>
         </li>
-        <li id='MY_DOCUMENTS' onClick={this.changeUserContent} className='bold'>
+        <li id='MY_DOCUMENTS' className='bold'>
+          <Link to='/owned-docs'>
             <div className='custom-div waves-effect'>
               <i className='sidebar-icon-position material-icons'>description</i>
               <span>My Documents</span>
             </div>
+          </Link>
         </li>
-        <li onClick={this.changeUserContent} id='SHARED_DOCUMENTS' className='bold'>
-          <div className='custom-div waves-effect'>
-            <i className='sidebar-icon-position material-icons'>group_work</i>
-            <span>Shared Documents</span>
-          </div>
+        <li id='SHARED_DOCUMENTS' className='bold'>
+          <Link to='/shared-docs'>
+            <div className='custom-div waves-effect'>
+              <i className='sidebar-icon-position material-icons'>group_work</i>
+              <span>Shared Documents</span>
+            </div>
+          </Link>
         </li>
-        <li id='EDIT_PROFILE' onClick={this.changeUserContent} className='bold'>
-          <div className='custom-div waves-effect'>
-            <i className='sidebar-icon-position material-icons'>mode_edit</i>
-            <span>Edit Profile</span>
-          </div>
+        <li id='EDIT_PROFILE' className='bold'>
+          <Link to='/profile/edit'>
+            <div className='custom-div waves-effect'>
+              <i className='sidebar-icon-position material-icons'>mode_edit</i>
+              <span>Edit Profile</span>
+            </div>
+          </Link>
         </li>
       </ul>
     );
   }
-}
+};
 
-function mapDispatchToProps(dispatch) {
-  return {
-    docAction: bindActionCreators(documentAction, dispatch)
-  }
-}
+SideNav.propTypes = {
+  userData: PropTypes.object.isRequired
+};
 
-function mapStateToProps(state) {
-  return {
-    userData: state.users.userData
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SideNav);
+export default SideNav;

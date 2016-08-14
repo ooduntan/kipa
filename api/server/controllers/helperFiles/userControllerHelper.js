@@ -132,7 +132,7 @@
         } else {
           var message = { failed: 'Oops!!! Invalid Username/Password' };
 
-          helper.messageResponder(responseObj, false, message, 400);
+          helper.messageResponder(responseObj, false, message, 200);
         }
       });
     },
@@ -152,12 +152,12 @@
             userData: userData
           };
 
-          delete result.userData.password;
-          helper.dataResponder(responseObj, isMatched, result, 'result', 402);
+          result.userData.password = null;
+          helper.dataResponder(responseObj, isMatched, result, 'result', 200);
         } else {
           var result = { failed: 'Oops!!! Invalid Username/Password' };
 
-          helper.messageResponder(responseObj, isMatched, result, 400);
+          helper.messageResponder(responseObj, isMatched, result, 200);
         }
       });
     },

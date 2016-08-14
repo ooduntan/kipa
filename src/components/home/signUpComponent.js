@@ -1,10 +1,7 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import * as userAction from '../../actions/userAction';
-import {bindActionCreators} from 'redux';
-import SignUpForm from './SignUpForm';
+import React, {PropTypes, Component} from "react";
+import SignUpForm from "./signUpForm";
 
-class SignUpComponent extends React.Component {
+export class SignUpComponent extends Component {
   constructor() {
     super();
     this.state = {
@@ -22,6 +19,12 @@ class SignUpComponent extends React.Component {
     this.confirmPassword = this.confirmPassword.bind(this);
     this.saveUser = this.saveUser.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
+    this.toggleDisplay = this.toggleDisplay.bind(this);
+  }
+
+  toggleDisplay(event) {
+    event.preventDefault();
+    this.props.toggleSignUp(this.refs.signUpComponent);
   }
 
   onChangeHandler(event) {
@@ -53,9 +56,7 @@ class SignUpComponent extends React.Component {
     return this.setState({emailError: true});
   }
 
-  confirmPassword(event) {
-    let value = event.target.value;
-
+  confirmPassword() {
     if (this.state.user.password === this.state.user.confirmPassword) {
       return this.setState({confirmPasswordError: false});
     }
@@ -66,7 +67,7 @@ class SignUpComponent extends React.Component {
   validatePassword(event) {
     const value = event.target.value;
 
-    this.confirmPassword(event);
+    this.confirmPassword();
     if (/(\w|\W|\d|\S|\s){6,}/.test(value)) {
       return this.setState({passwordError: false});
     }
@@ -80,15 +81,24 @@ class SignUpComponent extends React.Component {
       return false;
     }
 
-    this.props.actions.saveUserData(this.state.user);
+    this.props.userActions.saveUserData(this.state.user);
   }
 
   render() {
-    if (this.props.users.success) {
-      Materialize.toast('Account successfully created', 4000)
+    const {
+      userState: {
+        displayLoader,
+        success
+      },
+      roles: {roles}
+    } = this.props.stateProp;
+
+    if (success) {
+      Materialize.toast('Account successfully created', 4000);
     }
+
     return (
-      <div className='hide-element'>
+      <div ref='signUpComponent' className='hide-element'>
         <div className='signup-wrapper'>
           <div>Sign up for free</div>
           <div className='small-signup-text'>
@@ -104,26 +114,24 @@ class SignUpComponent extends React.Component {
             passwordIsVslid={this.validatePassword}
             passwordHasError={this.state.passwordError}
             matchPasswordError={this.state.confirmPasswordError}
-            showLoader={this.props.users.displayLoader}
+            showLoader={displayLoader}
+            roles={roles}
             matchPassword={this.confirmPassword}/>
+          <a className='custom-link'
+             onClick={this.toggleDisplay}>
+            Existing user? Sign in
+          </a>
         </div>
-        <a className='custom-link'
-          onClick={this.showSignIn}>
-          Existing user? Sign in
-        </a>
       </div>
     );
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(userAction, dispatch)
-  }
-}
+SignUpComponent.propTypes = {
+  toggleSignUp: PropTypes.func.isRequired,
+  userActions: PropTypes.object.isRequired,
+  stateProp: PropTypes.object,
+  roles: PropTypes.array
+};
 
-function mapStateToProps(state, ownProps) {
-  return {users: state.users}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpComponent);
+export default SignUpComponent;

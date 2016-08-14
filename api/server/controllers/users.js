@@ -65,6 +65,13 @@
       }
     },
 
+    getTokenData: function(req, res) {
+      var userId = req.decoded.user._id;
+      userService.findUsers({_id: userId}, function(bool, message) {
+        helper.dataResponder(res, bool, message[0], 'user', 404);
+      });
+    },
+
     /**
      * editUser -- Validate and edit userdata
      * @param  Object   req  [the request object]

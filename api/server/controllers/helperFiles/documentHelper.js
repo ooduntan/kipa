@@ -78,12 +78,8 @@
      * @param  {Object} docData [Document data]
      */
     saveDoc: function(res, docData) {
-      var result = {
-        success: docData.title + ' created!'
-      };
-      docService.saveDoc(docData, function(bool, message) {
-        result.failed = message;
-        helper.messageResponder(res, bool, result, 401);
+      docService.saveDoc(docData, function(bool, savedData) {
+        helper.dataResponder(res, bool, savedData, 'newDoc', 401);
       });
     },
 

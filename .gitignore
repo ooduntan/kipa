@@ -8,5 +8,8 @@ logs
 # Runtime data
 node_modules
 dist/lib
-coverage
+coverage.lcov
 .env
+.idea/
+.nyc_output/
+dist/

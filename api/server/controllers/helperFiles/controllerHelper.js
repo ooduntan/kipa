@@ -247,7 +247,7 @@
      * @param  {Function} cb            [Passes result to callback]
      */
     vierifyRole: function(validatedData, cb) {
-      if (validatedData.access !== undefined) {
+      if (validatedData.access !== undefined && validatedData.access.length) {
         this.checkRole(validatedData, cb);
       } else {
         cb(true, validatedData);

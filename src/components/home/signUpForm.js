@@ -1,7 +1,8 @@
-import {InputComponent, ButtonComponent} from '../common/input';
-import React, {PropTypes} from 'react';
+import {InputComponent, ButtonComponent, SelectComponent} from "../common/input";
+import React, {PropTypes} from "react";
 
 const SignUpForm = ({
+  roles,
   changeHandler,
   saveAction,
   emailHasError,
@@ -41,13 +42,13 @@ const SignUpForm = ({
           inputError={emailHasError}
           validateFunction={emailIsValid}
           onChangeEvent={changeHandler}/>
-          <InputComponent
-            name='role'
-            type='email'
-            id='role'
-            label='Role'
-            newClass='s6 form-spacing'
-            onChangeEvent={changeHandler}/>
+        <SelectComponent
+          addedClass='custom-select row'
+          name='role'
+          size={6}
+          selecetedValue='1'
+          selectData={roles}
+          onChangeEvent={changeHandler}/>
       </div>
       <div className='row'>
         <InputComponent
@@ -55,7 +56,7 @@ const SignUpForm = ({
           type='text'
           id='username'
           label='User Name'
-          newClass='s6 form-spacing'
+          newClass='s12 form-spacing'
           onChangeEvent={changeHandler}/>
       </div>
       <div className='row'>
@@ -91,7 +92,7 @@ const SignUpForm = ({
         newClass='custom-blue custom-btn'/>
     </form>
   );
-}
+};
 
 SignUpForm.propTypes = {
   changeHandler: PropTypes.func.isRequired,
@@ -103,7 +104,7 @@ SignUpForm.propTypes = {
   passwordHasError: PropTypes.bool.isRequired,
   matchPasswordError: PropTypes.bool.isRequired,
   matchPassword: PropTypes.func.isRequired,
-  showLoader: PropTypes.string.isRequired,
-}
+  roles: PropTypes.array.isRequired
+};
 
 export default SignUpForm;
