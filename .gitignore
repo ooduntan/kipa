@@ -12,4 +12,5 @@ coverage.lcov
 .env
 .idea/
 .nyc_output/
+lcov.info
 dist/

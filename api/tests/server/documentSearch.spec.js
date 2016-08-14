@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  var api = require('./../../index.js').app;
+  var api = require('../../index').api;
   var server = require('supertest')(api);
   var should = require('should');
   var faker = require('faker');
@@ -72,8 +72,8 @@
                 .expect('Content-type', /json/)
                 .end(function(err, res) {
                   res.status.should.equal(200);
-                  token = res.body.token;
-                  res.body.token.should.be.type('string');
+                  token = res.body.result.token;
+                  res.body.result.token.should.be.type('string');
                   done();
                 });
             });
@@ -97,8 +97,8 @@
                 .expect('Content-type', /json/)
                 .end(function(err, res) {
                   res.status.should.equal(200);
-                  token2 = res.body.token;
-                  res.body.token.should.be.type('string');
+                  token2 = res.body.result.token;
+                  res.body.result.token.should.be.type('string');
                   done();
                 });
             });
@@ -116,8 +116,7 @@
             .expect('Content-type', /json/)
             .end(function(err, res) {
               res.status.should.equal(200);
-              res.body.success.should.equal(true);
-              res.body.message.should.be.type('string');
+              res.body.newDoc.should.be.type('object');
               done();
             });
         });
@@ -131,8 +130,7 @@
             .expect('Content-type', /json/)
             .end(function(err, res) {
               res.status.should.equal(200);
-              res.body.success.should.equal(true);
-              res.body.message.should.be.type('string');
+              res.body.newDoc.should.be.type('object');
               done();
             });
         });
@@ -146,8 +144,7 @@
             .expect('Content-type', /json/)
             .end(function(err, res) {
               res.status.should.equal(200);
-              res.body.success.should.equal(true);
-              res.body.message.should.be.type('string');
+              res.body.newDoc.should.be.type('object');
               done();
             });
         });
@@ -161,8 +158,7 @@
             .expect('Content-type', /json/)
             .end(function(err, res) {
               res.status.should.equal(200);
-              res.body.success.should.equal(true);
-              res.body.message.should.be.type('string');
+              res.body.newDoc.should.be.type('object');
               done();
             });
         });
@@ -242,13 +238,13 @@
           function(done) {
 
             server
-              .get('/api/users/1/documents/')
+              .get('/api/users/3/documents/')
               .set({ token: token })
               .expect('Content-type', /json/)
               .end(function(err, res) {
                 res.status.should.equal(200);
                 res.body.doc.should.be.type('object');
-                res.body.doc[0].creator.should.equal(1);
+                res.body.doc[0].creator._id.should.equal(3);
                 done();
               });
           });
@@ -361,7 +357,7 @@
             function(done) {
 
               server
-                .get('/api/documents/?q=this&owner=' + docs[0].creator)
+                .get('/api/documents/?q=this&owner=' + docs[0].creator._id)
                 .set({ token: token })
                 .expect('Content-type', /json/)
                 .end(function(err, res) {

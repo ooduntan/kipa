@@ -1,5 +1,3 @@
-'use strict';
-
 import express from 'express';
 import path from 'path';
 import open from 'open';
@@ -9,7 +7,7 @@ import {
 
 /* eslint-disable no-console */
 
-const port = 3004;
+const port = process.env.PORT;
 const app = express();
 
 app.use(api);
