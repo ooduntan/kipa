@@ -4,5 +4,5 @@ ratings:
    paths:
      - '**.js'
 exclude_paths:
-  - 'src/tests/*/**'
+  - 'src/tests/*'
   - 'api/*'
