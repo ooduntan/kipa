@@ -11,7 +11,7 @@
     "test": "npm-run-all test:server test:e2e",
     "test:e2e": "nyc mocha --reporter=lcov --reporter=text-lcov --reporter progress tools/testSetup.js \"src/**/*.test.js\"",
     "test:server": "nyc mocha api/tests/server",
-    "coverage": "./node_modules/.bin/codeclimate-test-reporter < lcov.info",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "clean-dist": "npm run remove-dist && mkdir dist",
     "remove-dist": "node_modules/.bin/rimraf ./dist",
     "prebuild": "npm-run-all clean-dist test build:html seedData",
