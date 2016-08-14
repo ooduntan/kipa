@@ -1,7 +1,7 @@
 (function() {
   'use strict';
-
-  var api = require('./../../index.js').app;
+  
+  var api = require('../../index').api;
   var server = require('supertest')(api);
   var should = require('should');
   var faker = require('faker');
@@ -26,19 +26,6 @@
 
     describe('ROLE API END POINT', function() {
 
-      it('Authenticate user before creating role ', function(done) {
-
-        server
-          .post('/api/role/')
-          .send(roleObj.role2)
-          .expect('Content-type', /json/)
-          .end(function(err, res) {
-            res.status.should.equal(403);
-            res.body.success.should.equal(false);
-            done();
-          });
-      });
-
       it('Create a user for role test',
         function(done) {
 
@@ -62,39 +49,11 @@
             .expect('Content-type', /json/)
             .end(function(err, res) {
               res.status.should.equal(200);
-              token = res.body.token;
-              res.body.token.should.be.type('string');
+              token = res.body.result.token;
+              res.body.result.token.should.be.type('string');
               done();
             });
         });
-
-      it('Verify that a user has a default role',
-        function(done) {
-
-          server
-            .get('/api/users/' + nameObj.username)
-            .set({ token: token })
-            .expect('Content-type', /json/)
-            .end(function(err, res) {
-              res.status.should.equal(200);
-              res.body.user.role.should.equal('1');
-              done();
-            });
-        });
-
-      it('POST: create a new role ', function(done) {
-
-        server
-          .post('/api/role/')
-          .send(roleObj.role2)
-          .set({ token: token })
-          .expect('Content-type', /json/)
-          .end(function(err, res) {
-            res.status.should.equal(200);
-            res.body.success.should.equal(true);
-            done();
-          });
-      });
 
       it('Verify that first role cannot be deleted',
         function(done) {
@@ -132,7 +91,7 @@
             .set({ token: token })
             .expect('Content-type', /json/)
             .end(function(err, res) {
-              roleId = res.body.roles[3]._id;
+              roleId = res.body.roles[res.body.roles.length - 1]._id;
               res.body.roles.length.should.be.above(0);
               done();
             });

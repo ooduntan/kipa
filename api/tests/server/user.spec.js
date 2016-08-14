@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  var api = require('./../../index.js').app;
+  var api = require('../../index').api;
   var server = require('supertest')(api);
   var should = require('should');
   var faker = require('faker');
@@ -156,7 +156,7 @@
             .send({ username: 'Stephen', password: 'stephen' })
             .expect('Content-type', /json/)
             .end(function(err, res) {
-              res.status.should.equal(400);
+              res.status.should.equal(200);
               res.body.message.should.equal(error);
               res.body.success.should.equal(false);
               done();
@@ -171,7 +171,7 @@
             .send({ username: nameObj.username, password: 'stephen' })
             .expect('Content-type', /json/)
             .end(function(err, res) {
-              res.status.should.equal(400);
+              res.status.should.equal(200);
               res.body.message.should.equal(error);
               res.body.success.should.equal(false);
               done();
@@ -188,8 +188,8 @@
             .expect('Content-type', /json/)
             .end(function(err, res) {
               res.status.should.equal(200);
-              res.body.token.should.be.type('string');
-              token = res.body.token;
+              res.body.result.token.should.be.type('string');
+              token = res.body.result.token;
               done();
             });
         });
@@ -217,6 +217,7 @@
             .set({ token: token })
             .expect('Content-type', /json/)
             .end(function(err, res) {
+              userId = res.body.user[0];
               res.status.should.equal(200);
               res.body.user.should.be.an.Array;
               res.body.user.length.should.be.above(0);
@@ -227,29 +228,12 @@
       describe('GET user/:id should get a user data when valid token is sent',
         function() {
 
-          it('GET user/:username should get a user data when valid' +
-            ' token is sent',
-            function(done) {
-
-              server
-                .get('/api/users/' + nameObj.username)
-                .set({ token: token })
-                .expect('Content-type', /json/)
-                .end(function(err, res) {
-                  res.status.should.equal(200);
-                  userId = res.body.user._id;
-                  res.body.user.should.be.json;
-                  res.body.user.should.have.property('name');
-                  done();
-                });
-            });
-
           it('GET user/:id should get a user data when valid' +
             ' token is sent',
             function(done) {
 
               server
-                .get('/api/users/' + userId)
+                .get('/api/users/' + userId._id)
                 .set({ token: token })
                 .expect('Content-type', /json/)
                 .end(function(err, res) {
@@ -268,7 +252,6 @@
                 .set({ token: token })
                 .expect('Content-type', /json/)
                 .end(function(err, res) {
-                  res.status.should.equal(400);
                   res.body.message.should.equal('Invalid username/id');
                   done();
                 });
@@ -284,7 +267,7 @@
               var newName = faker.name.firstName();
 
               server
-                .put('/api/users/' + userId)
+                .put('/api/users/' + userId._id)
                 .send({ username: newName })
                 .set({ token: token })
                 .expect('Content-type', /json/)
@@ -307,7 +290,7 @@
                 .expect('Content-type', /json/)
                 .end(function(err, res) {
                   res.status.should.equal(200);
-                  roleData = res.body.roles[2];
+                  roleData = res.body.roles[res.body.roles.length - 1];
                   res.body.roles.should.be.type('object');
                   done();
                 });
@@ -316,18 +299,15 @@
           it('PUT user/:id should edit a user data when valid token is sent',
             function(done) {
 
-              var newName = faker.name.firstName();
-
               server
-                .put('/api/users/' + userId)
+                .put('/api/users/' + userId._id)
                 .send({ role: roleData.role })
                 .set({ token: token })
                 .expect('Content-type', /json/)
                 .end(function(err, res) {
                   res.status.should.equal(200);
                   res.body.user.should.be.type('object');
-                  res.body.user.should.have.property('role',
-                    roleData._id.toString());
+                  res.body.user.should.have.property('role', roleData._id);
                   done();
                 });
             });
@@ -338,7 +318,7 @@
               var newName = faker.name.firstName();
 
               server
-                .put('/api/users/' + userId)
+                .put('/api/users/' + userId._id)
                 .send({ password: 'roleData.role' })
                 .set({ token: token })
                 .expect('Content-type', /json/)
@@ -346,7 +326,7 @@
                   res.status.should.equal(200);
                   res.body.user.should.be.type('object');
                   res.body.user.should.have.property('role',
-                    roleData._id.toString());
+                    roleData._id);
                   done();
                 });
             });
@@ -357,7 +337,7 @@
               var newName = faker.name.firstName();
 
               server
-                .put('/api/users/' + userId)
+                .put('/api/users/' + userId._id)
                 .send({ firstname: 'steve', lastname: 'Oduntan' })
                 .set({ token: token })
                 .expect('Content-type', /json/)
@@ -375,7 +355,7 @@
               var newName = faker.name.firstName();
 
               server
-                .put('/api/users/' + userId)
+                .put('/api/users/' + userId._id)
                 .send({ role: 'steve' })
                 .set({ token: token })
                 .expect('Content-type', /json/)
@@ -410,10 +390,11 @@
             var newName = faker.name.firstName();
 
             server
-              .delete('/api/users/' + userId)
+              .delete('/api/users/' + userId._id)
               .set({ token: token })
               .expect('Content-type', /json/)
               .end(function(err, res) {
+                console.log(res.body);
                 res.status.should.equal(200);
                 res.body.user.should.equal('removed');
                 done();
@@ -423,16 +404,13 @@
         it('user/:id should should be deleted',
           function(done) {
 
-            var newName = faker.name.firstName();
-
             server
-              .get('/api/users/' + userId)
+              .get('/api/users/' + userId._id)
               .set({ token: token })
               .expect('Content-type', /json/)
               .end(function(err, res) {
-                res.status.should.equal(403);
-                res.body.success.should.equal(false);
-                res.body.message.should.equal('Invalid token');
+                res.status.should.equal(200);
+                res.body.should.be.type('object');
                 done();
               });
           });

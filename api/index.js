@@ -29,16 +29,6 @@
       console.log('Error connecting to the database');
     } else {
       console.log('Connected to the database...');
-
-
-      // Starts the appilication server
-      // server = dms.listen(config.port, function(error) {
-      //   if (error) {
-      //     console.log(error);
-      //   } else {
-      //     console.log('DMS is running');
-      //   }
-      // });
     }
   });
 

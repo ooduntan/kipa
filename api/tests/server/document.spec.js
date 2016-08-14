@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  var api = require('./../../index.js').app;
+  var api = require('../../index').api;
   var server = require('supertest')(api);
   var should = require('should');
   var faker = require('faker');
@@ -35,7 +35,7 @@
       }
     };
 
-    it('vaerifies that GET: document need aithentication', function(done) {
+    it('verifies that GET: document need authentication', function(done) {
 
       server
         .get('/api/documents/')
@@ -62,8 +62,9 @@
             .expect('Content-type', /json/)
             .end(function(err, res) {
               res.status.should.equal(200);
-              token = res.body.token;
-              res.body.token.should.be.type('string');
+              token = res.body.result.token;
+              res.body.result.token.should.be.type('string');
+              res.body.result.userData.should.be.type('object');
               done();
             });
         });
@@ -79,7 +80,6 @@
           .end(function(err, res) {
             res.status.should.equal(200);
             res.body.doc.should.be.type('object');
-
             done();
           });
       });
@@ -94,8 +94,7 @@
           .expect('Content-type', /json/)
           .end(function(err, res) {
             res.status.should.equal(200);
-            res.body.success.should.equal(true);
-            res.body.message.should.be.type('string');
+            res.body.newDoc.should.be.type('object');
             done();
           });
       });
@@ -109,8 +108,7 @@
           .expect('Content-type', /json/)
           .end(function(err, res) {
             res.status.should.equal(200);
-            res.body.success.should.equal(true);
-            res.body.message.should.be.type('string');
+            res.body.newDoc.should.be.type('object');
             done();
           });
       });
@@ -158,8 +156,7 @@
           .expect('Content-type', /json/)
           .end(function(err, res) {
             res.status.should.equal(200);
-            res.body.success.should.equal(true);
-            res.body.message.should.be.type('string');
+            res.body.newDoc.should.be.type('object');
             done();
           });
       });
@@ -175,7 +172,6 @@
           .end(function(err, res) {
             res.status.should.equal(401);
             res.body.success.should.equal(false);
-            res.body.message.should.be.type('object');
             done();
           });
       });
@@ -215,8 +211,7 @@
               .expect('Content-type', /json/)
               .end(function(err, res) {
                 res.status.should.equal(200);
-                res.body.success.should.equal(true);
-                res.body.message.should.be.type('string');
+                res.body.newDoc.should.be.type('object');
                 done();
               });
           });
@@ -288,7 +283,8 @@
             firstname: faker.name.firstName(),
             lastname: faker.name.lastName(),
             username: faker.internet.userName(),
-            password: faker.internet.password()
+            password: faker.internet.password(),
+            email: faker.internet.email()
           };
 
           it('Create a new user',
@@ -315,8 +311,8 @@
                 .expect('Content-type', /json/)
                 .end(function(err, res) {
                   res.status.should.equal(200);
-                  token2 = res.body.token;
-                  res.body.token.should.be.type('string');
+                  token2 = res.body.result.token;
+                  res.body.result.token.should.be.type('string');
                   done();
                 });
             });
