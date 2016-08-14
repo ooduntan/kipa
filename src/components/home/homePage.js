@@ -1,23 +1,14 @@
-import React, {Component, PropTypes} from 'react';
-import Header from '../common/header';
-import Footer from '../common/footer';
-import HomeContent from './content';
+import React, {Component, PropTypes} from "react";
+import Header from "../common/header";
+import Footer from "../common/footer";
+import HomeContent from "./content";
+import {DocController} from "../common/documentController";
 
-class Homepage extends Component {
+export class Homepage extends Component {
   constructor() {
     super();
 
     this.toggleSignUp = this.toggleSignUp.bind(this);
-  }
-
-  toggleSignUp(dom) {
-    $(dom).slideUp( 'slow', function() {
-      if (dom.className === 'signup-container') {
-         return $('.' + dom.className).prev().slideDown('fast');
-      }
-
-      return $('.' + dom.className).next().slideDown('fast');
-    });
   }
 
   componentWillMount() {
@@ -26,16 +17,27 @@ class Homepage extends Component {
     }
   }
 
+  toggleSignUp(dom) {
+    $(dom).slideUp('slow', function () {
+      if (dom.className === 'signup-container') {
+        return $('.' + dom.className).prev().slideDown('fast');
+      }
+
+      return $('.' + dom.className).next().slideDown('fast');
+    });
+  }
+
   render() {
     return (
       <div>
         <Header
-          status={false}
+          searchEvent={this.props.searchEvent}
           signInEvent={this.toggleSignUp}
-          />
+          status={false}/>
         <HomeContent
+          {...this.props}
           toggleSignUp={this.toggleSignUp}
-          />
+        />
         <Footer/>
       </div>
     );
@@ -43,6 +45,6 @@ class Homepage extends Component {
 }
 Homepage.contextTypes = {
   router: PropTypes.object
-}
+};
 
-export default Homepage;
+export default DocController(Homepage);

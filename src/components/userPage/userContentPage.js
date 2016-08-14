@@ -1,16 +1,8 @@
 import React, {PropTypes, Component} from 'react';
-import {Link} from 'react-router';
-import PopulateCard from '../common/populateCard';
-import {connect} from 'react-redux';
-import {DropDown} from '../common/input';
 import moment from 'moment';
 import CardGroup from '../common/cardDisplay';
-import {bindActionCreators} from 'redux';
-import * as documentAction from '../../actions/documentAction';
-import Preloader from '../common/preloader';
-import EditUserComponent from './editUserDataPage';
+import Preloader from '../common/loader';
 import documentCover from '../../images/coverPlaceHolder.jpg';
-import EditDocument from './editDocument';
 
 
 const UserContentPage = ({
@@ -20,12 +12,14 @@ const UserContentPage = ({
   cardType,
   editCard,
   deleteEvent,
-  userId}) => {
+  userId
+}) => {
   let cards = '';
 
   if (doc.length) {
     cards = doc.map((eachDocs, index) => {
       const {_id, title, creator, createdAt, content} = eachDocs;
+
       return (
         <CardGroup
           key={_id}
@@ -43,29 +37,34 @@ const UserContentPage = ({
       );
     });
   } else {
-      cards = (
+    cards = (
       <div>Oops!!! Sorry you don't any content at the moment</div>
     );
   }
 
-    return (
-      <div className='content-container'>
-        <div className='headerClass'>
-          {header}
-        </div>
-        <div style={{clear: 'both', overflow: 'auto'}}>
-          {cards}
-        </div>
-        <Preloader
-          showLoader={lazyLoading}/>
+  return (
+    <div className='content-container'>
+      <div className='headerClass'>
+        {header}
       </div>
-    );
-  //}
-}
+      <div style={{clear: 'both', overflow: 'auto'}}>
+        {cards}
+      </div>
+      <Preloader
+        showLoader={lazyLoading}/>
+    </div>
+  );
+};
 
 UserContentPage.propTypes = {
-  userDocs: PropTypes.array
-}
-
+  userDocs: PropTypes.array,
+  lazyLoading: PropTypes.bool,
+  doc: PropTypes.array,
+  header: PropTypes.string,
+  cardType: PropTypes.string,
+  editCard: PropTypes.func,
+  deleteEvent: PropTypes.func,
+  userId: PropTypes.number
+};
 
 export default UserContentPage;

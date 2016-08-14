@@ -1,21 +1,7 @@
-import {
-  Button,
-  Input,
-  Card,
-  Row,
-  Col,
-  Dropdown,
-  NavItem
-} from 'react-materialize';
-import React from 'react';
-import Preloader from '../common/preloader';
-import {
-  InputComponent,
-  ButtonComponent,
-  SelectComponent,
-  CheckBox,
-  File
-} from '../common/input';
+import {Input, Row} from 'react-materialize';
+import React, {PropTypes} from 'react';
+import Preloader from '../common/loader';
+import {SelectComponent} from '../common/input';
 
 const EditUserForm = ({
   preloader,
@@ -29,9 +15,8 @@ const EditUserForm = ({
   formSubmit
 }) => {
   if (Object.keys(userData).length) {
-    const {name: {firstname, lastname}, email, role, username, _id} = userData;
-    console.log(formSubmit, 'this is form submit');
-    return(
+    const {name: {firstname, lastname}, email, role: {_id: role}, username, _id} = userData;
+    return (
       <div className='edit-form-container'>
         <form id={_id} onSubmit={submitAction}>
           <div className='row'>
@@ -42,6 +27,7 @@ const EditUserForm = ({
           <Row>
             <Input
               s={6}
+              id='firstname'
               name='firstname'
               label='First Name'
               validate
@@ -50,6 +36,7 @@ const EditUserForm = ({
             <Input
               s={6}
               name='lastname'
+              id='lastname'
               label='Last Name'
               validate
               defaultValue={lastname}
@@ -59,26 +46,29 @@ const EditUserForm = ({
             <Input
               s={6}
               name='username'
+              id='username'
               label='Username'
               validate
               defaultValue={username}
               onChange={changeHandler}/>
             <SelectComponent
               name='role'
+              id='role'
               addedClass='row'
               size={6}
               selectData={selectData}
-              selecetedValue={role}
+              selectedValue={role}
               onChangeEvent={changeHandler}/>
           </Row>
           <Row>
             <Input
               s={12}
               name='email'
+              id='email'
               label='Email'
-              validate={true}
+              validate
               defaultValue={email}
-              onChange={changeHandler} />
+              onChange={changeHandler}/>
           </Row>
           <span
             style={{display: displayFeedBack, color: feedBackColor}}
@@ -89,14 +79,27 @@ const EditUserForm = ({
             position='left'/>
           <button
             disabled={formSubmit}
-            className='btn custom-create-btn right'>Update</button>
+            className='btn custom-create-btn right'>Update
+          </button>
         </form>
       </div>
     );
   } else {
-    return <div>Loading...</div>
+    return (<div>Loading...</div>);
   }
 
+};
+
+EditUserForm.propTypes = {
+  preloader: PropTypes.bool,
+  changeHandler: PropTypes.func,
+  userData: PropTypes.object,
+  selectData: PropTypes.array,
+  displayFeedBack: PropTypes.string,
+  feedBack: PropTypes.string,
+  feedBackColor: PropTypes.string,
+  formSubmit: PropTypes.bool,
+  submitAction: PropTypes.func
 };
 
 export default EditUserForm;

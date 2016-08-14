@@ -5,7 +5,7 @@ export const initialState = {
   shouldRedirect: false,
   userData: {},
   displayFeedBack: 'none',
-  feedBack:'Oops!!! An error occured.',
+  feedBack: 'Oops!!! An error occured.',
   feedBackColor: '#dd0404',
   editPreLoader: true,
   editFormState: true,
@@ -17,12 +17,12 @@ export const initialState = {
   editDocumentData: {
     title: '',
     content: '',
-    access: ''
+    access: []
   },
   deleteDoc: {
     title: '',
     content: '',
-    access: ''
+    access: []
   },
   editSuccess: false,
   search: [],

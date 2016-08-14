@@ -1,7 +1,10 @@
-import {connect} from 'react-redux';
-import React, {Component, PropTypes} from 'react';
-import {bindActionCreators} from 'redux';
-import * as documentActions from '../../actions/documentAction';
+import {connect} from "react-redux";
+import React, {Component, PropTypes} from "react";
+import {bindActionCreators} from "redux";
+import * as searchActions from "../../actions/searchAction";
+import * as roleActions from "../../actions/roleActions";
+import * as userActions from "../../actions/userAction";
+import * as documentActions from "../../actions/documentAction";
 
 export const DocController = (ChildComponent) => {
   class ParentComponent extends Component {
@@ -11,20 +14,55 @@ export const DocController = (ChildComponent) => {
         docData: {
           title: '',
           content: '',
-          access: ''
+          access: []
         },
         searchTerm: ''
       };
 
-      this.logout            = this.logout.bind(this);
-      this.fabClick          = this.fabClick.bind(this);
-      this.deleteDoc         = this.deleteDoc.bind(this);
-      this.confirmDelete     = this.confirmDelete.bind(this);
-      this.OnchangeTinymce   = this.OnchangeTinymce.bind(this);
-      this.onChangeHandler   = this.onChangeHandler.bind(this);
-      this.addMoreDocument   = this.addMoreDocument.bind(this);
-      this.onClickCheckbox   = this.onClickCheckbox.bind(this);
+      this.logout = this.logout.bind(this);
+      this.fabClick = this.fabClick.bind(this);
+      this.deleteDoc = this.deleteDoc.bind(this);
+      this.searchDoc = this.searchDoc.bind(this);
+      this.confirmDelete = this.confirmDelete.bind(this);
+      this.OnchangeTinymce = this.OnchangeTinymce.bind(this);
+      this.onChangeHandler = this.onChangeHandler.bind(this);
+      this.addMoreDocument = this.addMoreDocument.bind(this);
+      this.onClickCheckBox = this.onClickCheckBox.bind(this);
       this.modalSubmitAction = this.modalSubmitAction.bind(this);
+    }
+
+    componentWillMount() {
+      if (!window.localStorage.getItem('token')) {
+        this.context.router.push('/');
+      } else {
+        this.props.documentActions
+          .getComponentResources(this.props.stateProp.userState.userData);
+      }
+    }
+
+    componentWillReceiveProps(nextProps) {
+      const {docSuccess} = this.props.stateProp.userDocs;
+
+      if (!docSuccess) $('#createModal').closeModal();
+
+      if (nextProps.stateProp.userDocs.redirect) {
+        this.context.router.push('/');
+      }
+    }
+
+    searchDoc(event) {
+      let searchValue = event.target.value;
+      const {role: {_id: roleId}} = this.props.stateProp.userState.userData;
+
+      if (event.key === 'Enter') {
+        this.props.searchActions.searchDocument(searchValue, roleId);
+        this.context.router.push({
+          pathname: '/search',
+          query: {q: searchValue}
+        });
+
+        return;
+      }
     }
 
     logout(event) {
@@ -35,8 +73,9 @@ export const DocController = (ChildComponent) => {
 
     deleteDoc(event) {
       event.preventDefault();
-      const {_id: docId} = this.props.stateProp.userDocs.deleteDoc
-      this.props.documentAction.deleteDocAction(docId);
+      const {_id: docId} = this.props.stateProp.userDocs.deleteDoc;
+
+      this.props.documentActions.deleteDocAction(docId);
       $('#deleteDocModal').closeModal();
     }
 
@@ -51,42 +90,45 @@ export const DocController = (ChildComponent) => {
       let docIndex = event.target.id;
       let selectedDocumentData = userDocs.docs[docIndex];
 
-      this.props.documentAction.createModalData(selectedDocumentData);
+      this.props.documentActions.createModalData(selectedDocumentData);
       $('#deleteDocModal').openModal();
     }
 
     OnchangeTinymce(event) {
       const value = event.target.getContent();
-      this.state.docData.content =  value;
+      this.state.docData.content = value;
     }
 
     modalSubmitAction(event) {
       event.preventDefault();
       const {docData} = this.state;
+      const {username} = this.props.stateProp.userState.userData;
 
-      docData.access = docData.access.trim().replace(/\s/g, ',');
+      docData.access = docData.access.toString();
       this.setState({
         docData: {
           title: '',
           content: '',
-          access: ''
+          access: []
         }
       });
 
-      this.props.documentAction.createDoc(docData, event.currentTarget);
+      this.props.documentActions.createDoc(docData, username);
+      event.currentTarget.reset();
     }
 
-    onClickCheckbox(event) {
-      let role = event.target.value;
-      let access = this.state.docData.access;
 
-      if (event.target.checked) {
-        this.state.docData.access += ' ' + role;
-        return this.setState({docData: this.state.docData});
+    onClickCheckBox(event) {
+      const value = event.target.value;
+      const {access} = this.state.docData;
+
+      if (access.indexOf(value) < 0) {
+        access.push(value);
+        return this.state.docData.access = access;
       }
 
-      this.state.docData.access = access.replace(' ' + role, '');
-      return this.setState({docData: this.state.docData});
+      access.splice(access.indexOf(value), 1);
+      this.state.docData.access = access;
     }
 
     fabClick(event) {
@@ -95,75 +137,73 @@ export const DocController = (ChildComponent) => {
         docData: {
           title: '',
           content: '',
-          access: ''
+          access: []
         }
       });
       $('#createModal').openModal();
     }
 
-    componentWillMount() {
-      if (!window.localStorage.getItem('token')) {
-        this.context.router.push('/');
-      } else {
-        this.props.documentAction
-          .getComponentResources(this.props.stateProp.userState.userData);
-      }
-    }
-
-    addMoreDocument(MethodName) {
+    addMoreDocument(MethodName, userRoleOrId, exisitingDocs) {
       const _this = this;
-      const {userData: {_id}} = this.props.stateProp.userState;
 
-      $(window).scroll(function() {
+      $(window).scroll(function () {
         const winObj = $(window);
-        const docObj =  $(document);
-        const {userData: {_id}} = _this.props.stateProp.userState;
-        const {docs, fullOwnedDoc, lazyLoading} = _this.props.stateProp.userDocs;
+        const docObj = $(document);
+        const {
+          fullOwnedDoc,
+          loadedSharedDocs,
+          allSearchedDocs,
+          lazyLoading
+        } = _this.props.stateProp.userDocs;
 
-        if(winObj.scrollTop() + winObj.height() === docObj.height()) {
-          if (!fullOwnedDoc && !lazyLoading && docs.length > 9) {
-            _this.props.documentAction.addOwnedDocs(docs.length, _id);
+        if (winObj.scrollTop() + winObj.height() === docObj.height()) {
+          if (!lazyLoading && exisitingDocs.length > 9) {
+            _this
+              .props
+              .documentActions[MethodName](exisitingDocs.length, userRoleOrId);
           }
         }
       });
     }
 
-    componentWillReceiveProps(nextProps) {
-      const {docSuccess} = this.props.stateProp.userDocs;
-
-      if (!docSuccess) $('#createModal').closeModal();
-
-      if (nextProps.stateProp.userDocs.redirect) {
-        this.context.router.push('/');
-      }
-    }
-
     render() {
-      return <ChildComponent
-        deleteDoc={this.deleteDoc}
-        onChangeHandler={this.onChangeHandler}
-        confirmDelete={this.confirmDelete}
-        OnchangeTinymce={this.OnchangeTinymce}
-        modalSubmitAction={this.modalSubmitAction}
-        onClickCheckbox={this.onClickCheckbox}
-        logoutEvent={this.logout}
-        lazyLoader={this.addMoreDocument}
-        fabClick={this.fabClick}
-         {...this.props}/>
+      return (
+        <ChildComponent
+          deleteDoc={this.deleteDoc}
+          searchEvent={this.searchDoc}
+          onChangeHandler={this.onChangeHandler}
+          confirmDelete={this.confirmDelete}
+          OnchangeTinymce={this.OnchangeTinymce}
+          modalSubmitAction={this.modalSubmitAction}
+          onClickCheckbox={this.onClickCheckBox}
+          logoutEvent={this.logout}
+          lazyLoader={this.addMoreDocument}
+          fabClick={this.fabClick}
+          {...this.props}/>
+      );
     }
   }
 
   ParentComponent.contextTypes = {
     router: PropTypes.object
-  }
+  };
 
-  function mapDispatchToProps(dispatch) {
+  ParentComponent.propTypes = {
+    stateProp: PropTypes.object.isRequired,
+    documentActions: PropTypes.object.isRequired
+
+  };
+
+  const mapDispatchToProps = (dispatch) => {
     return {
-      documentAction: bindActionCreators(documentActions, dispatch)
-    }
-  }
+      documentActions: bindActionCreators(documentActions, dispatch),
+      userActions: bindActionCreators(userActions, dispatch),
+      searchActions: bindActionCreators(searchActions, dispatch),
+      roleActions: bindActionCreators(roleActions, dispatch)
+    };
+  };
 
-  function mapStateToProps(state) {
+  const mapStateToProps = (state) => {
     return {
       stateProp: {
         userState: state.users,
@@ -171,7 +211,7 @@ export const DocController = (ChildComponent) => {
         roles: state.roleState
       }
     };
-  }
+  };
 
   return connect(mapStateToProps, mapDispatchToProps)(ParentComponent);
-}
+};

@@ -1,5 +1,5 @@
-import * as actionTypes from '../actions/actionType.js';
-import {initialState} from './initialState';
+import * as actionTypes from "../actions/actionType.js";
+import {initialState} from "./initialState";
 
 export default function userReducer(state = initialState, action) {
   switch (action.type) {
@@ -30,14 +30,14 @@ export default function userReducer(state = initialState, action) {
 
     case actionTypes.ADDING_MORE_DOC_TO_STORE:
       return Object.assign({}, state, action.data);
-    case actionTypes.FETCHED_ALL_OWNED_DOCS:
+    case actionTypes.ADD_MORE_SHARED_DOCS:
       return Object.assign({}, state, action.data);
     case actionTypes.ADD_MORE_DOC_TO_STORE:
       return Object.assign({}, state, {
         docs: [...state.docs, ...action.data.docs]
-        },{
-          lazyLoading: action.data.lazyLoading
-        });
+      }, {
+        lazyLoading: action.data.lazyLoading
+      });
     case actionTypes.UPDATE_SEARCH_RESULT:
       return Object.assign({}, state, action.data);
     case actionTypes.SEARCH_COMPLETED:

@@ -1,24 +1,28 @@
 import React, {PropTypes, Component} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import {Link} from 'react-router';
 import userImage from '../../images/testImage.jpg';
-import Preloader from '../common/preloader';
-import * as documentAction from '../../actions/documentAction';
+import Preloader from '../common/loader';
 
-const SideNav = ({userData, roles}) => {
-  console.log(userData);
+const SideNav = ({userData}) => {
   if (!Object.keys(userData).length) {
-    return(
+    return (
       <Preloader
         size='big'
         position='page-preloader'
         showLoader={false}/>
-    )
+    );
   } else {
-    const {name: {firstname, lastname}, username, role, email} = userData;
-
-    console.log(name);
+    const {
+      name: {
+        firstname,
+        lastname
+      },
+      username,
+      role: {
+        role
+      },
+      email
+    } = userData;
 
     return (
       <ul id='nav-mobile' className='side-nav fixed'>
@@ -38,7 +42,7 @@ const SideNav = ({userData, roles}) => {
             </div>
             <div className='center-align'>{username}</div>
             <div className='center-align'>
-              {roles[role - 1].role}
+              {role}
             </div>
             <div className='custom-blue-text center-align'>{email}</div>
           </div>
@@ -49,7 +53,7 @@ const SideNav = ({userData, roles}) => {
               <i className='sidebar-icon-position material-icons'>description</i>
               <span>My Documents</span>
             </div>
-        </Link>
+          </Link>
         </li>
         <li id='SHARED_DOCUMENTS' className='bold'>
           <Link to='/shared-docs'>
@@ -70,11 +74,10 @@ const SideNav = ({userData, roles}) => {
       </ul>
     );
   }
-
-}
+};
 
 SideNav.propTypes = {
   userData: PropTypes.object.isRequired
-}
+};
 
 export default SideNav;

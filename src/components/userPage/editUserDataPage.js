@@ -1,14 +1,10 @@
-import React, {Component} from 'react';
-import EditUserForm from './editUserForm';
-import {connect} from 'react-redux';
-import SideNav from './sideNav';
-import Header from '../common/header';
-import {bindActionCreators} from 'redux';
-import {DocController} from '../common/documentController';
-import * as userAction from '../../actions/userAction';
+import React, {PropTypes, Component} from "react";
+import EditUserForm from "./editUserForm";
+import SideNav from "./sideNav";
+import Header from "../common/header";
+import {DocController} from "../common/documentController";
 
-
-class EditUserComponent extends Component {
+export class EditUserComponent extends Component {
   constructor() {
     super();
     this.state = {
@@ -59,11 +55,12 @@ class EditUserComponent extends Component {
       roles: {roles}
     } = this.props.stateProp;
 
-    return(
+    return (
       <div>
         <Header
+          searchEvent={this.props.searchEvent}
           signInEvent={this.props.logoutEvent}
-          status={true}/>
+          status/>
         <SideNav
           roles={roles}
           userData={userData}/>
@@ -80,21 +77,15 @@ class EditUserComponent extends Component {
             feedBackColor={feedBackColor}
             formSubmit={editFormState}/>
         </div>
-       </div>
+      </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    userActions: bindActionCreators(userAction, dispatch)
-  }
-}
+EditUserComponent.propTypes = {
+  stateProp: PropTypes.object,
+  userActions: PropTypes.object,
+  logoutEvent: PropTypes.func
+};
 
-const mapStateToProps = (state) => {
-  return {
-
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(DocController(EditUserComponent));
+export default DocController(EditUserComponent);

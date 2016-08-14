@@ -4,4 +4,10 @@ node_js:
 services:
   - mongodb
 script:
-  - npm start
+  -  npm test
+after_success:
+  - npm install codeclimate-test-reporter -g
+  - npm run coverage
+addons:
+    code_climate:
+        repo_token: f5e9741dc694d6296573fc2bcf67456a6f5b832729f364467b8c5c9a7d6ab3b6

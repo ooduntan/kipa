@@ -1,84 +1,76 @@
-import React, {PropTypes, Component} from 'react';
-import {connect} from 'react-redux';
-import SignInForm from './signInForm';
-import {bindActionCreators} from 'redux';
-import {ButtonComponent} from '../common/input';
-import {loginUser} from '../../actions/userAction';
+import React, {PropTypes, Component} from "react";
+import SignInForm from "./signInForm";
 
-class SignInComponent extends Component {
-	constructor() {
-		super();
-		this.state = {
-			displayForm: 'block',
-			displayLoader: 'show-element',
-			loginData: {}
-		};
+export class SignInComponent extends Component {
+  constructor() {
+    super();
+    this.state = {
+      displayForm: 'block',
+      displayLoader: 'show-element',
+      loginData: {}
+    };
 
-		this.onChangeHandler = this.onChangeHandler.bind(this);
-		this.signIn = this.signIn.bind(this);
-		this.toggleSignIn = this.toggleSignIn.bind(this);
-	}
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.signIn = this.signIn.bind(this);
+    this.toggleSignIn = this.toggleSignIn.bind(this);
+  }
 
-	onChangeHandler(event) {
-		this.state.loginData[event.target.name] = event.target.value;
-		this.setState({loginData: this.state.loginData});
-	}
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.stateProp.userState.shouldRedirect) {
+      this.context.router.push('/owned-docs');
+    }
+  }
 
-	signIn(event) {
-		event.preventDefault();
-		this.props.loginAction(this.state.loginData);
-	}
+  onChangeHandler(event) {
+    this.state.loginData[event.target.name] = event.target.value;
+    this.setState({loginData: this.state.loginData});
+  }
 
-	toggleSignIn(event) {
-		event.preventDefault();
-		this.props.toggleSignUp(this.refs.signInContainer);
-	}
+  signIn(event) {
+    event.preventDefault();
+    this.props.userActions.loginUser(this.state.loginData);
+  }
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.user.shouldRedirect) {
-			this.context.router.push('/owned-docs');
-		}
-	}
+  toggleSignIn(event) {
+    event.preventDefault();
+    this.props.toggleSignUp(this.refs.signInContainer);
+  }
 
   render() {
+    const {displayLoader, error} = this.props.stateProp.userState;
+
     return (
       <div ref='signInContainer'
-				style={{display: this.state.displayForm}}
-				className='signup-container'>
-				<div className='signup-wrapper'>
+           style={{display: this.state.displayForm}}
+           className='signup-container'>
+        <div className='signup-wrapper'>
           <div>Sign in</div>
           <div className='small-signup-text'>
             Sign in to create, share and manage documents.
           </div>
         </div>
-				<SignInForm
-					changeHandler={this.onChangeHandler}
-					errorMessage={this.props.user.error}
-					signInAction={this.signIn}
-					showLoader={this.props.user.displayLoader}/>
-				<a className='custom-link'
-					onClick={this.toggleSignIn}>
-					New user? Sign up
-				</a>
+        <SignInForm
+          changeHandler={this.onChangeHandler}
+          errorMessage={error}
+          signInAction={this.signIn}
+          showLoader={displayLoader}/>
+        <a className='custom-link'
+           onClick={this.toggleSignIn}>
+          New user? Sign up
+        </a>
       </div>
     );
   }
 }
 
+SignInComponent.propTypes = {
+  toggleSignUp: PropTypes.func.isRequired,
+  userActions: PropTypes.object.isRequired,
+  stateProp: PropTypes.object
+};
+
 SignInComponent.contextTypes = {
-	router: PropTypes.object
-}
+  router: PropTypes.object
+};
 
-function mapDispatchToProps(dispatch) {
-  return {
-    loginAction: bindActionCreators(loginUser, dispatch)
-  }
-}
-
-function mapStateToProps(state, ownProps) {
-  return {
-		user: state.users
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignInComponent);
+export default SignInComponent;

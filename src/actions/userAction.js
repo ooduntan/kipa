@@ -1,5 +1,5 @@
-import * as actionTypes from './actionType.js';
-import {apiRequest} from '../utils/apiRequest';
+import * as actionTypes from "./actionType.js";
+import {apiRequest} from "../utils/apiRequest";
 
 export function createUser(user) {
   return {
@@ -126,9 +126,9 @@ export function updateUserData(newUserData, id) {
   return (dispatch) => {
     dispatch(updatingUserData());
     const url = '/api/users/' + id;
-    return apiRequest(newUserData, 'put', url, function(apiResult) {
-        dispatch(updatedUserData(apiResult));
-      });
+    return apiRequest(newUserData, 'put', url, function (apiResult) {
+      dispatch(updatedUserData(apiResult));
+    });
   };
 }
 
@@ -136,9 +136,9 @@ export function saveUserData(user) {
   return (dispatch) => {
     dispatch(savingUser());
     const url = '/api/users/';
-    return apiRequest(user, 'post', url, function(apiResult) {
+    return apiRequest(user, 'post', url, function (apiResult) {
       dispatch(createUser(apiResult));
-      dispatch(saveUserSuccess(newUserData));
+      dispatch(saveUserSuccess());
     });
   };
 }
@@ -147,7 +147,7 @@ export function loginUser(userData) {
   return (dispatch) => {
     dispatch(checkingUser());
     const url = '/api/users/login';
-    return apiRequest(userData, 'post', url, function(apiResult) {
+    return apiRequest(userData, 'post', url, function (apiResult) {
       dispatch(checkLoginResult(apiResult));
     });
   };

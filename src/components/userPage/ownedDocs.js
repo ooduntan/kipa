@@ -1,45 +1,34 @@
-import React, {PropTypes, Component} from 'react';
-import {Link} from 'react-router';
-import SideNav from './sideNav';
-import * as documentActions from '../../actions/documentAction';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import NewDocumentForm from './addDocument';
-import Header from '../common/header';
-import Fab from '../common/fab';
-import {DocController} from '../common/documentController';
-import UserContentPage from './userContentPage';
-import DeleteModal from './deleteModal';
+import React, {PropTypes, Component} from "react";
+import SideNav from "./sideNav";
+import NewDocumentForm from "./addDocument";
+import Header from "../common/header";
+import Fab from "../common/fab";
+import {DocController} from "../common/documentController";
+import UserContentPage from "./userContentPage";
+import DeleteModal from "./deleteDoc";
 
-class OwnDocument extends Component {
+export class OwnDocument extends Component {
   constructor() {
     super();
-    this.state = {
-      dispatched: false
-    };
 
     this.prepareStoreForEdit = this.prepareStoreForEdit.bind(this);
+  }
+
+  componentWillReceiveProps(nextPorp, prevProps) {
+    const {userData: {_id}} = this.props.stateProp.userState;
+    const {docs} = this.props.stateProp.userDocs;
+
+    this.props.lazyLoader('addOwnedDocs', _id, docs);
   }
 
   prepareStoreForEdit(event) {
     const {id} = event.target;
     let selectedDocumentData = this.props.stateProp.userDocs.docs[id];
 
-    this.props.documentAction.preparePageForEdit(selectedDocumentData);
+    this.props.documentActions.preparePageForEdit(selectedDocumentData);
     this.context.router.push({
       pathname: '/docs/edit/owned/' + selectedDocumentData._id
     });
-  }
-
-  componentWillReceiveProps(nextPorp, prevProps) {
-    const _this = this;
-    this.props.lazyLoader('addOwnedDocs');
-  }
-
-  componentWillUnmount() {
-    $(window).unbind('scroll', this.props.lazyLoader);
-    console.log(this.props.lazyLoader);
-    // this.props.lazyloader.unbind();
   }
 
   render() {
@@ -57,10 +46,10 @@ class OwnDocument extends Component {
     return (
       <div className='row'>
         <Header
+          searchEvent={this.props.searchEvent}
           signInEvent={this.props.logoutEvent}
-          status={true}/>
+          status/>
         <SideNav
-          roles={roles}
           userData={userData}/>
         <UserContentPage
           header='My Documents'
@@ -70,32 +59,40 @@ class OwnDocument extends Component {
           deleteEvent={this.props.confirmDelete}
           userId={userData._id}
           editCard={this.prepareStoreForEdit}
-          />
+        />
         <Fab
           clickEvent={this.props.fabClick}/>
         <NewDocumentForm
-         docRoles={roles}
-         changeHandler={this.props.onChangeHandler}
-         CheckboxHandler={this.props.onClickCheckbox}
-         submitAction={this.props.modalSubmitAction}
-         tinymceEvent={this.props.OnchangeTinymce}
-         showLoader={docSuccess}/>
-       <DeleteModal
-         docData={deleteDoc}
-         deleteEvent={this.props.deleteDoc}/>
+          docRoles={roles}
+          changeHandler={this.props.onChangeHandler}
+          CheckboxHandler={this.props.onClickCheckbox}
+          submitAction={this.props.modalSubmitAction}
+          tinymceEvent={this.props.OnchangeTinymce}
+          showLoader={docSuccess}/>
+        <DeleteModal
+          docData={deleteDoc}
+          deleteEvent={this.props.deleteDoc}/>
       </div>
     );
   }
 }
 
+OwnDocument.propTypes = {
+  deleteDoc: PropTypes.func,
+  onClickCheckbox: PropTypes.func,
+  onChangeHandler: PropTypes.func,
+  fabClick: PropTypes.func,
+  OnchangeTinymce: PropTypes.func,
+  confirmDelete: PropTypes.func,
+  lazyLoader: PropTypes.func,
+  stateProp: PropTypes.object,
+  documentActions: PropTypes.object,
+  logoutEvent: PropTypes.func,
+  modalSubmitAction: PropTypes.func
+};
+
 OwnDocument.contextTypes = {
   router: PropTypes.object
-}
+};
 
-function mapDispatchToProps(dispatch) {
-  return {
-    documentAction: bindActionCreators(documentActions, dispatch)
-  };
-}
-
-export default connect(mapDispatchToProps)(DocController(OwnDocument));
+export default DocController(OwnDocument);

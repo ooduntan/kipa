@@ -1,37 +1,31 @@
-import SideNav from './sideNav';
-import {Link} from 'react-router';
-import {connect} from 'react-redux';
-import Header from '../common/header';
-import DeleteModal from './deleteModal';
-import {bindActionCreators} from 'redux';
-import UserContentPage from './userContentPage';
-import React, {PropTypes, Component} from 'react';
-import * as searchAction from '../../actions/searchAction';
-import {DocController} from '../common/documentController';
+import SideNav from "./sideNav";
+import Header from "../common/header";
+import DeleteModal from "./deleteDoc";
+import UserContentPage from "./userContentPage";
+import React, {PropTypes, Component} from "react";
+import {DocController} from "../common/documentController";
 
-class Search extends Component {
+export class Search extends Component {
   constructor() {
     super();
 
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps, 'You should have all the answers');
     const {docSuccess, refreshed, updateSearch} = nextProps.stateProp.userDocs;
-    const {userData: {role}} = nextProps.stateProp.userState;
+    const {userData: {role: {_id: roleId}}} = nextProps.stateProp.userState;
     const {query: {q}} = nextProps.location;
 
     if ((!docSuccess && refreshed) || updateSearch) {
-      this.props.searchActions.searchDocument(q, role);
+      this.props.searchActions.searchDocument(q, roleId);
     }
-
   }
 
   prepareStoreForEdit(event) {
     const {id} = event.target;
     let selectedDocumentData = this.props.stateProp.userDocs.search[id];
 
-    this.props.documentAction.preparePageForEdit(selectedDocumentData);
+    this.props.documentActions.preparePageForEdit(selectedDocumentData);
     this.context.router.push({
       pathname: '/docs/edit/search/' + selectedDocumentData._id
     });
@@ -44,19 +38,16 @@ class Search extends Component {
         search,
         deleteDoc
       },
-      userState: {userData},
-      roles: {roles}
+      userState: {userData}
     } = this.props.stateProp;
-
-    console.log(this.props, 'this is our props');
 
     return (
       <div className='row'>
         <Header
+          searchEvent={this.props.searchEvent}
           signInEvent={this.props.logoutEvent}
-          status={true}/>
+          status/>
         <SideNav
-          roles={roles}
           userData={userData}/>
         <UserContentPage
           header={`Found ${search.length} Result(s) for ${q}`}
@@ -65,27 +56,27 @@ class Search extends Component {
           deleteEvent={this.props.confirmDelete}
           userId={userData._id}
           editCard={this.prepareStoreForEdit}
-          />
-          <DeleteModal
-            docData={deleteDoc}
-            deleteEvent={this.props.deleteDoc}/>
+        />
+        <DeleteModal
+          docData={deleteDoc}
+          deleteEvent={this.props.deleteDoc}/>
       </div>
     );
   }
 }
 
+Search.propTypes = {
+  documentActions: PropTypes.object,
+  deleteDoc: PropTypes.func,
+  location: PropTypes.object,
+  confirmDelete: PropTypes.func,
+  stateProp: PropTypes.object,
+  searchActions: PropTypes.object,
+  logoutEvent: PropTypes.func
+};
+
 Search.contextTypes = {
   router: PropTypes.object
-}
+};
 
-function mapDispatchToProps(dispatch) {
-  return {
-    searchActions: bindActionCreators(searchAction, dispatch)
-  }
-}
-
-function mapStateToProps(state) {
-  return{}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(DocController(Search));
+export default DocController(Search);

@@ -1,12 +1,12 @@
-import React, {PropTypes} from 'react';
-import {InputComponent, ButtonComponent} from '../common/input';
+import React, {PropTypes} from "react";
+import {InputComponent, ButtonComponent} from "../common/input";
 
 const SignInForm = ({
   changeHandler,
   signInAction,
-  displayForm,
   showLoader,
-  errorMessage}) => {
+  errorMessage
+}) => {
   return (
     <form
       onSubmit={signInAction}
@@ -39,13 +39,14 @@ const SignInForm = ({
         newClass='custom-green custom-btn submit-button-spacing'/>
     </form>
   );
-}
+};
 
 SignInForm.propTypes = {
   changeHandler: PropTypes.func.isRequired,
   signInAction: PropTypes.func.isRequired,
   showLoader: PropTypes.string,
-  signInAction: PropTypes.string
-}
+  errorMessage: PropTypes.string,
+  displayForm: PropTypes.bool
+};
 
 export default SignInForm;

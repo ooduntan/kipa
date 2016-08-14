@@ -1,5 +1,5 @@
-import {InputComponent, ButtonComponent, SelectComponent} from '../common/input';
-import React, {PropTypes} from 'react';
+import {InputComponent, ButtonComponent, SelectComponent} from "../common/input";
+import React, {PropTypes} from "react";
 
 const SignUpForm = ({
   roles,
@@ -45,7 +45,7 @@ const SignUpForm = ({
         <SelectComponent
           addedClass='custom-select row'
           name='role'
-          size='s6'
+          size={6}
           selecetedValue='1'
           selectData={roles}
           onChangeEvent={changeHandler}/>
@@ -92,7 +92,7 @@ const SignUpForm = ({
         newClass='custom-blue custom-btn'/>
     </form>
   );
-}
+};
 
 SignUpForm.propTypes = {
   changeHandler: PropTypes.func.isRequired,
@@ -104,7 +104,7 @@ SignUpForm.propTypes = {
   passwordHasError: PropTypes.bool.isRequired,
   matchPasswordError: PropTypes.bool.isRequired,
   matchPassword: PropTypes.func.isRequired,
-  showLoader: PropTypes.string.isRequired,
-}
+  roles: PropTypes.array.isRequired
+};
 
 export default SignUpForm;

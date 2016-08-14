@@ -152,7 +152,7 @@
             userData: userData
           };
 
-          delete result.userData.password;
+          result.userData.password = null;
           helper.dataResponder(responseObj, isMatched, result, 'result', 200);
         } else {
           var result = { failed: 'Oops!!! Invalid Username/Password' };

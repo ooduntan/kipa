@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Description = () => {
   return (
@@ -7,6 +7,6 @@ const Description = () => {
       <div className='supporting-text'>Doccip helps you create and manage your docs remotely LEARN MORE.</div>
     </div>
   );
-}
+};
 
 export default Description;

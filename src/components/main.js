@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, {PropTypes} from "react";
 
 const Home = ({children}) => {
   return (
@@ -6,10 +6,10 @@ const Home = ({children}) => {
       {children}
     </div>
   );
-}
+};
 
 Home.propTypes = {
   children: PropTypes.object.isRequired
-}
+};
 
 export default Home;

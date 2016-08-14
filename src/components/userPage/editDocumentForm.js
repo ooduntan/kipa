@@ -1,22 +1,8 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import TinyMCE from 'react-tinymce';
-import Preloader from '../common/preloader';
-import {
-  Button,
-  Input,
-  Card,
-  Row,
-  Col,
-  Dropdown,
-  NavItem
-} from 'react-materialize';
-import {
-  InputComponent,
-  ButtonComponent,
-  SelectComponent,
-  CheckBox,
-  File
-} from '../common/input';
+import Preloader from '../common/loader';
+import {Input, Row} from 'react-materialize';
+import {CheckBox} from '../common/input';
 
 const EditDocumentForm = ({
   preloader,
@@ -24,22 +10,20 @@ const EditDocumentForm = ({
   changeHandler,
   docRoles,
   formDefaultData,
-  displayFeedBack,
-  feedBack,
-  feedBackColor,
-  formStatus,
   checkboxHandler,
   tinymceEvent
 }) => {
   const {title, content, access} = formDefaultData;
+
   if (title.length) {
-    return(
+    return (
       <div className='edit-doc-form'>
         <form onSubmit={submitAction}>
           <Row>
             <Input
               s={6}
               name='title'
+              id='title'
               label='Title'
               validate
               defaultValue={title}
@@ -54,14 +38,14 @@ const EditDocumentForm = ({
           <Row className='left-padding'>
             <TinyMCE
               content={content}
-               config={{
+              config={{
                  height : '280',
                  forced_root_block: false,
                  plugins: 'link image code',
                  toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
                }}
-               onChange={tinymceEvent}
-             />
+              onChange={tinymceEvent}
+            />
           </Row>
           <span
             className='edit-user-error'></span>
@@ -70,13 +54,25 @@ const EditDocumentForm = ({
             size='small'
             position='left'/>
           <button
-            className='btn custom-update-btn right'>Update</button>
-      </form>
-    </div>
+            className='btn custom-update-btn right'>Update
+          </button>
+        </form>
+      </div>
     );
   } else {
-    return (<div></div>)
+    return (<div></div>);
   }
+};
+
+EditDocumentForm.propTypes = {
+  checkboxHandler: PropTypes.func,
+  changeHandler: PropTypes.func,
+  tinymceEvent: PropTypes.func,
+  displayFeedBack: PropTypes.bool,
+  preloader: PropTypes.bool,
+  formDefaultData: PropTypes.object,
+  docRoles: PropTypes.array,
+  submitAction: PropTypes.func
 };
 
 export default EditDocumentForm;

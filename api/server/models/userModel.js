@@ -37,6 +37,7 @@
     },
     role: {
       type: Number,
+      ref: 'roles',
       default: 1,
     }
   });

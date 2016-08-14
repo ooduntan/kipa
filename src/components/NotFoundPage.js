@@ -1,7 +1,7 @@
 // (function() {
 //   'use strict';
 
-import React from 'react';
+import React from "react";
 
 class NotFoundPage extends React.Component {
   render() {

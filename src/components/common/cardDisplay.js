@@ -1,5 +1,5 @@
-import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
+import React, {PropTypes} from "react";
+import {Link} from "react-router";
 
 const CardGroup = ({
   id,
@@ -7,24 +7,23 @@ const CardGroup = ({
   cardTitle,
   cardCreator,
   docDate,
-  editCard,
   cardType,
-  deleteCard,
   confirmDelete,
   docIndex,
   currentUserId,
-  cardContent}) => {
-    let deleteButton;
+  cardContent
+}) => {
+  let deleteButton;
 
-    if (cardCreator._id === currentUserId) {
-      deleteButton = (
-        <i id={docIndex}
-          onClick={confirmDelete}
-          className='material-icons delete-color modal-trigger custom-icon'>
-          delete
-        </i>
-      );
-    }
+  if (cardCreator._id === currentUserId) {
+    deleteButton = (
+      <i id={docIndex}
+         onClick={confirmDelete}
+         className='material-icons delete-color modal-trigger custom-icon'>
+        delete
+      </i>
+    );
+  }
 
   return (
     <div key={id} className='card hoverable document-cards'>
@@ -57,14 +56,21 @@ const CardGroup = ({
       </div>
     </div>
   );
-}
+};
 
 CardGroup.propTypes = {
+  id: PropTypes.number,
+  docData: PropTypes.string,
+  docDate: PropTypes.string,
+  cardType: PropTypes.string,
   cardCorver: PropTypes.string,
+  confirmDelete: PropTypes.func,
+  docIndex: PropTypes.number,
+  currentUserId: PropTypes.number,
   cardTitle: PropTypes.string.isRequired,
-  cardCreator: PropTypes.number.isRequired,
+  cardCreator: PropTypes.object.isRequired,
   docdate: PropTypes.string,
   cardContent: PropTypes.string.isRequired
-}
+};
 
 export default CardGroup;

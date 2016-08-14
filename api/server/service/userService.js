@@ -22,7 +22,11 @@
      * @param  {Function} cb         [Passes result to callback]
      */
     findUsers: function(searchTerm, cb) {
-      query.findQuery(userObj, searchTerm, cb);
+      userObj.find(searchTerm)
+      .populate('role')
+      .exec(function(err, data) {
+        return err ? cb(false, err) : cb(true, data);
+      });
     },
 
     /**

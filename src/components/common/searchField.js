@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {PropTypes} from "react";
 
 const SearchField = ({searchEvent}) => {
-  return(
+  return (
     <div className='input-field custom-nav-bar'>
       <input
         id='search'
@@ -9,10 +9,14 @@ const SearchField = ({searchEvent}) => {
         type='search'
         onKeyPress={searchEvent}
         required/>
-      <label for='search'><i className='material-icons'>search</i></label>
+      <label htmlFor='search'><i className='material-icons'>search</i></label>
       <i className='material-icons'>close</i>
     </div>
   );
+};
+
+SearchField.propTypes = {
+  searchEvent: PropTypes.func.isRequired
 };
 
 export default SearchField;

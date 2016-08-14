@@ -1,5 +1,5 @@
-import  * as actionTypes from './actionType';
-import {apiRequest} from '../utils/apiRequest';
+import * as actionTypes from "./actionType";
+import {apiRequest} from "../utils/apiRequest";
 
 export function getDocsSuccess(rolesData) {
   return {
@@ -12,7 +12,7 @@ export function getRoles() {
   return (dispatch) => {
     const url = '/api/role';
     apiRequest(null, 'get', url, (apiResult) => {
-       dispatch(getDocsSuccess(apiResult));
+      dispatch(getDocsSuccess(apiResult));
     });
   };
 }
