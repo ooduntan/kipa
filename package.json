@@ -1,7 +1,7 @@
 {
   "name": "dockip",
   "version": "1.0.0",
-  "description": "[![Build Status](https://travis-ci.org/andela-ooduntan/dms-api.svg?branch=master)](https://travis-ci.org/andela-ooduntan/dms-api)   [![Code Climate](https://codeclimate.com/github/andela-ooduntan/dms-api/badges/gpa.svg)](https://codeclimate.com/github/andela-ooduntan/dms-api)   [![Test Coverage](https://codeclimate.com/github/andela-ooduntan/dms-api/badges/coverage.svg)](https://codeclimate.com/github/andela-ooduntan/dms-api/coverage) [![HitCount](https://hitt.herokuapp.com/andela-ooduntan/dms-api.svg)](https://github.com/andela-ooduntan/dms-api)",
+  "description": "[![Build Status](https://travis-ci.org/andela-ooduntan/dockip.svg?branch=master)](https://travis-ci.org/andela-ooduntan/dockip)  [![Code Climate](https://codeclimate.com/github/andela-ooduntan/dms-api/badges/gpa.svg)](https://codeclimate.com/github/andela-ooduntan/dms-api)   [![Test Coverage](https://codeclimate.com/github/andela-ooduntan/dms-api/badges/coverage.svg)](https://codeclimate.com/github/andela-ooduntan/dms-api/coverage) [![HitCount](https://hitt.herokuapp.com/andela-ooduntan/dms-api.svg)](https://github.com/andela-ooduntan/dms-api)",
   "main": "index.js",
   "scripts": {
     "prestart": "./node_modules/.bin/babel-node tools/startMessage.js",
