@@ -255,7 +255,7 @@ nav li:hover {
 }
 
 .hide-element {
-    display: none !Important;
+    display: none;
 }
 
 .custom-loader {
