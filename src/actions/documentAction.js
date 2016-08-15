@@ -1,15 +1,6 @@
 import * as actionTypes from "./actionType.js";
 import {apiRequest} from "../utils/apiRequest";
 
-export function showMenuContent(nextView) {
-  return {
-    type: actionTypes.CHANGE_CONTENT,
-    data: {
-      header: nextView.replace('_', ' ')
-    }
-  };
-}
-
 export function getSharedDocSuccess(sharedDocs) {
   return {
     type: actionTypes.SHARED_DOCUMENTS,
@@ -89,11 +80,6 @@ export function updatingDocData() {
       editPreLoader: false
     }
   };
-}
-
-export function deletingDoc() {
-  return {};
-  // body...
 }
 
 export function createDocSuccess() {
