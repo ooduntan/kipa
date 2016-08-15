@@ -1,4 +1,4 @@
-# Document Management System
+# Kipa - A Document Management System
 
 [![Build Status](https://travis-ci.org/andela-ooduntan/dockip.svg?branch=master)](https://travis-ci.org/andela-ooduntan/dockip)   [![Code Climate](https://codeclimate.com/github/andela-ooduntan/dockip/badges/gpa.svg)](https://codeclimate.com/github/andela-ooduntan/dockip)  [![codecov](https://codecov.io/gh/andela-ooduntan/dockip/branch/master/graph/badge.svg)](https://codecov.io/gh/andela-ooduntan/dockip) [![HitCount](https://hitt.herokuapp.com/andela-ooduntan/.svg)](https://github.com/andela-ooduntan/dms-api)
 
@@ -41,7 +41,6 @@ The usage of the application is as follows:
 3.  Users can only see documents that are shared with there role.
 4.  Users can share a document with any role.
 5.  Users can access all documents he or she created regardless of the role they share the document with.
-```
 
 
 ##  Contributing

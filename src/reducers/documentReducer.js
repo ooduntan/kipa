@@ -1,12 +1,8 @@
 import * as actionTypes from "../actions/actionType.js";
 import {initialState} from "./initialState";
 
-export default function userReducer(state = initialState, action) {
+export default function docReducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.CHECK_USER_DOCS:
-      return Object.assign({}, state, action.data);
-    case actionTypes.CHANGE_CONTENT:
-      return Object.assign({}, state, action.data);
     case actionTypes.GETTING_USER_DOCS:
       return Object.assign({}, state);
     case actionTypes.USER_DOCS_SUCCESS:
