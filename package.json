@@ -71,9 +71,7 @@
     "vorpal": "^1.11.2",
     "webpack": "1.13.0",
     "webpack-dev-middleware": "1.6.1",
-    "webpack-hot-middleware": "2.10.0"
-  },
-  "devDependencies": {
+    "webpack-hot-middleware": "2.10.0",
     "babel-preset-react-hmre": "1.1.1",
     "codeclimate-test-reporter": "^0.3.3",
     "codecov": "^1.0.1",
