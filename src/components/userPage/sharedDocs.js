@@ -14,6 +14,10 @@ export class SharedDocs extends Component {
     this.prepareStoreForEdit = this.prepareStoreForEdit.bind(this);
   }
 
+  componentWillMount() {
+    this.props.documentActions.editDocSuccess()
+  }
+
   componentWillReceiveProps(nextPorp) {
     const {userData: {_id}} = this.props.stateProp.userState;
     const {doc} = this.props.stateProp.userDocs.sharedDocs;
@@ -25,7 +29,6 @@ export class SharedDocs extends Component {
     const {id} = event.target;
     let selectedDocumentData = this.props.stateProp.userDocs.sharedDocs.doc[id];
 
-    this.props.documentActions.preparePageForEdit(selectedDocumentData);
     this.context.router.push({
       pathname: '/docs/edit/shared/' + selectedDocumentData._id
     });

@@ -81,13 +81,14 @@ export class SignUpComponent extends Component {
       return false;
     }
 
-    this.props.userActions.saveUserData(this.state.user);
+    this.props.userActions.saveUserData(this.state.user, event);
   }
 
   render() {
     const {
       userState: {
         displayLoader,
+        createUserError,
         success
       },
       roles: {roles}
@@ -95,6 +96,7 @@ export class SignUpComponent extends Component {
 
     if (success) {
       Materialize.toast('Account successfully created', 4000);
+      this.props.toggleSignUp(this.refs.signUpComponent);
     }
 
     return (
@@ -114,6 +116,7 @@ export class SignUpComponent extends Component {
             passwordIsVslid={this.validatePassword}
             passwordHasError={this.state.passwordError}
             matchPasswordError={this.state.confirmPasswordError}
+            errorMessage={createUserError}
             showLoader={displayLoader}
             roles={roles}
             matchPassword={this.confirmPassword}/>

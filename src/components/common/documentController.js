@@ -102,7 +102,8 @@ export const DocController = (ChildComponent) => {
     modalSubmitAction(event) {
       event.preventDefault();
       const {docData} = this.state;
-      const {username} = this.props.stateProp.userState.userData;
+      const {_id, username} = this.props.stateProp.userState.userData;
+      const creatorData = {_id, username}
 
       docData.access = docData.access.toString();
       this.setState({
@@ -113,7 +114,7 @@ export const DocController = (ChildComponent) => {
         }
       });
 
-      this.props.documentActions.createDoc(docData, username);
+      this.props.documentActions.createDoc(docData, creatorData);
       event.currentTarget.reset();
     }
 

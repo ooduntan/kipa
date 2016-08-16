@@ -29,13 +29,13 @@ const SideNav = ({userData}) => {
         <li>
           <div
             className='logo-name custom-blue-text font-effect-mitosis left-align'>
-            DocKip
+            Kipa
           </div>
         </li>
         <li>
           <div className='user-info-container'>
             <div>
-              <img className='user-image' src={userImage}/>
+              <i className='user-image material-icons'>perm_identity</i>
             </div>
             <div className='username-text center-align'>
               <span>{lastname},</span> {firstname}

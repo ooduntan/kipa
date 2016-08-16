@@ -38,7 +38,7 @@ const UserContentPage = ({
     });
   } else {
     cards = (
-      <div>Oops!!! Sorry you don't any content at the moment</div>
+      <div className='center'>Oops!!! Sorry you don't any content at the moment</div>
     );
   }
 

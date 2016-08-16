@@ -9,7 +9,7 @@ const Header = ({status, signInEvent, searchEvent}) => {
     <div className='navbar-fixed'>
       <nav>
         <div className='nav-wrapper custom-blue'>
-          <div className='logo-name left white-text font-effect-mitosis left-align'>DocKip</div>
+          <div className='logo-name left white-text font-effect-mitosis left-align'>Kipa</div>
           <Link to='/' data-activates='mobile-demo' className='button-collapse'>
             <i className='material-icons'>menu</i>
           </Link>

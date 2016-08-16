@@ -205,12 +205,12 @@ export function deleteDocAction(docId) {
   };
 }
 
-export function createDoc(docData, username) {
+export function createDoc(docData, creatorData) {
   return (dispatch) => {
     dispatch(savingDoc());
     const url = '/api/documents/';
     return apiRequest(docData, 'post', url, function (apiResult) {
-      apiResult.newDoc.creator = {username};
+      apiResult.newDoc.creator = creatorData;
       dispatch(updateStoreWithNewDoc(apiResult));
     });
   };

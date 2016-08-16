@@ -14,7 +14,6 @@ const CardGroup = ({
   cardContent
 }) => {
   let deleteButton;
-
   if (cardCreator._id === currentUserId) {
     deleteButton = (
       <i id={docIndex}

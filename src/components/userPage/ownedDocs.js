@@ -14,7 +14,11 @@ export class OwnDocument extends Component {
     this.prepareStoreForEdit = this.prepareStoreForEdit.bind(this);
   }
 
-  componentWillReceiveProps(nextPorp, prevProps) {
+  componentWillMount() {
+    this.props.documentActions.editDocSuccess()
+  }
+
+  componentWillReceiveProps(nextPorp) {
     const {userData: {_id}} = this.props.stateProp.userState;
     const {docs} = this.props.stateProp.userDocs;
 
@@ -25,7 +29,6 @@ export class OwnDocument extends Component {
     const {id} = event.target;
     let selectedDocumentData = this.props.stateProp.userDocs.docs[id];
 
-    this.props.documentActions.preparePageForEdit(selectedDocumentData);
     this.context.router.push({
       pathname: '/docs/edit/owned/' + selectedDocumentData._id
     });

@@ -154,7 +154,7 @@
      */
     canView: function(userData, docData) {
       if (userData._id === docData.creator ||
-        docData.access.indexOf(userData.role) > -1) {
+        docData.access.indexOf(userData.role._id) > -1) {
         return true;
       } else {
         return false;

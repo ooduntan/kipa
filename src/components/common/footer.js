@@ -7,8 +7,8 @@ const Footer = () => {
         ...Create, Share and Manage Documents
       </div>
       <div>
-        <div className='footer-links'>Dockip Home | Contact | Security | Term of Service | Privacy Policy</div>
-        <div>© 2016, DocKip Corporation. All Right Resevered</div>
+        <div className='footer-links'>Kipa Home | Contact | Security | Term of Service | Privacy Policy</div>
+        <div>© 2016, Kipa Corporation. All Right Resevered</div>
       </div>
     </div>
   );

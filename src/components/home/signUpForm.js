@@ -11,10 +11,11 @@ const SignUpForm = ({
   passwordHasError,
   matchPasswordError,
   matchPassword,
-  showLoader
+  showLoader,
+  errorMessage
 }) => {
   return (
-    <form onSubmit={saveAction} className='col s12 form-container-space'>
+    <form onSubmit={saveAction} id='sign-up' className='col s12 form-container-space'>
       <div className='row'>
         <InputComponent
           name='firstname'
@@ -83,9 +84,10 @@ const SignUpForm = ({
           validateFunction={matchPassword}
           onChangeEvent={changeHandler}/>
       </div>
-      <div className={`${showLoader} progress`}>
+      <div className={`${showLoader} custom-loader progress`}>
         <div className='indeterminate'></div>
       </div>
+      <div className='error-span-position error-span'>{errorMessage}</div>
       <ButtonComponent
         text='SIGN UP'
         name='sign-up'

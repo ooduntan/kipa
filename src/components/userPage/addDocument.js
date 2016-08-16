@@ -49,7 +49,7 @@ const NewDocumentForm = ({
             showLoader={showLoader}
           />
           <button
-            className='btn custom-create-btn'>Create
+            className='btn custom-create-doc custom-blue '>Create
           </button>
         </div>
       </div>

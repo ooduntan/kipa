@@ -23,6 +23,8 @@ export default function userReducer(state = initialState, action) {
       return Object.assign({}, state, action.data);
     case actionTypes.UPDATE_FAILED:
       return Object.assign({}, state, action.data);
+    case actionTypes.CREATE_USER_FAILED:
+      return Object.assign({}, state, action.data);
     case actionTypes.UPDATED_USER_DATA:
       return Object.assign({}, state, action.data);
     case actionTypes.ACTIVATE_SUBMIT_BUTTON:

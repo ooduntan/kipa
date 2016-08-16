@@ -12,7 +12,8 @@ export function savingUser() {
   return {
     type: actionTypes.SAVING_USER,
     data: {
-      displayLoader: 'block'
+      displayLoader: '',
+      userCreated: false
     }
   };
 }
@@ -21,7 +22,8 @@ export function saveUserSuccess() {
   return {
     type: actionTypes.SAVE_USER_SUCCESS,
     data: {
-      displayLoader: 'none'
+      displayLoader: 'hide-element',
+      userCreated: true
     }
   };
 }
@@ -109,6 +111,16 @@ export function loginFailed(loginResult) {
   };
 }
 
+export function saveUserFailed() {
+  return {
+    type: actionTypes.CREATE_USER_FAILED,
+    data: {
+      createUserError: 'An error occured. Try again',
+      displayLoader: 'hide-element'
+    }
+  }
+}
+
 export function checkLoginResult(loginData) {
   return (dispatch) => {
     if (loginData.message) {
@@ -138,7 +150,11 @@ export function saveUserData(user) {
     const url = '/api/users/';
     return apiRequest(user, 'post', url, function (apiResult) {
       dispatch(createUser(apiResult));
-      dispatch(saveUserSuccess());
+      if (apiResult.success) {
+        return dispatch(saveUserSuccess());
+      }
+      
+      return dispatch(saveUserFailed());
     });
   };
 }

@@ -10,6 +10,10 @@
     border-radius: 4px !important;
 }
 
+.custom-create-doc {
+    margin-right: 16px !important;
+}
+
 nav li:hover {
     border-bottom: 1px solid white;
     box-sizing: border-box;
@@ -155,7 +159,7 @@ nav li:hover {
     margin-right: 4%;
 }
 
-.side-nav div:hover {
+.side-nav .bold:hover {
     color: #203d73;
 }
 
@@ -165,7 +169,7 @@ nav li:hover {
 
 .custom-create-btn {
     background-color: #375a86;
-    margin-right: 18px !important;
+    margin-right: 8px !important;
 }
 
 .custom-update-btn {
@@ -247,11 +251,9 @@ nav li:hover {
 }
 
 .user-image {
-    width: 30%;
-    border-radius: 50%;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+    margin: auto;
+    display: table;
+    font-size: 77px;
 }
 
 .hide-element {
