@@ -1,10 +1,10 @@
-import {connect} from "react-redux";
-import React, {Component, PropTypes} from "react";
-import {bindActionCreators} from "redux";
-import * as searchActions from "../../actions/searchAction";
-import * as roleActions from "../../actions/roleActions";
-import * as userActions from "../../actions/userAction";
-import * as documentActions from "../../actions/documentAction";
+import {connect} from 'react-redux';
+import React, {Component, PropTypes} from 'react';
+import {bindActionCreators} from 'redux';
+import * as searchActions from '../../actions/searchAction';
+import * as roleActions from '../../actions/roleActions';
+import * as userActions from '../../actions/userAction';
+import * as documentActions from '../../actions/documentAction';
 
 export const DocController = (ChildComponent) => {
   class ParentComponent extends Component {

@@ -1,9 +1,9 @@
-import expect from "expect";
-import "../testUtils/localStorage";
-import React from "react";
-import {mount} from "enzyme";
-import {spy} from "sinon";
-import {EditUserComponent} from "../../components/userPage/editUserDataPage";
+import expect from 'expect';
+import '../testUtils/localStorage';
+import React from 'react';
+import {mount} from 'enzyme';
+import {spy} from 'sinon';
+import {EditUserComponent} from '../../components/userPage/editUserDataPage';
 
 const props = {
   userActions: {

@@ -1,11 +1,11 @@
-import React, {PropTypes, Component} from "react";
-import SideNav from "./sideNav";
-import NewDocumentForm from "./addDocument";
-import Header from "../common/header";
-import Fab from "../common/fab";
-import {DocController} from "../common/documentController";
-import UserContentPage from "./userContentPage";
-import DeleteModal from "./deleteDoc";
+import React, {PropTypes, Component} from 'react';
+import SideNav from './sideNav';
+import NewDocumentForm from './addDocument';
+import Header from '../common/header';
+import Fab from '../common/fab';
+import {DocController} from '../common/documentController';
+import UserContentPage from './userContentPage';
+import DeleteModal from './deleteDoc';
 
 export class OwnDocument extends Component {
   constructor() {
@@ -16,6 +16,10 @@ export class OwnDocument extends Component {
 
   componentWillMount() {
     this.props.documentActions.editDocSuccess()
+  }
+
+  componentWillUnmount() {
+    $(window).unbind('scroll');
   }
 
   componentWillReceiveProps(nextPorp) {

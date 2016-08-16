@@ -1,9 +1,9 @@
-import expect from "expect";
-import "../testUtils/localStorage";
-import React from "react";
-import {mount} from "enzyme";
-import {spy} from "sinon";
-import SideNav from "../../components/userPage/sideNav";
+import expect from 'expect';
+import '../testUtils/localStorage';
+import React from 'react';
+import {mount} from 'enzyme';
+import {spy} from 'sinon';
+import SideNav from '../../components/userPage/sideNav';
 
 const props = {
   userData: {

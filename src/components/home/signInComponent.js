@@ -1,5 +1,5 @@
-import React, {PropTypes, Component} from "react";
-import SignInForm from "./signInForm";
+import React, {PropTypes, Component} from 'react';
+import SignInForm from './signInForm';
 
 export class SignInComponent extends Component {
   constructor() {

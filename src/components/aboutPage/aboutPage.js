@@ -1,7 +1,4 @@
-// (function() {
-//   'use strict';
-
-import React from "react";
+import React from 'react';
 
 class AboutPage extends React.Component {
   render() {
@@ -14,5 +11,3 @@ class AboutPage extends React.Component {
 }
 
 export default AboutPage;
-
-// }());

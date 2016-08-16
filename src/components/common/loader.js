@@ -1,4 +1,4 @@
-import React, {PropTypes} from "react";
+import React, {PropTypes} from 'react';
 
 const Preloader = ({showLoader, size, position}) => {
   let displayLoader = showLoader ? {display: 'none'} : {display: 'block'};

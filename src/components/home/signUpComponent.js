@@ -1,5 +1,5 @@
-import React, {PropTypes, Component} from "react";
-import SignUpForm from "./signUpForm";
+import React, {PropTypes, Component} from 'react';
+import SignUpForm from './signUpForm';
 
 export class SignUpComponent extends Component {
   constructor() {
@@ -107,7 +107,7 @@ export class SignUpComponent extends Component {
             Create a free DocKip account
           </div>
         </div>
-        <div className="row">
+        <div className='row'>
           <SignUpForm
             changeHandler={this.onChangeHandler}
             saveAction={this.saveUser}

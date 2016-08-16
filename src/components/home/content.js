@@ -1,7 +1,7 @@
-import React, {PropTypes} from "react";
-import Description from "./description";
-import SignUpComponent from "./signUpComponent";
-import SignInComponent from "./signInComponent";
+import React, {PropTypes} from 'react';
+import Description from './description';
+import SignUpComponent from './signUpComponent';
+import SignInComponent from './signInComponent';
 
 const HomeContent = ({toggleSignUp, userActions, stateProp}) => {
   return (

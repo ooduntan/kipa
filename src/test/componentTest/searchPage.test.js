@@ -1,9 +1,9 @@
-import expect from "expect";
-import "../testUtils/localStorage";
-import React from "react";
-import {mount} from "enzyme";
-import {spy} from "sinon";
-import {Search} from "../../components/userPage/search";
+import expect from 'expect';
+import '../testUtils/localStorage';
+import React from 'react';
+import {mount} from 'enzyme';
+import {spy} from 'sinon';
+import {Search} from '../../components/userPage/search';
 
 const props = {
   changeHandler: function () {

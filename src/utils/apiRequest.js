@@ -1,4 +1,4 @@
-import * as request from "superagent";
+import * as request from 'superagent';
 export function apiRequest(data, type, url, callBack) {
   request[type](url)
     .send(data)

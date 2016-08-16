@@ -1,8 +1,8 @@
-import React, {PropTypes, Component} from "react";
-import EditUserForm from "./editUserForm";
-import SideNav from "./sideNav";
-import Header from "../common/header";
-import {DocController} from "../common/documentController";
+import React, {PropTypes, Component} from 'react';
+import EditUserForm from './editUserForm';
+import SideNav from './sideNav';
+import Header from '../common/header';
+import {DocController} from '../common/documentController';
 
 export class EditUserComponent extends Component {
   constructor() {

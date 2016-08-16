@@ -1,8 +1,8 @@
-import React, {Component, PropTypes} from "react";
+import React, {Component, PropTypes} from 'react';
 import EditDocumentForm from './editDocumentForm';
-import SideNav from "./sideNav";
-import Header from "../common/header";
-import {DocController} from "../common/documentController";
+import SideNav from './sideNav';
+import Header from '../common/header';
+import {DocController} from '../common/documentController';
 
 export class EditDocument extends Component {
   constructor() {

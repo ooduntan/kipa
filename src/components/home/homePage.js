@@ -1,8 +1,8 @@
-import React, {Component, PropTypes} from "react";
-import Header from "../common/header";
-import Footer from "../common/footer";
-import HomeContent from "./content";
-import {DocController} from "../common/documentController";
+import React, {Component, PropTypes} from 'react';
+import Header from '../common/header';
+import Footer from '../common/footer';
+import HomeContent from './content';
+import {DocController} from '../common/documentController';
 
 export class Homepage extends Component {
   constructor() {

@@ -1,6 +1,5 @@
 import React, {PropTypes, Component} from 'react';
 import {Link} from 'react-router';
-import userImage from '../../images/testImage.jpg';
 import Preloader from '../common/loader';
 
 const SideNav = ({userData}) => {

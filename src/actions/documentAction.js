@@ -1,5 +1,5 @@
-import * as actionTypes from "./actionType.js";
-import {apiRequest} from "../utils/apiRequest";
+import * as actionTypes from './actionType.js';
+import {apiRequest} from '../utils/apiRequest';
 
 export function getSharedDocSuccess(sharedDocs) {
   return {

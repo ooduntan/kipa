@@ -1,13 +1,15 @@
-import expect from "expect";
-import "../testUtils/localStorage";
-import React from "react";
-import {mount} from "enzyme";
-import {spy} from "sinon";
-import {OwnDocument} from "../../components/userPage/ownedDocs";
+import expect from 'expect';
+import '../testUtils/localStorage';
+import React from 'react';
+import {mount} from 'enzyme';
+import {spy} from 'sinon';
+import {OwnDocument} from '../../components/userPage/ownedDocs';
 
 const props = {
-  changeHandler: function () {
-    return;
+  documentActions: {
+    editDocSuccess: function () {
+      return;
+    }
   },
   stateProp: {
     userState: {
@@ -36,7 +38,7 @@ const props = {
   }
 };
 
-describe('Test the sign in page', () => {
+describe('User document page', () => {
   let ownDocument;
 
   beforeEach(() => {

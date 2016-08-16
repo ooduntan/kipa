@@ -1,9 +1,9 @@
-import SideNav from "./sideNav";
-import Header from "../common/header";
-import DeleteModal from "./deleteDoc";
-import UserContentPage from "./userContentPage";
-import React, {PropTypes, Component} from "react";
-import {DocController} from "../common/documentController";
+import SideNav from './sideNav';
+import Header from '../common/header';
+import DeleteModal from './deleteDoc';
+import UserContentPage from './userContentPage';
+import React, {PropTypes, Component} from 'react';
+import {DocController} from '../common/documentController';
 
 export class Search extends Component {
   constructor() {
@@ -19,6 +19,10 @@ export class Search extends Component {
     if ((!docSuccess && refreshed) || updateSearch) {
       this.props.searchActions.searchDocument(q, roleId);
     }
+  }
+
+  componentWillUnmount() {
+    $(window).unbind('scroll');
   }
 
   prepareStoreForEdit(event) {

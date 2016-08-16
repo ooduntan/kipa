@@ -244,6 +244,7 @@
               .end(function(err, res) {
                 res.status.should.equal(200);
                 res.body.doc.should.be.type('object');
+                console.log(res.body.doc);
                 res.body.doc[0].creator._id.should.equal(3);
                 done();
               });

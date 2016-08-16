@@ -1,5 +1,5 @@
-import * as actionTypes from "./actionType";
-import {apiRequest} from "../utils/apiRequest";
+import * as actionTypes from './actionType';
+import {apiRequest} from '../utils/apiRequest';
 
 export function getDocsSuccess(rolesData) {
   return {

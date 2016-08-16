@@ -1,11 +1,11 @@
-import React, {Component, PropTypes} from "react";
-import SideNav from "./sideNav";
-import {DocController} from "../common/documentController";
-import NewDocumentForm from "./addDocument";
-import Header from "../common/header";
-import Fab from "../common/fab";
-import UserContentPage from "./userContentPage";
-import DeleteModal from "./deleteDoc";
+import React, {Component, PropTypes} from 'react';
+import SideNav from './sideNav';
+import {DocController} from '../common/documentController';
+import NewDocumentForm from './addDocument';
+import Header from '../common/header';
+import Fab from '../common/fab';
+import UserContentPage from './userContentPage';
+import DeleteModal from './deleteDoc';
 
 export class SharedDocs extends Component {
   constructor() {
@@ -16,6 +16,10 @@ export class SharedDocs extends Component {
 
   componentWillMount() {
     this.props.documentActions.editDocSuccess()
+  }
+
+  componentWillUnmount() {
+    $(window).unbind('scroll');
   }
 
   componentWillReceiveProps(nextPorp) {

@@ -1,8 +1,8 @@
-import expect from "expect";
-import "../testUtils/localStorage";
-import React from "react";
-import {mount} from "enzyme";
-import {Homepage} from "../../components/home/homePage";
+import expect from 'expect';
+import '../testUtils/localStorage';
+import React from 'react';
+import {mount} from 'enzyme';
+import {Homepage} from '../../components/home/homePage';
 const props = {
   signInEvent: function () {
     return;
@@ -19,7 +19,7 @@ const props = {
 describe('Test home page component', () => {
   it('Should check if the homepage is loaded', () => {
     const wrapper = mount(<Homepage {...props}/>);
-    expect(wrapper.find('.logo-name').text()).toBe('DocKip');
+    expect(wrapper.find('.logo-name').text()).toBe('Kipa');
   });
 
   it('Should not have search field if user not logged in', () => {

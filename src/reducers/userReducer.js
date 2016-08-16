@@ -1,5 +1,5 @@
-import * as actionTypes from "../actions/actionType.js";
-import {initialState} from "./initialState";
+import * as actionTypes from '../actions/actionType.js';
+import {initialState} from './initialState';
 
 export default function userReducer(state = initialState, action) {
   switch (action.type) {

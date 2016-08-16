@@ -1,5 +1,5 @@
-import React, {PropTypes} from "react";
-import {Input, Row} from "react-materialize";
+import React, {PropTypes} from 'react';
+import {Input, Row} from 'react-materialize';
 
 const SelectComponent = ({selectData, size, addedClass, selectedValue, onChangeEvent, name}) => {
   return (

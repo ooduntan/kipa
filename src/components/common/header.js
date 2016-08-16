@@ -1,7 +1,7 @@
-import React, {PropTypes, Component} from "react";
-import {Link} from "react-router";
-import SearchField from "./searchField";
-import Logout from "./logout";
+import React, {PropTypes, Component} from 'react';
+import {Link} from 'react-router';
+import SearchField from './searchField';
+import Logout from './logout';
 
 const Header = ({status, signInEvent, searchEvent}) => {
 

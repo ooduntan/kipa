@@ -1,6 +1,6 @@
-import expect from "expect";
-import * as userActions from "../../actions/userAction";
-import userReducer from "../../reducers/userReducer";
+import expect from 'expect';
+import * as userActions from '../../actions/userAction';
+import userReducer from '../../reducers/userReducer';
 
 describe('User reducer test', () => {
   const initialState = {
@@ -22,14 +22,14 @@ describe('User reducer test', () => {
     const action = userActions.savingUser();
     const newState = userReducer(initialState, action);
 
-    expect(newState.displayLoader).toEqual('block');
+    expect(newState.displayLoader).toEqual('');
   });
 
   it('Should update the loader property in the store', () => {
     const action = userActions.saveUserSuccess();
     const newState = userReducer(initialState, action);
 
-    expect(newState.displayLoader).toEqual('none');
+    expect(newState.displayLoader).toEqual('hide-element');
   });
 
   it('Should update the loader property in the store', () => {

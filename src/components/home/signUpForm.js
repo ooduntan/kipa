@@ -1,5 +1,5 @@
-import {InputComponent, ButtonComponent, SelectComponent} from "../common/input";
-import React, {PropTypes} from "react";
+import {InputComponent, ButtonComponent, SelectComponent} from '../common/input';
+import React, {PropTypes} from 'react';
 
 const SignUpForm = ({
   roles,

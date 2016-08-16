@@ -19,7 +19,8 @@ describe('User actions', () => {
     const expectedResult = {
       type: actionTypes.SAVING_USER,
       data: {
-        displayLoader: 'block'
+        displayLoader: '',
+        userCreated: false
       }
     };
     const action = userActions.savingUser();
@@ -31,7 +32,8 @@ describe('User actions', () => {
     const expectedResult = {
       type: actionTypes.SAVE_USER_SUCCESS,
       data: {
-        displayLoader: 'none'
+        displayLoader: 'hide-element',
+        userCreated: true
       }
     };
     const action = userActions.saveUserSuccess(userData);
