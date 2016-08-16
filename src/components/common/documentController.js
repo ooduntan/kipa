@@ -26,7 +26,6 @@ export const DocController = (ChildComponent) => {
       this.confirmDelete = this.confirmDelete.bind(this);
       this.OnchangeTinymce = this.OnchangeTinymce.bind(this);
       this.onChangeHandler = this.onChangeHandler.bind(this);
-      this.addMoreDocument = this.addMoreDocument.bind(this);
       this.onClickCheckBox = this.onClickCheckBox.bind(this);
       this.modalSubmitAction = this.modalSubmitAction.bind(this);
     }
@@ -143,30 +142,7 @@ export const DocController = (ChildComponent) => {
       });
       $('#createModal').openModal();
     }
-
-    addMoreDocument(MethodName, userRoleOrId, exisitingDocs) {
-      const _this = this;
-
-      $(window).scroll(function () {
-        const winObj = $(window);
-        const docObj = $(document);
-        const {
-          fullOwnedDoc,
-          loadedSharedDocs,
-          allSearchedDocs,
-          lazyLoading
-        } = _this.props.stateProp.userDocs;
-
-        if (winObj.scrollTop() + winObj.height() === docObj.height()) {
-          if (!lazyLoading && exisitingDocs.length > 9) {
-            _this
-              .props
-              .documentActions[MethodName](exisitingDocs.length, userRoleOrId);
-          }
-        }
-      });
-    }
-
+    
     render() {
       return (
         <ChildComponent
@@ -178,7 +154,6 @@ export const DocController = (ChildComponent) => {
           modalSubmitAction={this.modalSubmitAction}
           onClickCheckbox={this.onClickCheckBox}
           logoutEvent={this.logout}
-          lazyLoader={this.addMoreDocument}
           fabClick={this.fabClick}
           {...this.props}/>
       );

@@ -18,8 +18,35 @@ export function searchDocument(searchTerm, userRole) {
     const url = '/api/documents?q=' + searchTerm + '&role=' + userRole;
 
     apiRequest(null, 'get', url, (apiResult) => {
-      console.log(apiResult, 'checkin api result');
       dispatch(searchCompleted(searchTerm, apiResult));
+    });
+  };
+}
+
+export function addingMoreDocToStore() {
+  return {
+    type: actionTypes.ADDING_MORE_DOC_TO_STORE,
+    data: {lazyLoading: true}
+  };
+}
+
+export function updatedStoreWithSearchedDocs(newDocs) {
+  return {
+    type: actionTypes.ADD_MORE_SHARED_DOCS,
+    data: {
+      docs: newDocs.doc,
+      lazyLoading: false
+    }
+  };
+}
+
+export function addMoreSearchResult(exisitingDocs, userRole, searchTerm) {
+  return (dispatch) => {
+    dispatch(addingMoreDocToStore());
+    const url = '/api/documents?q=' + searchTerm + '&role=' +
+      userRole + 'offset=' + exisitingDocs;
+    return apiRequest(null, 'get', url, function (apiResult) {
+      return dispatch(updatedStoreWithSearchedDocs(apiResult));
     });
   };
 }

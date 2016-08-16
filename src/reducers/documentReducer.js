@@ -27,7 +27,13 @@ export default function docReducer(state = initialState, action) {
     case actionTypes.ADDING_MORE_DOC_TO_STORE:
       return Object.assign({}, state, action.data);
     case actionTypes.ADD_MORE_SHARED_DOCS:
-      return Object.assign({}, state, action.data);
+      return Object.assign({}, state, {
+          sharedDocs: {
+            doc: [...state.sharedDocs.doc, ...action.data]
+          },
+          lazyLoading: action.data.lazyLoading
+        }
+      );
     case actionTypes.ADD_MORE_DOC_TO_STORE:
       return Object.assign({}, state, {
         docs: [...state.docs, ...action.data.docs]

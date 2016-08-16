@@ -10,7 +10,8 @@ import DeleteModal from './deleteDoc';
 export class SharedDocs extends Component {
   constructor() {
     super();
-
+    
+    this.addMoreSharedDocs   = this.addMoreSharedDocs.bind(this);
     this.prepareStoreForEdit = this.prepareStoreForEdit.bind(this);
   }
 
@@ -18,15 +19,27 @@ export class SharedDocs extends Component {
     this.props.documentActions.editDocSuccess()
   }
 
+  componentDidMount() {
+    $(window).scroll(this.addMoreSharedDocs)
+  }
+
   componentWillUnmount() {
     $(window).unbind('scroll');
   }
 
-  componentWillReceiveProps(nextPorp) {
-    const {userData: {_id}} = this.props.stateProp.userState;
-    const {doc} = this.props.stateProp.userDocs.sharedDocs;
+  addMoreSharedDocs() {
+    const winObj = $(window);
+    const docObj = $(document);
+    const {lazyLoading, sharedDocs: {doc}} = this.props.stateProp.userDocs;
+    const {role: {_id: roleId}} = this.props.stateProp.userState.userData;
 
-    this.props.lazyLoader('addSharedDocs', _id, doc);
+    if (winObj.scrollTop() + winObj.height() === docObj.height()
+      && !lazyLoading && doc.length > 9) {
+      this
+        .props
+        .documentActions
+        .addSharedDocs(doc.length, roleId);
+    }
   }
 
   prepareStoreForEdit(event) {
@@ -96,7 +109,6 @@ SharedDocs.propTypes = {
   fabClick: PropTypes.func,
   OnchangeTinymce: PropTypes.func,
   confirmDelete: PropTypes.func,
-  lazyLoader: PropTypes.func,
   stateProp: PropTypes.object,
   documentActions: PropTypes.object,
   logoutEvent: PropTypes.func,

@@ -11,22 +11,35 @@ export class OwnDocument extends Component {
   constructor() {
     super();
 
+    this.addMoreDocs         = this.addMoreDocs.bind(this);
     this.prepareStoreForEdit = this.prepareStoreForEdit.bind(this);
   }
 
   componentWillMount() {
-    this.props.documentActions.editDocSuccess()
+    this.props.documentActions.editDocSuccess();
+  }
+
+  componentDidMount() {
+    $(window).scroll(this.addMoreDocs)
   }
 
   componentWillUnmount() {
     $(window).unbind('scroll');
   }
 
-  componentWillReceiveProps(nextPorp) {
-    const {userData: {_id}} = this.props.stateProp.userState;
-    const {docs} = this.props.stateProp.userDocs;
+  addMoreDocs() {
+      const winObj = $(window);
+      const docObj = $(document);
+      const {lazyLoading, docs} = this.props.stateProp.userDocs;
+      const {_id: userId} = this.props.stateProp.userState.userData;
 
-    this.props.lazyLoader('addOwnedDocs', _id, docs);
+      if (winObj.scrollTop() + winObj.height() === docObj.height()
+        && !lazyLoading && docs.length > 9) {
+          this
+            .props
+            .documentActions
+            .addOwnedDocs(docs.length, userId);
+      }
   }
 
   prepareStoreForEdit(event) {
@@ -91,7 +104,6 @@ OwnDocument.propTypes = {
   fabClick: PropTypes.func,
   OnchangeTinymce: PropTypes.func,
   confirmDelete: PropTypes.func,
-  lazyLoader: PropTypes.func,
   stateProp: PropTypes.object,
   documentActions: PropTypes.object,
   logoutEvent: PropTypes.func,
