@@ -1,5 +1,6 @@
 import expect from 'expect';
 import '../testUtils/localStorage';
+import {testContext} from '../testUtils/contextMock';
 import React from 'react';
 import {mount} from 'enzyme';
 import {spy} from 'sinon';
@@ -31,6 +32,13 @@ const props = {
         username: 'tobolowoski'
       }
     },
+    context: {
+      router: {
+        push: function () {
+          return;
+        }
+      }
+    },
     roles: {
       roles: [
         {
@@ -54,7 +62,7 @@ describe('Test edit user data page', () => {
   let editUserComponent;
 
   beforeEach(() => {
-    editUserComponent = mount(<EditUserComponent {...props}/>);
+    editUserComponent = mount(<EditUserComponent {...props}/>, testContext);
   });
 
   it('Should render five inputs', () => {

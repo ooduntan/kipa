@@ -44,6 +44,13 @@ global.window.tinymce = {init: () => {}};
 global.window.$ = $;
 global.window.jQuery = jQuery;
 global.window.$.fn.material_select = () => {return this};
+global.window.context = {
+  router: {
+    push: function () {
+      return;
+    }
+  }
+}
 
 Object.keys(document.defaultView).forEach((property) => {
   if (typeof global[property] === 'undefined') {

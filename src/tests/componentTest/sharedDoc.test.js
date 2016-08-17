@@ -1,5 +1,6 @@
 import expect from 'expect';
 import '../testUtils/localStorage';
+import {testContext} from '../testUtils/contextMock';
 import React from 'react';
 import {mount} from 'enzyme';
 import {spy} from 'sinon';
@@ -45,7 +46,7 @@ describe('Shared document page', () => {
   let sharedDocs;
 
   beforeEach(() => {
-    sharedDocs = mount(<SharedDocs {...props}/>);
+    sharedDocs = mount(<SharedDocs {...props}/>, testContext);
   });
 
   it('Should render four inputs', () => {

@@ -22,7 +22,6 @@ export class EditDocument extends Component {
   componentWillMount() {
     let seletedDoc = this.props.stateProp.userDocs.editDocumentData;
     const {title, access, content} = seletedDoc;
-
     if (!window.localStorage.getItem('token')) {
       this.context.router.push('/');
     }

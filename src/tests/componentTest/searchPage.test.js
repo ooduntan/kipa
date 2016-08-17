@@ -3,6 +3,7 @@ import '../testUtils/localStorage';
 import React from 'react';
 import {mount} from 'enzyme';
 import {spy} from 'sinon';
+import {testContext} from '../testUtils/contextMock';
 import {Search} from '../../components/userPage/search';
 
 const props = {
@@ -54,7 +55,7 @@ describe('Test the sign in page', () => {
   let search;
 
   beforeEach(() => {
-    search = mount(<Search {...props}/>);
+    search = mount(<Search {...props}/>, testContext);
   });
 
   it('Should render only search inputs', () => {

@@ -1,5 +1,6 @@
 import expect from 'expect';
 import '../testUtils/localStorage';
+import {testContext} from '../testUtils/contextMock';
 import React from 'react';
 import {mount} from 'enzyme';
 import {spy} from 'sinon';
@@ -9,6 +10,13 @@ const props = {
   documentActions: {
     editDocSuccess: function () {
       return;
+    }
+  },
+  context: {
+    router: {
+      push: function () {
+        return
+      }
     }
   },
   stateProp: {
@@ -42,7 +50,7 @@ describe('User document page', () => {
   let ownDocument;
 
   beforeEach(() => {
-    ownDocument = mount(<OwnDocument {...props}/>);
+    ownDocument = mount(<OwnDocument {...props}/>, testContext);
   });
 
   it('Should render four inputs', () => {
