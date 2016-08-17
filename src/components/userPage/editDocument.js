@@ -23,6 +23,10 @@ export class EditDocument extends Component {
     let seletedDoc = this.props.stateProp.userDocs.editDocumentData;
     const {title, access, content} = seletedDoc;
 
+    if (!window.localStorage.getItem('token')) {
+      this.context.router.push('/');
+    }
+
     this.props.documentActions.updatePageWithEditData(this.props.params.id);
     this.setState({title, content, access});
   }
@@ -105,7 +109,7 @@ export class EditDocument extends Component {
       <div>
         <Header
           searchEvent={this.props.searchEvent}
-          signInEvent={this.props.logoutEvent}
+          logoutEvent={this.props.logoutEvent}
           status/>
         <SideNav
           roles={roles}

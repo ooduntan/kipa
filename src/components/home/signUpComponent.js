@@ -100,7 +100,7 @@ export class SignUpComponent extends Component {
     }
 
     return (
-      <div ref='signUpComponent' className='hide-element'>
+      <div ref='signUpComponent' className='hide-element signup-container'>
         <div className='signup-wrapper'>
           <div>Sign up for free</div>
           <div className='small-signup-text'>

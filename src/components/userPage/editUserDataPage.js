@@ -21,6 +21,12 @@ export class EditUserComponent extends Component {
     this.onSubmitEditForm = this.onSubmitEditForm.bind(this);
   }
 
+  componentWillMount() {
+    if (!window.localStorage.getItem('token')) {
+      this.context.router.push('/');
+    }
+  }
+
   onSubmitEditForm(event) {
     event.preventDefault();
     let updatedUserData = {};
@@ -60,7 +66,7 @@ export class EditUserComponent extends Component {
       <div>
         <Header
           searchEvent={this.props.searchEvent}
-          signInEvent={this.props.logoutEvent}
+          logoutEvent={this.props.logoutEvent}
           status/>
         <SideNav
           roles={roles}
@@ -82,6 +88,10 @@ export class EditUserComponent extends Component {
     );
   }
 }
+
+EditUserComponent.contextTypes = {
+  router: PropTypes.object
+};
 
 EditUserComponent.propTypes = {
   stateProp: PropTypes.object,

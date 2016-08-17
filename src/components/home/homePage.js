@@ -32,7 +32,7 @@ export class Homepage extends Component {
       <div>
         <Header
           searchEvent={this.props.searchEvent}
-          signInEvent={this.toggleSignUp}
+          logoutEvent={this.toggleSignUp}
           status={false}/>
         <HomeContent
           {...this.props}

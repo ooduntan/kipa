@@ -31,10 +31,8 @@ export const DocController = (ChildComponent) => {
     }
 
     componentWillMount() {
-      if (!window.localStorage.getItem('token')) {
-        this.context.router.push('/');
-      } else {
-        this.props.documentActions
+      if (window.localStorage.getItem('token')) {
+      this.props.documentActions
           .getComponentResources(this.props.stateProp.userState.userData);
       }
     }

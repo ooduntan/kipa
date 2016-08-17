@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import SearchField from './searchField';
 import Logout from './logout';
 
-const Header = ({status, signInEvent, searchEvent}) => {
+const Header = ({status, logoutEvent, searchEvent}) => {
 
   return (
     <div className='navbar-fixed'>
@@ -21,7 +21,7 @@ const Header = ({status, signInEvent, searchEvent}) => {
             <li activeClassName='active'>
               <Link to='the-app' activeClassName='active'>HOW IT WORKS</Link>
             </li>
-            {status ? <Logout status={status} logoutEvent={signInEvent}/> : ''}
+            {status ? <Logout status={status} logoutEvent={logoutEvent}/> : ''}
           </ul>
           <ul className='side-nav' id='mobile-demo'>
             <li>
@@ -29,9 +29,6 @@ const Header = ({status, signInEvent, searchEvent}) => {
             </li>
             <li>
               <Link to='the-app'>HOW IT WORKS</Link>
-            </li>
-            <li>
-              <Link to='#'>SIGN IN</Link>
             </li>
           </ul>
         </div>

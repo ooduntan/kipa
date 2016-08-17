@@ -23,6 +23,7 @@ nav li:hover {
     color: #ffffff;
     margin: auto;
     float: left;
+    width: 40%;
     margin-top: 14%;
     margin-left: 11%;
 }
@@ -409,6 +410,10 @@ nav li:hover {
     font-weight: 300;
 }
 
+.form-container .select-wrapper span.caret{
+    color: #ffffff;
+}
+
 .footer {
     text-align: center;
     color: #707070;
@@ -425,4 +430,21 @@ nav li:hover {
     color: #ffffff;
     width: 35%;
     margin-left: 2.5%;
+    min-width: 289.8px;
+}
+
+@media only screen and (max-width: 624px) {
+    .description-text {
+        width: 88%;
+        margin-top: 8%;
+        margin-left: 6%;
+    }
+    .form-container {
+        width: 77%;
+        margin-left: 0;
+    }
+
+    .info-container{
+        height: 740px;
+    }
 }

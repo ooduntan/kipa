@@ -17,6 +17,10 @@ export class SharedDocs extends Component {
 
   componentWillMount() {
     this.props.documentActions.editDocSuccess()
+
+    if (!window.localStorage.getItem('token')) {
+      this.context.router.push('/');
+    }
   }
 
   componentDidMount() {
@@ -67,7 +71,7 @@ export class SharedDocs extends Component {
       <div className='row'>
         <Header
           searchEvent={this.props.searchEvent}
-          signInEvent={this.props.logoutEvent}
+          logoutEvent={this.props.logoutEvent}
           status/>
         <SideNav
           roles={roles}

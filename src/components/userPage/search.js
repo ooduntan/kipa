@@ -11,8 +11,6 @@ export class Search extends Component {
     
     this.addMoreSearchResult = this.addMoreSearchResult.bind(this);
   }
-  
-  
 
   componentWillReceiveProps(nextProps) {
     const {
@@ -29,8 +27,14 @@ export class Search extends Component {
     
   }
 
+  componentWillMount() {
+    if (!window.localStorage.getItem('token')) {
+      this.context.router.push('/');
+    }
+  }
+  
   componentDidMount() {
-    // $(window).scroll(this.addMoreSearchResult);
+    $(window).scroll(this.addMoreSearchResult);
   }
   
   componentWillUnmount() {
@@ -78,7 +82,7 @@ export class Search extends Component {
       <div className='row'>
         <Header
           searchEvent={this.props.searchEvent}
-          signInEvent={this.props.logoutEvent}
+          logoutEvent={this.props.logoutEvent}
           status/>
         <SideNav
           userData={userData}/>
