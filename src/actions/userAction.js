@@ -91,9 +91,10 @@ export function updatingUserData() {
   };
 }
 
-export function updatedUserData(newUserData) {
+export function updatedUserData(newUserData, roles) {
   return (dispatch) => {
     if (newUserData.user) {
+      newUserData.user.role = roles[newUserData.user.role - 1];
       return dispatch(userUpdataSuccess(newUserData));
     }
 
@@ -134,12 +135,12 @@ export function checkLoginResult(loginData) {
   };
 }
 
-export function updateUserData(newUserData, id) {
+export function updateUserData(newUserData, id, roles) {
   return (dispatch) => {
     dispatch(updatingUserData());
     const url = '/api/users/' + id;
     return apiRequest(newUserData, 'put', url, function (apiResult) {
-      dispatch(updatedUserData(apiResult));
+      dispatch(updatedUserData(apiResult, roles));
     });
   };
 }

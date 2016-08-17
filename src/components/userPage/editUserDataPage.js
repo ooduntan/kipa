@@ -26,13 +26,14 @@ export class EditUserComponent extends Component {
     let updatedUserData = {};
     const {userData} = this.state;
     const {userData: {_id}} = this.props.stateProp.userState;
+    const {roles} = this.props.stateProp.roles;
 
     for (let key in userData) {
       if (userData[key].length) updatedUserData[key] = userData[key];
     }
 
     if (Object.keys(updatedUserData).length) {
-      this.props.userActions.updateUserData(updatedUserData, _id);
+      this.props.userActions.updateUserData(updatedUserData, _id, roles);
     }
   }
 

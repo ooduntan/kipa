@@ -22,7 +22,7 @@ const SideNav = ({userData}) => {
       },
       email
     } = userData;
-
+    
     return (
       <ul id='nav-mobile' className='side-nav fixed'>
         <li>
