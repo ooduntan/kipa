@@ -20,7 +20,7 @@ export class OwnDocument extends Component {
   }
 
   componentDidMount() {
-    $(window).scroll(this.addMoreDocs)
+    $(window).scroll(this.addMoreDocs);
   }
 
   componentWillUnmount() {

@@ -17,7 +17,7 @@
  2. Tests will not display detailed error messages
  when running against production version code
  */
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = 'TEST';
 
 // Register babel so that it will transpile ES6 to ES5
 // before our tests run.
@@ -31,14 +31,19 @@ require.extensions['.jpg'] = function () {return null;};
 
 // Configure JSDOM and set global variables
 // to simulate a browser environment for tests.
-var jsdom = require('jsdom').jsdom;
+var jsdom = require('jsdom').jsdom,
+  $ = require('jquery')(jsdom('').defaultView),
+  jQuery = $;
+// require('materialize-css')
 
 var exposedProperties = ['window', 'navigator', 'document'];
 
 global.document = jsdom('');
 global.window = document.defaultView;
 global.window.tinymce = {init: () => {}};
-global.window.$ = (argument) => {scroll: () => {}};
+global.window.$ = $;
+global.window.jQuery = jQuery;
+global.window.$.fn.material_select = () => {return this};
 
 Object.keys(document.defaultView).forEach((property) => {
   if (typeof global[property] === 'undefined') {

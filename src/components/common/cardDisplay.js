@@ -51,7 +51,7 @@ const CardGroup = ({
         <span className='card-title grey-text text-darken-4'>{cardTitle}
           <i className='material-icons right'>close</i>
         </span>
-        <p>{cardContent}</p>
+        <p dangerouslySetInnerHTML={{__html: cardContent}}/>
       </div>
     </div>
   );

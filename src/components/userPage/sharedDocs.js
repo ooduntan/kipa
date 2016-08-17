@@ -20,7 +20,7 @@ export class SharedDocs extends Component {
   }
 
   componentDidMount() {
-    $(window).scroll(this.addMoreSharedDocs)
+    $(window).scroll(this.addMoreSharedDocs);
   }
 
   componentWillUnmount() {

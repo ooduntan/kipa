@@ -30,7 +30,7 @@ export class Search extends Component {
   }
 
   componentDidMount() {
-    $(window).scroll(this.addMoreSearchResult);
+    // $(window).scroll(this.addMoreSearchResult);
   }
   
   componentWillUnmount() {
