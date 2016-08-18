@@ -4,6 +4,7 @@ import SearchField from './searchField';
 import Logout from './logout';
 
 const Header = ({status, logoutEvent, searchEvent}) => {
+  $('.button-collapse').sideNav();
 
   return (
     <div className='navbar-fixed'>

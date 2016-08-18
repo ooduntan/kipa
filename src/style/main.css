@@ -28,8 +28,8 @@ nav li:hover {
     margin-left: 11%;
 }
 
-.custom-nav-bar {
-    margin-left: 8.4% !important;
+nav > .nav-wrapper > .custom-nav-bar {
+    margin-left: 122px;
     float: left;
     width: 41%;
 }
@@ -137,7 +137,7 @@ nav li:hover {
 }
 
 .user-icon {
-    width: 21%;
+    width: 129px;
     padding-left: 5px;
     margin: auto;
     margin-bottom: 13px;
@@ -165,7 +165,7 @@ nav li:hover {
 }
 
 .content-container {
-    margin-left: 19%;
+    padding-left: 300px;
 }
 
 .custom-create-btn {
@@ -233,7 +233,7 @@ nav li:hover {
 .document-cards {
     width: 31%;
     float: left;
-    height: 355px;
+    min-width: 157.16px;
     margin-left: 2% !important;
 }
 
@@ -251,7 +251,7 @@ nav li:hover {
     padding: 14px 0px;
 }
 
-.user-image {
+.user-info-container > div > i {
     margin: auto;
     display: table;
     font-size: 77px;
@@ -385,7 +385,7 @@ nav li:hover {
 
 .footer-text {
     margin: 0 103px;
-    line-height: 94px;
+    line-height: 40px;
     text-align: center;
     border-bottom: 1px solid #cbcbcb;
     height: 86px;
@@ -446,5 +446,16 @@ nav li:hover {
 
     .info-container{
         height: 740px;
+    }
+
+    .footer-text {
+        font-size: 33px;
+        margin: 0 20px;
+    }
+}
+
+@media only screen and (max-width : 992px) {
+    .content-container {
+        padding-left: 0;
     }
 }
