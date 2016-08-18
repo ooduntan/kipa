@@ -44,6 +44,7 @@ global.window.tinymce = {init: () => {}};
 global.window.$ = $;
 global.window.jQuery = jQuery;
 global.window.$.fn.material_select = () => {return this};
+global.window.$.fn.sideNav = () => {return this};
 global.window.context = {
   router: {
     push: function () {
