@@ -9,7 +9,7 @@ const SelectComponent = ({selectData, size, addedClass, selectedValue, onChangeE
         onChange={onChangeEvent}
         s={size}
         type='select'
-        label='Roles'>
+        label='Role'>
         <option disabled>Choose your role</option>
         {
           selectData.map((item) => {

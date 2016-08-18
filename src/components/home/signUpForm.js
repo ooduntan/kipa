@@ -57,16 +57,14 @@ const SignUpForm = ({
           type='text'
           id='username'
           label='User Name'
-          newClass='s12 form-spacing'
+          newClass='s6 form-spacing'
           onChangeEvent={changeHandler}/>
-      </div>
-      <div className='row'>
         <InputComponent
           name='password'
           type='password'
           id='password'
           label='Password'
-          newClass='s12 form-spacing'
+          newClass='s6 form-spacing'
           errorMessage='Password must have six or more characters'
           inputError={passwordHasError}
           validateFunction={passwordIsVslid}

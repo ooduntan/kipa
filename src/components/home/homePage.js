@@ -19,21 +19,22 @@ export class Homepage extends Component {
 
   toggleSignUp(dom) {
     $(dom).slideUp('slow', function () {
-      if (dom.className === 'signup-container') {
-        return $('.' + dom.className).prev().slideDown('fast');
+      if (dom.className === 'signin-container') {
+        return $('.signup-container').slideDown('fast');
       }
 
-      return $('.' + dom.className).next().slideDown('fast');
+      return $('.signin-container').slideDown('fast');
     });
   }
 
   render() {
     return (
       <div>
-        <Header
-          searchEvent={this.props.searchEvent}
-          logoutEvent={this.toggleSignUp}
-          status={false}/>
+        <nav>
+          <div className='nav-wrapper custom-blue'>
+            <div className='logo-name left white-text font-effect-mitosis left-align'>Kipa</div>
+          </div>
+        </nav>
         <HomeContent
           {...this.props}
           toggleSignUp={this.toggleSignUp}

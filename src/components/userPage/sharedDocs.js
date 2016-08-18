@@ -70,10 +70,12 @@ export class SharedDocs extends Component {
     return (
       <div className='row'>
         <Header
+          userData={userData}
           searchEvent={this.props.searchEvent}
           logoutEvent={this.props.logoutEvent}
           status/>
         <SideNav
+          changeClass={this.props.changeClass}
           roles={roles}
           userData={userData}/>
         <UserContentPage

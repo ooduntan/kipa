@@ -6,7 +6,7 @@ const Preloader = ({showLoader, size, position}) => {
   return (
     <div className={position} style={displayLoader}>
       <div className={`preloader-wrapper ${size} active custom-spin`}>
-        <div className='spinner-layer spinner-blue-only custom-spin-color'>
+        <div className='spinner-layer custom-spin-color'>
           <div className='circle-clipper left'>
             <div className='circle'></div>
           </div>

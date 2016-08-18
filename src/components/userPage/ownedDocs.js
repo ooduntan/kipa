@@ -69,11 +69,11 @@ export class OwnDocument extends Component {
     return (
       <div className='row'>
         <Header
+          userData={userData}
           searchEvent={this.props.searchEvent}
           logoutEvent={this.props.logoutEvent}
           status/>
-        <SideNav
-          userData={userData}/>
+        <SideNav userData={userData}/>
         <UserContentPage
           header='My Documents'
           doc={docs}

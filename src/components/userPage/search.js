@@ -81,6 +81,7 @@ export class Search extends Component {
     return (
       <div className='row'>
         <Header
+          userData={userData}
           searchEvent={this.props.searchEvent}
           logoutEvent={this.props.logoutEvent}
           status/>

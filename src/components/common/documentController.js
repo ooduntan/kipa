@@ -152,6 +152,7 @@ export const DocController = (ChildComponent) => {
           modalSubmitAction={this.modalSubmitAction}
           onClickCheckbox={this.onClickCheckBox}
           logoutEvent={this.logout}
+          changeClass={this.changeClass}
           fabClick={this.fabClick}
           {...this.props}/>
       );

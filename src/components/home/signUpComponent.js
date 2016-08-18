@@ -95,7 +95,6 @@ export class SignUpComponent extends Component {
     } = this.props.stateProp;
 
     if (success) {
-      Materialize.toast('Account successfully created', 4000);
       this.props.toggleSignUp(this.refs.signUpComponent);
     }
 
@@ -104,7 +103,7 @@ export class SignUpComponent extends Component {
         <div className='signup-wrapper'>
           <div>Sign up for free</div>
           <div className='small-signup-text'>
-            Create a free DocKip account
+            Create a free Kipa account
           </div>
         </div>
         <div className='row'>

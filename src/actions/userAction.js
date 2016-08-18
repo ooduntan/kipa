@@ -152,7 +152,8 @@ export function saveUserData(user) {
     return apiRequest(user, 'post', url, function (apiResult) {
       dispatch(createUser(apiResult));
       if (apiResult.success) {
-        return dispatch(saveUserSuccess());
+        dispatch(saveUserSuccess());
+        return Materialize.toast('Account successfully created', 4000);
       }
       
       return dispatch(saveUserFailed());

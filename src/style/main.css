@@ -1,3 +1,4 @@
+
 .info-container {
     height: 567px;
     width: 100%;
@@ -117,7 +118,7 @@ nav > .nav-wrapper > .custom-nav-bar {
     padding-left: 23px;
 }
 
-.custom-spin-color {
+.preloader-wrapper > div.custom-spin-color {
     border-color: #203d73;
 }
 
@@ -261,7 +262,7 @@ nav > .nav-wrapper > .custom-nav-bar {
     display: none;
 }
 
-.custom-loader {
+.form-container-space > .custom-loader {
     width: 95%;
     margin-left: 2.3%;
 }
@@ -276,6 +277,10 @@ nav > .nav-wrapper > .custom-nav-bar {
     margin-bottom: 2px !important;
     border-bottom: 1px solid #F44336 !important;
     box-shadow: 0 1px 0 0 #F44336 !important;
+}
+
+.card-reveal > .card-title{
+    font-weight: 600;
 }
 
 .activator {
@@ -327,12 +332,12 @@ nav > .nav-wrapper > .custom-nav-bar {
 .main-text {
     font-size: 34.53px;
     width: 99%;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .supporting-text {
     margin-top: 13px;
-    font-weight: 300;
+    font-weight: 100;
     width: 64%;
 }
 
@@ -362,12 +367,16 @@ nav > .nav-wrapper > .custom-nav-bar {
     margin-top: 2%;
 }
 
+.current-menu {
+    border-right: #203d73 3px solid;
+}
+
 .small-signup-text {
     font-size: 12px;
     margin-bottom: 14px;
 }
 
-.signup-container {
+.signin-container, .signup-container {
     padding-left: 4.7%;
     padding-top: 19px;
 }
@@ -383,18 +392,21 @@ nav > .nav-wrapper > .custom-nav-bar {
     margin-left: 12px;
 }
 
+.app-desc {
+    font-size: 12px;
+    line-height: 15px;
+    font-weight: 300;
+}
+
 .footer-text {
     margin: 0 103px;
     line-height: 40px;
     text-align: center;
     border-bottom: 1px solid #cbcbcb;
-    height: 86px;
     color: #686868;
     font-size: 36px;
-}
-
-.footer-links {
-    line-height: 36px;
+    width: 100%;
+    padding-top: 19px;
 }
 
 .custom-btn {
@@ -410,6 +422,13 @@ nav > .nav-wrapper > .custom-nav-bar {
     font-weight: 300;
 }
 
+.not-found {
+    margin: 20px;
+    text-align: center;
+    font-size: 20px;
+    color: #7e7e7e;
+}
+
 .form-container .select-wrapper span.caret{
     color: #ffffff;
 }
@@ -417,7 +436,6 @@ nav > .nav-wrapper > .custom-nav-bar {
 .footer {
     text-align: center;
     color: #707070;
-    height: 164px;
     background-color: #f1f1f1;
 }
 
@@ -454,8 +472,32 @@ nav > .nav-wrapper > .custom-nav-bar {
     }
 }
 
+@media only screen and (max-width : 327px) {
+    .content-container > div > .document-cards {
+        min-width: 157.16px;
+        margin: 10%!important;
+        width: 79%;
+    }
+
+    nav ul a {
+        font-size: 10px;
+    }
+}
+
 @media only screen and (max-width : 992px) {
     .content-container {
         padding-left: 0;
     }
+
+    nav .button-collapse {
+        margin-left: 20px;
+    }
+
+    .footer-text {
+        font-size: 20px;
+    }
+    nav > .nav-wrapper > .custom-nav-bar {
+        margin-left: 1%;
+    }
 }
+

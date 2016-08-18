@@ -107,6 +107,7 @@ export class EditDocument extends Component {
     return (
       <div>
         <Header
+          userData={userData}
           searchEvent={this.props.searchEvent}
           logoutEvent={this.props.logoutEvent}
           status/>
