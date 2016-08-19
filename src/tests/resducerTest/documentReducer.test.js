@@ -120,7 +120,7 @@ describe('Document reducer', () => {
   });
 
   it('Should update the store with the update status', () => {
-    const action = docActions.InvalidUser();
+    const action = docActions.invalidUser();
     const newState = docReducer(initialState, action);
 
     expect(newState.redirect).toBe(true);

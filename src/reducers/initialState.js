@@ -15,6 +15,12 @@ export const initialState = {
   sharedDocs: {
     doc: []
   },
+  viewDoc: {
+    title: '',
+    content: '',
+    access: '',
+    creator: ''
+  },
   docSuccess: false,
   editDocumentData: {
     title: '',

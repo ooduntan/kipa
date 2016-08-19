@@ -2,11 +2,12 @@ import React, {PropTypes, Component} from 'react';
 import {Link} from 'react-router';
 import SearchField from './searchField';
 import Logout from './logout';
-import SideNav from '../userPage/sideNav'
 
-const Header = ({status, logoutEvent, searchEvent, userData}) => {
-  $('.button-collapse').sideNav();
-
+const Header = ({status, logoutEvent, searchEvent}) => {
+  $( document ).ready(function() {
+    $(".button-collapse").sideNav();
+  });
+  
   return (
     <div className='navbar-fixed'>
       <nav>

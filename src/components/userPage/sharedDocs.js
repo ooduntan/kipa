@@ -4,13 +4,15 @@ import {DocController} from '../common/documentController';
 import NewDocumentForm from './addDocument';
 import Header from '../common/header';
 import Fab from '../common/fab';
+import ViewDocModal from './viewDocModal';
 import UserContentPage from './userContentPage';
 import DeleteModal from './deleteDoc';
 
 export class SharedDocs extends Component {
   constructor() {
     super();
-    
+
+    this.viewDocEvent             = this.viewDocEvent.bind(this);
     this.addMoreSharedDocs   = this.addMoreSharedDocs.bind(this);
     this.prepareStoreForEdit = this.prepareStoreForEdit.bind(this);
   }
@@ -46,10 +48,21 @@ export class SharedDocs extends Component {
     }
   }
 
+
+  viewDocEvent(event) {
+    const {id} = event.target;
+    let selectedDocumentData = this.props.stateProp.userDocs.sharedDocs.doc[id];
+    selectedDocumentData.index = id;
+
+    this.props.documentActions.prepareStoreForDocDetails(selectedDocumentData)
+    $('#editDocModal').openModal();
+  }
+
   prepareStoreForEdit(event) {
     const {id} = event.target;
     let selectedDocumentData = this.props.stateProp.userDocs.sharedDocs.doc[id];
 
+    $('#editDocModal').closeModal();
     this.context.router.push({
       pathname: '/docs/edit/shared/' + selectedDocumentData._id
     });
@@ -58,6 +71,7 @@ export class SharedDocs extends Component {
   render() {
     const {
       userDocs: {
+        viewDoc,
         docSuccess,
         deleteDoc,
         sharedDocs: {doc},
@@ -66,7 +80,7 @@ export class SharedDocs extends Component {
       roles: {roles},
       userState: {userData}
     } = this.props.stateProp;
-
+    
     return (
       <div className='row'>
         <Header
@@ -82,6 +96,7 @@ export class SharedDocs extends Component {
           header='Shared Documents'
           doc={doc}
           cardType='shared'
+          viewEvent={this.viewDocEvent}
           lazyLoading={!lazyLoading}
           deleteEvent={this.props.confirmDelete}
           userId={userData._id}
@@ -96,6 +111,9 @@ export class SharedDocs extends Component {
           submitAction={this.props.modalSubmitAction}
           tinymceEvent={this.props.OnchangeTinymce}
           showLoader={docSuccess}/>
+        <ViewDocModal
+          docData={viewDoc}
+          editEvent={this.prepareStoreForEdit}/>
         <DeleteModal
           docData={deleteDoc}
           deleteEvent={this.props.deleteDoc}/>

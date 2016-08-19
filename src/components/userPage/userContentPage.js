@@ -7,6 +7,7 @@ import documentCover from '../../images/coverPlaceHolder.jpg';
 
 const UserContentPage = ({
   lazyLoading,
+  viewEvent,
   doc,
   header,
   cardType,
@@ -30,6 +31,7 @@ const UserContentPage = ({
           cardTitle={title}
           editCard={editCard}
           cardCreator={creator}
+          viewDoc={viewEvent}
           docDate={moment(createdAt).fromNow()}
           currentUserId={userId}
           confirmDelete={deleteEvent}

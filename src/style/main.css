@@ -30,7 +30,7 @@ nav li:hover {
 }
 
 nav > .nav-wrapper > .custom-nav-bar {
-    margin-left: 122px;
+    margin-left: 240px;
     float: left;
     width: 41%;
 }
@@ -89,7 +89,8 @@ nav > .nav-wrapper > .custom-nav-bar {
     margin-left: 11px;
 }
 
-.custom-create-btn:disabled, .custom-create-btn:disabled:hover {
+.custom-create-btn:disabled,
+.custom-create-btn:disabled:hover {
     background-color: rgba(158, 158, 158, 0.35);
     color: #979794;
     cursor: not-allowed;
@@ -98,7 +99,6 @@ nav > .nav-wrapper > .custom-nav-bar {
 
 .custom-checkox {
     float: left;
-    border-bottom: 1px solid #9e9e9e;
     padding-top: 10px;
     width: 50%;
 }
@@ -186,7 +186,8 @@ nav > .nav-wrapper > .custom-nav-bar {
     background-color: #034496;
 }
 
-.custom-update-btn:focus, .custom-update-btn:focus {
+.custom-update-btn:focus,
+.custom-update-btn:focus {
     background-color: #034496;
 }
 
@@ -298,7 +299,7 @@ nav > .nav-wrapper > .custom-nav-bar {
 
 .custom-doc-card span {
     line-height: 20px !important;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 400;
 }
 
@@ -449,6 +450,16 @@ nav > .nav-wrapper > .custom-nav-bar {
     width: 35%;
     margin-left: 2.5%;
     min-width: 289.8px;
+}
+
+.modal-footer > .modal-action:hover {
+    outline: 0;
+    background-color: #203d73;
+    color: #ffffff;
+}
+
+.modal-footer > span:first-child {
+    margin-left: 20px;
 }
 
 @media only screen and (max-width: 624px) {

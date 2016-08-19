@@ -6,7 +6,8 @@ const Footer = () => {
       <div className='valign-wrapper'>
         <div className='valign footer-text'>
           <div>...Create, Share and Manage Documents</div>
-          <div className='app-desc'>Kipa is a document management system that helps you collaborate and manage documents efficiently</div>
+          <div className='app-desc'>Kipa is a document management 
+            system that helps you collaborate and manage documents efficiently</div>
         </div>
       </div>
       <div>

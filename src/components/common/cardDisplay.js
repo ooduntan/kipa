@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 
 const CardGroup = ({
   id,
+  viewDoc,
   cardCorver,
   cardTitle,
   cardCreator,
@@ -30,7 +31,7 @@ const CardGroup = ({
         <img className='activator' src={cardCorver}/>
       </div>
       <div className='card-content custom-doc-card'>
-        <i className='material-icons activator right '>more_vert</i>
+        <i className='material-icons activator right'>more_vert</i>
         <span className='card-title activator truncate custom-blue-text '>
           {cardTitle}
         </span>
@@ -46,6 +47,12 @@ const CardGroup = ({
             edit
           </i>
         </Link>
+        <i
+          id={docIndex}
+          onClick={viewDoc}
+          className='material-icons modal-trigger custom-icon right'>
+          open_in_new
+        </i>
       </div>
       <div className='card-reveal'>
         <span className='card-title grey-text text-darken-4'>{cardTitle}

@@ -88,15 +88,10 @@ export class SignUpComponent extends Component {
     const {
       userState: {
         displayLoader,
-        createUserError,
-        success
+        createUserError
       },
       roles: {roles}
     } = this.props.stateProp;
-
-    if (success) {
-      this.props.toggleSignUp(this.refs.signUpComponent);
-    }
 
     return (
       <div ref='signUpComponent' className='hide-element signup-container'>

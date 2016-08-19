@@ -122,7 +122,7 @@ export function updateSearch() {
   };
 }
 
-export function InvalidUser() {
+export function invalidUser() {
   return {
     type: actionTypes.REDIRECT_USER,
     data: {redirect: true}
@@ -226,18 +226,29 @@ export function getUserDocs(userId) {
   };
 }
 
+export function prepareStoreForDocDetails(currentDoc) {
+  return {
+    type: actionTypes.ADD_DOC_DETAILS,
+    data: {
+      viewDoc: currentDoc,
+      lazyLoading: false
+    }
+  };
+  
+}
+
 export function upadateDocument(newDocData, docId) {
   return (dispatch) => {
     dispatch(updatingDocData());
     const url = '/api/documents/' + docId;
-    return apiRequest(newDocData, 'put', url, function (apiResult) {
+    return apiRequest(newDocData, 'put', url, function () {
       dispatch(getComponentResources({}));
       dispatch(editDocSuccess());
     });
   };
 }
 
-export function ValidateUser() {
+export function validateUser() {
   return (dispatch) => {
     const url = '/api/users/getData';
     return apiRequest(null, 'get', url, function (apiResult) {
@@ -245,7 +256,7 @@ export function ValidateUser() {
         dispatch(updateStoreWithUserData(apiResult.user));
         return dispatch(getComponentResources(apiResult.user));
       }
-      return dispatch(InvalidUser());
+      return dispatch(invalidUser());
     });
   };
 }
@@ -265,6 +276,6 @@ export function getComponentResources(userData) {
       return dispatch(getsharedDocument(userData));
     }
 
-    return dispatch(ValidateUser());
+    return dispatch(validateUser());
   };
 }

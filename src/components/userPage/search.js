@@ -1,6 +1,7 @@
 import SideNav from './sideNav';
 import Header from '../common/header';
 import DeleteModal from './deleteDoc';
+import ViewDocModal from './viewDocModal';
 import UserContentPage from './userContentPage';
 import React, {PropTypes, Component} from 'react';
 import {DocController} from '../common/documentController';
@@ -8,7 +9,9 @@ import {DocController} from '../common/documentController';
 export class Search extends Component {
   constructor() {
     super();
-    
+
+    this.viewDocEvent        = this.viewDocEvent.bind(this);
+    this.prepareStoreForEdit =this.prepareStoreForEdit.bind(this);
     this.addMoreSearchResult = this.addMoreSearchResult.bind(this);
   }
 
@@ -45,7 +48,7 @@ export class Search extends Component {
     const winObj = $(window);
     const docObj = $(document);
     const {query: {q}} = this.props.location;
-    const {lazyLoading, search} = _this.props.stateProp.userDocs;
+    const {lazyLoading, search} = this.props.stateProp.userDocs;
     const {userData: {role: {_id: roleId}}} = this.props.stateProp.userState;
 
     if (winObj.scrollTop() + winObj.height() === docObj.height() 
@@ -62,9 +65,20 @@ export class Search extends Component {
     let selectedDocumentData = this.props.stateProp.userDocs.search[id];
 
     this.props.documentActions.preparePageForEdit(selectedDocumentData);
+
+    $('#editDocModal').closeModal();
     this.context.router.push({
       pathname: '/docs/edit/search/' + selectedDocumentData._id
     });
+  }
+
+  viewDocEvent(event) {
+    const {id} = event.target;
+    let selectedDocumentData = this.props.stateProp.userDocs.search[id];
+    selectedDocumentData.index = id;
+
+    this.props.documentActions.prepareStoreForDocDetails(selectedDocumentData)
+    $('#editDocModal').openModal();
   }
 
   render() {
@@ -73,7 +87,8 @@ export class Search extends Component {
       userDocs: {
         search,
         lazyLoading,
-        deleteDoc
+        deleteDoc,
+        viewDoc
       },
       userState: {userData}
     } = this.props.stateProp;
@@ -92,10 +107,14 @@ export class Search extends Component {
           doc={search}
           cardType='search'
           deleteEvent={this.props.confirmDelete}
+          viewEvent={this.viewDocEvent}
           userId={userData._id}
           lazyLoading={!lazyLoading}
           editCard={this.prepareStoreForEdit}
         />
+        <ViewDocModal
+          docData={viewDoc}
+          editEvent={this.prepareStoreForEdit}/>
         <DeleteModal
           docData={deleteDoc}
           deleteEvent={this.props.deleteDoc}/>

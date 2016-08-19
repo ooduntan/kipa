@@ -7,6 +7,8 @@ export default function docReducer(state = initialState, action) {
       return Object.assign({}, state);
     case actionTypes.USER_DOCS_SUCCESS:
       return Object.assign({}, state, action.data);
+    case actionTypes.ADD_DOC_DETAILS:
+      return Object.assign({}, state, action.data);
     case actionTypes.SHARED_DOCUMENTS:
       return Object.assign({}, state, action.data);
     case actionTypes.CREATING_DOC:

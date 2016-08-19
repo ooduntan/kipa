@@ -151,9 +151,11 @@ export function saveUserData(user) {
     const url = '/api/users/';
     return apiRequest(user, 'post', url, function (apiResult) {
       dispatch(createUser(apiResult));
+      
       if (apiResult.success) {
-        dispatch(saveUserSuccess());
-        return Materialize.toast('Account successfully created', 4000);
+        // dispatch(saveUserSuccess());
+        Materialize.toast('Account successfully created', 4000);
+        return dispatch(loginUser(user));
       }
       
       return dispatch(saveUserFailed());

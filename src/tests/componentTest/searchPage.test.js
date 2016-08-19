@@ -25,6 +25,14 @@ const props = {
         title: '',
         content: ''
       },
+      viewDoc: {
+        title: '',
+        content: '',
+        creator: {
+          username: ''
+        },
+        createdAt: ''
+      },
       search: [{
         _id: 1,
         title: 'new dumb title',
@@ -81,7 +89,7 @@ describe('Test the sign in page', () => {
     expect(search.find('.card').length).toBe(1);
     expect(search.find('.card-title').at(0).text()).toBe('new dumb title');
     expect(search.find('.card-title').at(1).text()).toBe('new dumb titleclose');
-    expect(search.find('.card-action').props().children.length).toBe(2);
+    expect(search.find('.card-action').props().children.length).toBe(3);
     expect(search.find('.card-reveal').props().children.length).toBe(2);
   });
 

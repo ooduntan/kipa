@@ -1,7 +1,14 @@
 import React, {PropTypes} from 'react';
 import {Input, Row} from 'react-materialize';
 
-const SelectComponent = ({selectData, size, addedClass, selectedValue, onChangeEvent, name}) => {
+const SelectComponent = ({
+  selectData, 
+  size, 
+  addedClass, 
+  selectedValue, 
+  onChangeEvent, 
+  name
+}) => {
   return (
     <Row className={addedClass}>
       <Input

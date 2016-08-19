@@ -29,6 +29,14 @@ const props = {
         title: '',
         content: ''
       },
+      viewDoc: {
+        title: '',
+        content: '',
+        creator: {
+          username: ''
+        },
+        createdAt: ''
+      },
       docs: []
     },
     roles: {

@@ -3,6 +3,7 @@ import SideNav from './sideNav';
 import NewDocumentForm from './addDocument';
 import Header from '../common/header';
 import Fab from '../common/fab';
+import ViewDocModal from './viewDocModal';
 import {DocController} from '../common/documentController';
 import UserContentPage from './userContentPage';
 import DeleteModal from './deleteDoc';
@@ -12,6 +13,7 @@ export class OwnDocument extends Component {
     super();
 
     this.addMoreDocs         = this.addMoreDocs.bind(this);
+    this.viewDocEvent             = this.viewDocEvent.bind(this);
     this.prepareStoreForEdit = this.prepareStoreForEdit.bind(this);
   }
 
@@ -45,10 +47,20 @@ export class OwnDocument extends Component {
       }
   }
 
+  viewDocEvent(event) {
+    const {id} = event.target;
+    let selectedDocumentData = this.props.stateProp.userDocs.docs[id];
+    selectedDocumentData.index = id;
+
+    this.props.documentActions.prepareStoreForDocDetails(selectedDocumentData)
+    $('#editDocModal').openModal();
+  }
+
   prepareStoreForEdit(event) {
     const {id} = event.target;
     let selectedDocumentData = this.props.stateProp.userDocs.docs[id];
 
+    $('#editDocModal').closeModal();
     this.context.router.push({
       pathname: '/docs/edit/owned/' + selectedDocumentData._id
     });
@@ -60,7 +72,8 @@ export class OwnDocument extends Component {
         docSuccess,
         deleteDoc,
         docs,
-        lazyLoading
+        lazyLoading,
+        viewDoc
       },
       roles: {roles},
       userState: {userData}
@@ -78,6 +91,7 @@ export class OwnDocument extends Component {
           header='My Documents'
           doc={docs}
           cardType='owned'
+          viewEvent={this.viewDocEvent}
           lazyLoading={!lazyLoading}
           deleteEvent={this.props.confirmDelete}
           userId={userData._id}
@@ -92,6 +106,9 @@ export class OwnDocument extends Component {
           submitAction={this.props.modalSubmitAction}
           tinymceEvent={this.props.OnchangeTinymce}
           showLoader={docSuccess}/>
+        <ViewDocModal
+          docData={viewDoc}
+          editEvent={this.prepareStoreForEdit}/>
         <DeleteModal
           docData={deleteDoc}
           deleteEvent={this.props.deleteDoc}/>
