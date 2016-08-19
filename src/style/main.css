@@ -122,7 +122,7 @@ nav > .nav-wrapper > .custom-nav-bar {
     border-color: #203d73;
 }
 
-.headerClass {
+.header-class {
     font-size: 33px;
     font-weight: 300;
     color: #203d73;
@@ -395,8 +395,13 @@ nav > .nav-wrapper > .custom-nav-bar {
 
 .app-desc {
     font-size: 12px;
+    padding-top: 7px;
     line-height: 15px;
     font-weight: 300;
+}
+
+.footer > div:last-child {
+    margin-top: 13px;
 }
 
 .footer-text {
@@ -405,6 +410,7 @@ nav > .nav-wrapper > .custom-nav-bar {
     text-align: center;
     border-bottom: 1px solid #cbcbcb;
     color: #686868;
+    padding-bottom: 13px;
     font-size: 36px;
     width: 100%;
     padding-top: 19px;
@@ -500,8 +506,20 @@ nav > .nav-wrapper > .custom-nav-bar {
         padding-left: 0;
     }
 
+    .side-nav {
+        color: #000000;
+    }
+
+    .custom-div > i {
+        line-height: 35px !important;
+    }
+
     nav .button-collapse {
         margin-left: 20px;
+    }
+
+    .header-class {
+        font-size: 25px;
     }
 
     .footer-text {

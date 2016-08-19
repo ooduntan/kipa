@@ -37,7 +37,11 @@ export class Search extends Component {
   }
   
   componentDidMount() {
-    $(window).scroll(this.addMoreSearchResult);
+    $(document).ready(function () {
+      $('.button-collapse').sideNav();
+      $(window).scroll(this.addMoreSearchResult);
+      $('.button-collapse').sideNav('hide');
+    });
   }
   
   componentWillUnmount() {

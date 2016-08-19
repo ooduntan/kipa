@@ -18,11 +18,12 @@ export const DocController = (ChildComponent) => {
         },
         searchTerm: ''
       };
+      
 
       this.logout = this.logout.bind(this);
       this.fabClick = this.fabClick.bind(this);
-      this.deleteDoc = this.deleteDoc.bind(this);
       this.searchDoc = this.searchDoc.bind(this);
+      this.deleteDoc = this.deleteDoc.bind(this);
       this.confirmDelete = this.confirmDelete.bind(this);
       this.OnchangeTinymce = this.OnchangeTinymce.bind(this);
       this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -152,7 +153,6 @@ export const DocController = (ChildComponent) => {
           modalSubmitAction={this.modalSubmitAction}
           onClickCheckbox={this.onClickCheckBox}
           logoutEvent={this.logout}
-          changeClass={this.changeClass}
           fabClick={this.fabClick}
           {...this.props}/>
       );

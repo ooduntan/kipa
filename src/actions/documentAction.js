@@ -226,15 +226,14 @@ export function getUserDocs(userId) {
   };
 }
 
-export function prepareStoreForDocDetails(currentDoc) {
+export function prepareStoreForDocDetails(newDocs) {
   return {
     type: actionTypes.ADD_DOC_DETAILS,
     data: {
-      viewDoc: currentDoc,
+      viewDoc: newDocs,
       lazyLoading: false
     }
   };
-  
 }
 
 export function upadateDocument(newDocData, docId) {

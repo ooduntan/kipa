@@ -27,6 +27,13 @@ export class EditUserComponent extends Component {
     }
   }
 
+  componentDidMount() {
+    $(document).ready(function () {
+      $('.button-collapse').sideNav();
+      $('.button-collapse').sideNav('hide');
+    });
+  }
+
   onSubmitEditForm(event) {
     event.preventDefault();
     let updatedUserData = {};
@@ -73,7 +80,7 @@ export class EditUserComponent extends Component {
           roles={roles}
           userData={userData}/>
         <div className='content-container'>
-          <div className='headerClass'>Edit Profile</div>
+          <div className='header-class'>Edit Profile</div>
           <EditUserForm
             preloader={editPreLoader}
             userData={userData}

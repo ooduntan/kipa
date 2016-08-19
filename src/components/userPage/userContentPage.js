@@ -46,7 +46,7 @@ const UserContentPage = ({
 
   return (
     <div className='content-container'>
-      <div className='headerClass'>
+      <div className='header-class'>
         {header}
       </div>
       <div style={{clear: 'both', overflow: 'auto'}}>

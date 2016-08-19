@@ -27,6 +27,11 @@ export class SharedDocs extends Component {
 
   componentDidMount() {
     $(window).scroll(this.addMoreSharedDocs);
+
+    $(document).ready(function () {
+      $('.button-collapse').sideNav();
+      $('.button-collapse').sideNav('hide');
+    });
   }
 
   componentWillUnmount() {

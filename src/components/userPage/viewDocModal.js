@@ -8,7 +8,7 @@ const ViewDocModal = ({docData, editEvent}) => {
     <div id='editDocModal' className='modal modal-fixed-footer'>
       <div className='modal-content'>
         <h4 className='custom-blue-text'>{title}</h4>
-        <p>{content}</p>
+        <p dangerouslySetInnerHTML={{__html: content}}/>
       </div>
       <div className='modal-footer'>
         <span>Created by: <span className='username'>{username}</span> | </span>

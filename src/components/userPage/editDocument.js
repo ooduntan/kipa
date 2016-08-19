@@ -62,10 +62,16 @@ export class EditDocument extends Component {
     }
   }
 
+  componentDidMount() {
+    $(document).ready(function () {
+      $('.button-collapse').sideNav();
+      $('.button-collapse').sideNav('hide');
+    });
+  }
+
   onChangeHandler(event) {
     const {name, value} = event.target;
     this.state[name] = value;
-    // this.props.userActions.activateSubmit();
   }
 
   submitForm(event) {
@@ -115,7 +121,7 @@ export class EditDocument extends Component {
           roles={roles}
           userData={userData}/>
         <div className='content-container'>
-          <div className='headerClass'>Edit Document</div>
+          <div className='header-class'>Edit Document</div>
           <EditDocumentForm
             preloader={editPreLoader}
             docRoles={roles}
