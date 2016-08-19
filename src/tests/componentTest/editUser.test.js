@@ -84,7 +84,7 @@ describe('Test edit user data page', () => {
   });
 
   it('Should contain the correct header title', () => {
-    expect(editUserComponent.find('.headerClass').text()).toBe('Edit Profile');
+    expect(editUserComponent.find('.header-class').text()).toBe('Edit Profile');
   });
 
   it('Should not contain a FAB icon', () => {

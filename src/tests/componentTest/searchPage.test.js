@@ -59,26 +59,15 @@ const props = {
   }
 };
 
-describe('Test the sign in page', () => {
+describe('Test the search page', () => {
   let search;
 
   beforeEach(() => {
     search = mount(<Search {...props}/>, testContext);
   });
 
-  it('Should render only search inputs', () => {
-    expect(search.find('input').length).toBe(1);
-    expect(search.find('textarea').length).toBe(0);
-    expect(search.find('button').length).toBe(0);
-
-  });
-
-  it('Should contain a search input', () => {
-    search.find('#search').simulate('change', {target: {value: 'A test document', name: 'search'}});
-  });
-
   it('Should contain the correct header title', () => {
-    expect(search.find('.headerClass').text()).toBe('Found 1 Result(s) for Search Word');
+    expect(search.find('.header-class').text()).toBe('Found 1 Result(s) for Search Word');
   });
 
   it('Should not have FAB icon', () => {

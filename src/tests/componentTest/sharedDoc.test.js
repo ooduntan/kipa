@@ -58,7 +58,7 @@ describe('Shared document page', () => {
   });
 
   it('Should render four inputs', () => {
-    expect(sharedDocs.find('input').length).toBe(4);
+    expect(sharedDocs.find('input').length).toBe(3);
     expect(sharedDocs.find('textarea').length).toBe(1);
   });
 
@@ -71,12 +71,8 @@ describe('Shared document page', () => {
     expect(sharedDocs.find('form').length).toBe(1);
   });
 
-  it('Should contain a search input', () => {
-    sharedDocs.find('#search').simulate('change', {target: {value: 'A test document', name: 'search'}});
-  });
-
   it('Should contain the correct header title', () => {
-    expect(sharedDocs.find('.headerClass').text()).toBe('Shared Documents');
+    expect(sharedDocs.find('.header-class').text()).toBe('Shared Documents');
   });
 
   it('Should contain a FAB icon', () => {

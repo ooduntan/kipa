@@ -62,7 +62,7 @@ describe('User document page', () => {
   });
 
   it('Should render four inputs', () => {
-    expect(ownDocument.find('input').length).toBe(4);
+    expect(ownDocument.find('input').length).toBe(3);
     expect(ownDocument.find('textarea').length).toBe(1);
   });
 
@@ -75,12 +75,8 @@ describe('User document page', () => {
     expect(ownDocument.find('form').length).toBe(1);
   });
 
-  it('Should contain a search input', () => {
-    ownDocument.find('#search').simulate('change', {target: {value: 'A test document', name: 'search'}});
-  });
-
   it('Should contain the correct header title', () => {
-    expect(ownDocument.find('.headerClass').text()).toBe('My Documents');
+    expect(ownDocument.find('.header-class').text()).toBe('My Documents');
   });
 
   it('Should contain a FAB icon', () => {

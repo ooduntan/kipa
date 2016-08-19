@@ -62,7 +62,7 @@ describe('Test the Edit document in page', () => {
   });
 
   it('Should render four inputs', () => {
-    expect(editDocument.find('input').length).toBe(4);
+    expect(editDocument.find('input').length).toBe(3);
     expect(editDocument.find('[type="checkbox"]').length).toBe(2);
   });
 
@@ -75,12 +75,9 @@ describe('Test the Edit document in page', () => {
     expect(editDocument.find('form').length).toBe(1);
   });
 
-  it('Should contain a search input', () => {
-    editDocument.find('#search').simulate('change', {target: {value: 'A test document', name: 'search'}});
-  });
 
   it('Should contain the correct header title', () => {
-    expect(editDocument.find('.headerClass').text()).toBe('Edit Document');
+    expect(editDocument.find('.header-class').text()).toBe('Edit Document');
   });
 
   it('Should not contain a FAB icon', () => {
