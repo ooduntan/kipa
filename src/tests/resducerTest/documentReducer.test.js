@@ -7,7 +7,9 @@ describe('Document reducer', () => {
   const initialState = {
     user: {},
     docs: [],
-    sharedDocs: []
+    sharedDocs: {
+      doc: []
+    }
   };
 
   it('Should add new user document to store with USER_DOCS_SUCCESS', () => {
@@ -100,7 +102,7 @@ describe('Document reducer', () => {
     const newState = docReducer(initialState, action);
 
     expect(newState.lazyLoading).toBe(false);
-    expect(newState.docs).toBe(newUserDoc.doc);
+    expect(newState.sharedDocs.doc).toEqual(newUserDoc.doc);
   });
 
   it('Should update the store with the update status', () => {
@@ -118,7 +120,7 @@ describe('Document reducer', () => {
   });
 
   it('Should update the store with the update status', () => {
-    const action = docActions.InvalidUser();
+    const action = docActions.invalidUser();
     const newState = docReducer(initialState, action);
 
     expect(newState.redirect).toBe(true);

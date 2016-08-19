@@ -1,9 +1,10 @@
-import expect from "expect";
-import "../testUtils/localStorage";
-import React from "react";
-import {mount} from "enzyme";
-import {spy} from "sinon";
-import {EditDocument} from "../../components/userPage/editDocument";
+import expect from 'expect';
+import '../testUtils/localStorage';
+import {testContext} from '../testUtils/contextMock';
+import React from 'react';
+import {mount} from 'enzyme';
+import {spy} from 'sinon';
+import {EditDocument} from '../../components/userPage/editDocument';
 
 const props = {
   documentActions: {
@@ -44,13 +45,15 @@ const props = {
   }
 };
 
+const contextTypes = { router: React.PropTypes.object };
+
 describe('Test the Edit document in page', () => {
   let editDocument;
   let updatePageSyp = spy(props.documentActions, 'updatePageWithEditData');
 
 
   beforeEach(() => {
-    editDocument = mount(<EditDocument {...props}/>);
+    editDocument = mount(<EditDocument {...props}/>, testContext);
   });
 
   it('Should call updatePageWithEditData function to update ' +
@@ -59,7 +62,7 @@ describe('Test the Edit document in page', () => {
   });
 
   it('Should render four inputs', () => {
-    expect(editDocument.find('input').length).toBe(4);
+    expect(editDocument.find('input').length).toBe(3);
     expect(editDocument.find('[type="checkbox"]').length).toBe(2);
   });
 
@@ -72,12 +75,9 @@ describe('Test the Edit document in page', () => {
     expect(editDocument.find('form').length).toBe(1);
   });
 
-  it('Should contain a search input', () => {
-    editDocument.find('#search').simulate('change', {target: {value: 'A test document', name: 'search'}});
-  });
 
   it('Should contain the correct header title', () => {
-    expect(editDocument.find('.headerClass').text()).toBe('Edit Document');
+    expect(editDocument.find('.header-class').text()).toBe('Edit Document');
   });
 
   it('Should not contain a FAB icon', () => {

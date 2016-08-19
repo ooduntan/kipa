@@ -1,9 +1,9 @@
-import expect from "expect";
-import "../testUtils/localStorage";
-import React from "react";
-import {mount} from "enzyme";
-import {spy} from "sinon";
-import {SignInComponent} from "../../components/home/signInComponent";
+import expect from 'expect';
+import '../testUtils/localStorage';
+import React from 'react';
+import {mount} from 'enzyme';
+import {spy} from 'sinon';
+import {SignInComponent} from '../../components/home/signInComponent';
 
 const props = {
   stateProp: {

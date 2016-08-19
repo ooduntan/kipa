@@ -1,3 +1,4 @@
+
 .info-container {
     height: 567px;
     width: 100%;
@@ -10,6 +11,10 @@
     border-radius: 4px !important;
 }
 
+.custom-create-doc {
+    margin-right: 16px !important;
+}
+
 nav li:hover {
     border-bottom: 1px solid white;
     box-sizing: border-box;
@@ -19,12 +24,13 @@ nav li:hover {
     color: #ffffff;
     margin: auto;
     float: left;
+    width: 40%;
     margin-top: 14%;
     margin-left: 11%;
 }
 
-.custom-nav-bar {
-    margin-left: 5.4% !important;
+nav > .nav-wrapper > .custom-nav-bar {
+    margin-left: 240px;
     float: left;
     width: 41%;
 }
@@ -83,7 +89,8 @@ nav li:hover {
     margin-left: 11px;
 }
 
-.custom-create-btn:disabled, .custom-create-btn:disabled:hover {
+.custom-create-btn:disabled,
+.custom-create-btn:disabled:hover {
     background-color: rgba(158, 158, 158, 0.35);
     color: #979794;
     cursor: not-allowed;
@@ -92,7 +99,6 @@ nav li:hover {
 
 .custom-checkox {
     float: left;
-    border-bottom: 1px solid #9e9e9e;
     padding-top: 10px;
     width: 50%;
 }
@@ -112,11 +118,11 @@ nav li:hover {
     padding-left: 23px;
 }
 
-.custom-spin-color {
+.preloader-wrapper > div.custom-spin-color {
     border-color: #203d73;
 }
 
-.headerClass {
+.header-class {
     font-size: 33px;
     font-weight: 300;
     color: #203d73;
@@ -132,7 +138,7 @@ nav li:hover {
 }
 
 .user-icon {
-    width: 21%;
+    width: 129px;
     padding-left: 5px;
     margin: auto;
     margin-bottom: 13px;
@@ -155,17 +161,17 @@ nav li:hover {
     margin-right: 4%;
 }
 
-.side-nav div:hover {
+.side-nav .bold:hover {
     color: #203d73;
 }
 
 .content-container {
-    margin-left: 19%;
+    padding-left: 300px;
 }
 
 .custom-create-btn {
     background-color: #375a86;
-    margin-right: 18px !important;
+    margin-right: 8px !important;
 }
 
 .custom-update-btn {
@@ -180,7 +186,8 @@ nav li:hover {
     background-color: #034496;
 }
 
-.custom-update-btn:focus, .custom-update-btn:focus {
+.custom-update-btn:focus,
+.custom-update-btn:focus {
     background-color: #034496;
 }
 
@@ -228,7 +235,7 @@ nav li:hover {
 .document-cards {
     width: 31%;
     float: left;
-    height: 355px;
+    min-width: 157.16px;
     margin-left: 2% !important;
 }
 
@@ -246,19 +253,17 @@ nav li:hover {
     padding: 14px 0px;
 }
 
-.user-image {
-    width: 30%;
-    border-radius: 50%;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+.user-info-container > div > i {
+    margin: auto;
+    display: table;
+    font-size: 77px;
 }
 
 .hide-element {
-    display: none !Important;
+    display: none;
 }
 
-.custom-loader {
+.form-container-space > .custom-loader {
     width: 95%;
     margin-left: 2.3%;
 }
@@ -273,6 +278,10 @@ nav li:hover {
     margin-bottom: 2px !important;
     border-bottom: 1px solid #F44336 !important;
     box-shadow: 0 1px 0 0 #F44336 !important;
+}
+
+.card-reveal > .card-title{
+    font-weight: 600;
 }
 
 .activator {
@@ -290,7 +299,7 @@ nav li:hover {
 
 .custom-doc-card span {
     line-height: 20px !important;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 400;
 }
 
@@ -324,12 +333,12 @@ nav li:hover {
 .main-text {
     font-size: 34.53px;
     width: 99%;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .supporting-text {
     margin-top: 13px;
-    font-weight: 300;
+    font-weight: 100;
     width: 64%;
 }
 
@@ -359,12 +368,16 @@ nav li:hover {
     margin-top: 2%;
 }
 
+.current-menu {
+    border-right: #203d73 3px solid;
+}
+
 .small-signup-text {
     font-size: 12px;
     margin-bottom: 14px;
 }
 
-.signup-container {
+.signin-container, .signup-container {
     padding-left: 4.7%;
     padding-top: 19px;
 }
@@ -380,18 +393,27 @@ nav li:hover {
     margin-left: 12px;
 }
 
-.footer-text {
-    margin: 0 103px;
-    line-height: 94px;
-    text-align: center;
-    border-bottom: 1px solid #cbcbcb;
-    height: 86px;
-    color: #686868;
-    font-size: 36px;
+.app-desc {
+    font-size: 12px;
+    padding-top: 7px;
+    line-height: 15px;
+    font-weight: 300;
 }
 
-.footer-links {
-    line-height: 36px;
+.footer > div:last-child {
+    margin-top: 13px;
+}
+
+.footer-text {
+    margin: 0 103px;
+    line-height: 40px;
+    text-align: center;
+    border-bottom: 1px solid #cbcbcb;
+    color: #686868;
+    padding-bottom: 13px;
+    font-size: 36px;
+    width: 100%;
+    padding-top: 19px;
 }
 
 .custom-btn {
@@ -407,10 +429,20 @@ nav li:hover {
     font-weight: 300;
 }
 
+.not-found {
+    margin: 20px;
+    text-align: center;
+    font-size: 20px;
+    color: #7e7e7e;
+}
+
+.form-container .select-wrapper span.caret{
+    color: #ffffff;
+}
+
 .footer {
     text-align: center;
     color: #707070;
-    height: 164px;
     background-color: #f1f1f1;
 }
 
@@ -423,4 +455,78 @@ nav li:hover {
     color: #ffffff;
     width: 35%;
     margin-left: 2.5%;
+    min-width: 289.8px;
 }
+
+.modal-footer > .modal-action:hover {
+    outline: 0;
+    background-color: #203d73;
+    color: #ffffff;
+}
+
+.modal-footer > span:first-child {
+    margin-left: 20px;
+}
+
+@media only screen and (max-width: 624px) {
+    .description-text {
+        width: 88%;
+        margin-top: 8%;
+        margin-left: 6%;
+    }
+    .form-container {
+        width: 77%;
+        margin-left: 0;
+    }
+
+    .info-container{
+        height: 740px;
+    }
+
+    .footer-text {
+        font-size: 33px;
+        margin: 0 20px;
+    }
+}
+
+@media only screen and (max-width : 327px) {
+    .content-container > div > .document-cards {
+        min-width: 157.16px;
+        margin: 10%!important;
+        width: 79%;
+    }
+
+    nav ul a {
+        font-size: 10px;
+    }
+}
+
+@media only screen and (max-width : 992px) {
+    .content-container {
+        padding-left: 0;
+    }
+
+    .side-nav {
+        color: #000000;
+    }
+
+    .custom-div > i {
+        line-height: 35px !important;
+    }
+
+    nav .button-collapse {
+        margin-left: 20px;
+    }
+
+    .header-class {
+        font-size: 25px;
+    }
+
+    .footer-text {
+        font-size: 20px;
+    }
+    nav > .nav-wrapper > .custom-nav-bar {
+        margin-left: 1%;
+    }
+}
+

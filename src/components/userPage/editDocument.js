@@ -1,8 +1,8 @@
-import React, {Component, PropTypes} from "react";
+import React, {Component, PropTypes} from 'react';
 import EditDocumentForm from './editDocumentForm';
-import SideNav from "./sideNav";
-import Header from "../common/header";
-import {DocController} from "../common/documentController";
+import SideNav from './sideNav';
+import Header from '../common/header';
+import {DocController} from '../common/documentController';
 
 export class EditDocument extends Component {
   constructor() {
@@ -22,6 +22,9 @@ export class EditDocument extends Component {
   componentWillMount() {
     let seletedDoc = this.props.stateProp.userDocs.editDocumentData;
     const {title, access, content} = seletedDoc;
+    if (!window.localStorage.getItem('token')) {
+      this.context.router.push('/');
+    }
 
     this.props.documentActions.updatePageWithEditData(this.props.params.id);
     this.setState({title, content, access});
@@ -59,10 +62,16 @@ export class EditDocument extends Component {
     }
   }
 
+  componentDidMount() {
+    $(document).ready(function () {
+      $('.button-collapse').sideNav();
+      $('.button-collapse').sideNav('hide');
+    });
+  }
+
   onChangeHandler(event) {
     const {name, value} = event.target;
     this.state[name] = value;
-    // this.props.userActions.activateSubmit();
   }
 
   submitForm(event) {
@@ -104,14 +113,15 @@ export class EditDocument extends Component {
     return (
       <div>
         <Header
+          userData={userData}
           searchEvent={this.props.searchEvent}
-          signInEvent={this.props.logoutEvent}
+          logoutEvent={this.props.logoutEvent}
           status/>
         <SideNav
           roles={roles}
           userData={userData}/>
         <div className='content-container'>
-          <div className='headerClass'>Edit Document</div>
+          <div className='header-class'>Edit Document</div>
           <EditDocumentForm
             preloader={editPreLoader}
             docRoles={roles}

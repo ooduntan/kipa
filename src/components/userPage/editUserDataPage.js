@@ -1,8 +1,8 @@
-import React, {PropTypes, Component} from "react";
-import EditUserForm from "./editUserForm";
-import SideNav from "./sideNav";
-import Header from "../common/header";
-import {DocController} from "../common/documentController";
+import React, {PropTypes, Component} from 'react';
+import EditUserForm from './editUserForm';
+import SideNav from './sideNav';
+import Header from '../common/header';
+import {DocController} from '../common/documentController';
 
 export class EditUserComponent extends Component {
   constructor() {
@@ -21,18 +21,32 @@ export class EditUserComponent extends Component {
     this.onSubmitEditForm = this.onSubmitEditForm.bind(this);
   }
 
+  componentWillMount() {
+    if (!window.localStorage.getItem('token')) {
+      this.context.router.push('/');
+    }
+  }
+
+  componentDidMount() {
+    $(document).ready(function () {
+      $('.button-collapse').sideNav();
+      $('.button-collapse').sideNav('hide');
+    });
+  }
+
   onSubmitEditForm(event) {
     event.preventDefault();
     let updatedUserData = {};
     const {userData} = this.state;
     const {userData: {_id}} = this.props.stateProp.userState;
+    const {roles} = this.props.stateProp.roles;
 
     for (let key in userData) {
       if (userData[key].length) updatedUserData[key] = userData[key];
     }
 
     if (Object.keys(updatedUserData).length) {
-      this.props.userActions.updateUserData(updatedUserData, _id);
+      this.props.userActions.updateUserData(updatedUserData, _id, roles);
     }
   }
 
@@ -58,14 +72,15 @@ export class EditUserComponent extends Component {
     return (
       <div>
         <Header
+          userData={userData}
           searchEvent={this.props.searchEvent}
-          signInEvent={this.props.logoutEvent}
+          logoutEvent={this.props.logoutEvent}
           status/>
         <SideNav
           roles={roles}
           userData={userData}/>
         <div className='content-container'>
-          <div className='headerClass'>Edit Profile</div>
+          <div className='header-class'>Edit Profile</div>
           <EditUserForm
             preloader={editPreLoader}
             userData={userData}
@@ -81,6 +96,10 @@ export class EditUserComponent extends Component {
     );
   }
 }
+
+EditUserComponent.contextTypes = {
+  router: PropTypes.object
+};
 
 EditUserComponent.propTypes = {
   stateProp: PropTypes.object,

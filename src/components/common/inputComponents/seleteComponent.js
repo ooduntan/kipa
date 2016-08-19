@@ -1,7 +1,14 @@
-import React, {PropTypes} from "react";
-import {Input, Row} from "react-materialize";
+import React, {PropTypes} from 'react';
+import {Input, Row} from 'react-materialize';
 
-const SelectComponent = ({selectData, size, addedClass, selectedValue, onChangeEvent, name}) => {
+const SelectComponent = ({
+  selectData, 
+  size, 
+  addedClass, 
+  selectedValue, 
+  onChangeEvent, 
+  name
+}) => {
   return (
     <Row className={addedClass}>
       <Input
@@ -9,7 +16,7 @@ const SelectComponent = ({selectData, size, addedClass, selectedValue, onChangeE
         onChange={onChangeEvent}
         s={size}
         type='select'
-        label='Roles'>
+        label='Role'>
         <option disabled>Choose your role</option>
         {
           selectData.map((item) => {

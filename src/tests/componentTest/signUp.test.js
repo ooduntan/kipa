@@ -1,10 +1,10 @@
-import expect from "expect";
-import "../testUtils/localStorage";
-import React from "react";
-import {mount} from "enzyme";
-import SignInForm from "../../components/home/signUpForm";
-import {spy} from "sinon";
-import {SignUpComponent} from "../../components/home/signUpComponent";
+import expect from 'expect';
+import '../testUtils/localStorage';
+import React from 'react';
+import {mount} from 'enzyme';
+import SignInForm from '../../components/home/signUpForm';
+import {spy} from 'sinon';
+import {SignUpComponent} from '../../components/home/signUpComponent';
 
 const props = {
   userState: {

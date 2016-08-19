@@ -1,10 +1,10 @@
-import {connect} from "react-redux";
-import React, {Component, PropTypes} from "react";
-import {bindActionCreators} from "redux";
-import * as searchActions from "../../actions/searchAction";
-import * as roleActions from "../../actions/roleActions";
-import * as userActions from "../../actions/userAction";
-import * as documentActions from "../../actions/documentAction";
+import {connect} from 'react-redux';
+import React, {Component, PropTypes} from 'react';
+import {bindActionCreators} from 'redux';
+import * as searchActions from '../../actions/searchAction';
+import * as roleActions from '../../actions/roleActions';
+import * as userActions from '../../actions/userAction';
+import * as documentActions from '../../actions/documentAction';
 
 export const DocController = (ChildComponent) => {
   class ParentComponent extends Component {
@@ -18,24 +18,22 @@ export const DocController = (ChildComponent) => {
         },
         searchTerm: ''
       };
+      
 
       this.logout = this.logout.bind(this);
       this.fabClick = this.fabClick.bind(this);
-      this.deleteDoc = this.deleteDoc.bind(this);
       this.searchDoc = this.searchDoc.bind(this);
+      this.deleteDoc = this.deleteDoc.bind(this);
       this.confirmDelete = this.confirmDelete.bind(this);
       this.OnchangeTinymce = this.OnchangeTinymce.bind(this);
       this.onChangeHandler = this.onChangeHandler.bind(this);
-      this.addMoreDocument = this.addMoreDocument.bind(this);
       this.onClickCheckBox = this.onClickCheckBox.bind(this);
       this.modalSubmitAction = this.modalSubmitAction.bind(this);
     }
 
     componentWillMount() {
-      if (!window.localStorage.getItem('token')) {
-        this.context.router.push('/');
-      } else {
-        this.props.documentActions
+      if (window.localStorage.getItem('token')) {
+      this.props.documentActions
           .getComponentResources(this.props.stateProp.userState.userData);
       }
     }
@@ -102,7 +100,8 @@ export const DocController = (ChildComponent) => {
     modalSubmitAction(event) {
       event.preventDefault();
       const {docData} = this.state;
-      const {username} = this.props.stateProp.userState.userData;
+      const {_id, username} = this.props.stateProp.userState.userData;
+      const creatorData = {_id, username}
 
       docData.access = docData.access.toString();
       this.setState({
@@ -113,7 +112,7 @@ export const DocController = (ChildComponent) => {
         }
       });
 
-      this.props.documentActions.createDoc(docData, username);
+      this.props.documentActions.createDoc(docData, creatorData);
       event.currentTarget.reset();
     }
 
@@ -142,30 +141,7 @@ export const DocController = (ChildComponent) => {
       });
       $('#createModal').openModal();
     }
-
-    addMoreDocument(MethodName, userRoleOrId, exisitingDocs) {
-      const _this = this;
-
-      $(window).scroll(function () {
-        const winObj = $(window);
-        const docObj = $(document);
-        const {
-          fullOwnedDoc,
-          loadedSharedDocs,
-          allSearchedDocs,
-          lazyLoading
-        } = _this.props.stateProp.userDocs;
-
-        if (winObj.scrollTop() + winObj.height() === docObj.height()) {
-          if (!lazyLoading && exisitingDocs.length > 9) {
-            _this
-              .props
-              .documentActions[MethodName](exisitingDocs.length, userRoleOrId);
-          }
-        }
-      });
-    }
-
+    
     render() {
       return (
         <ChildComponent
@@ -177,7 +153,6 @@ export const DocController = (ChildComponent) => {
           modalSubmitAction={this.modalSubmitAction}
           onClickCheckbox={this.onClickCheckBox}
           logoutEvent={this.logout}
-          lazyLoader={this.addMoreDocument}
           fabClick={this.fabClick}
           {...this.props}/>
       );

@@ -1,13 +1,23 @@
-import expect from "expect";
-import "../testUtils/localStorage";
-import React from "react";
-import {mount} from "enzyme";
-import {spy} from "sinon";
-import {OwnDocument} from "../../components/userPage/ownedDocs";
+import expect from 'expect';
+import '../testUtils/localStorage';
+import {testContext} from '../testUtils/contextMock';
+import React from 'react';
+import {mount} from 'enzyme';
+import {spy} from 'sinon';
+import {OwnDocument} from '../../components/userPage/ownedDocs';
 
 const props = {
-  changeHandler: function () {
-    return;
+  documentActions: {
+    editDocSuccess: function () {
+      return;
+    }
+  },
+  context: {
+    router: {
+      push: function () {
+        return
+      }
+    }
   },
   stateProp: {
     userState: {
@@ -18,6 +28,14 @@ const props = {
         _id: '',
         title: '',
         content: ''
+      },
+      viewDoc: {
+        title: '',
+        content: '',
+        creator: {
+          username: ''
+        },
+        createdAt: ''
       },
       docs: []
     },
@@ -36,15 +54,15 @@ const props = {
   }
 };
 
-describe('Test the sign in page', () => {
+describe('User document page', () => {
   let ownDocument;
 
   beforeEach(() => {
-    ownDocument = mount(<OwnDocument {...props}/>);
+    ownDocument = mount(<OwnDocument {...props}/>, testContext);
   });
 
   it('Should render four inputs', () => {
-    expect(ownDocument.find('input').length).toBe(4);
+    expect(ownDocument.find('input').length).toBe(3);
     expect(ownDocument.find('textarea').length).toBe(1);
   });
 
@@ -57,12 +75,8 @@ describe('Test the sign in page', () => {
     expect(ownDocument.find('form').length).toBe(1);
   });
 
-  it('Should contain a search input', () => {
-    ownDocument.find('#search').simulate('change', {target: {value: 'A test document', name: 'search'}});
-  });
-
   it('Should contain the correct header title', () => {
-    expect(ownDocument.find('.headerClass').text()).toBe('My Documents');
+    expect(ownDocument.find('.header-class').text()).toBe('My Documents');
   });
 
   it('Should contain a FAB icon', () => {

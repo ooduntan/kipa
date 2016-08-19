@@ -7,6 +7,7 @@ import documentCover from '../../images/coverPlaceHolder.jpg';
 
 const UserContentPage = ({
   lazyLoading,
+  viewEvent,
   doc,
   header,
   cardType,
@@ -30,6 +31,7 @@ const UserContentPage = ({
           cardTitle={title}
           editCard={editCard}
           cardCreator={creator}
+          viewDoc={viewEvent}
           docDate={moment(createdAt).fromNow()}
           currentUserId={userId}
           confirmDelete={deleteEvent}
@@ -38,13 +40,13 @@ const UserContentPage = ({
     });
   } else {
     cards = (
-      <div>Oops!!! Sorry you don't any content at the moment</div>
+      <div className='center'>Oops!!! Sorry you don't any content at the moment</div>
     );
   }
 
   return (
     <div className='content-container'>
-      <div className='headerClass'>
+      <div className='header-class'>
         {header}
       </div>
       <div style={{clear: 'both', overflow: 'auto'}}>

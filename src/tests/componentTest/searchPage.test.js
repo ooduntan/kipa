@@ -1,9 +1,10 @@
-import expect from "expect";
-import "../testUtils/localStorage";
-import React from "react";
-import {mount} from "enzyme";
-import {spy} from "sinon";
-import {Search} from "../../components/userPage/search";
+import expect from 'expect';
+import '../testUtils/localStorage';
+import React from 'react';
+import {mount} from 'enzyme';
+import {spy} from 'sinon';
+import {testContext} from '../testUtils/contextMock';
+import {Search} from '../../components/userPage/search';
 
 const props = {
   changeHandler: function () {
@@ -23,6 +24,14 @@ const props = {
         _id: '',
         title: '',
         content: ''
+      },
+      viewDoc: {
+        title: '',
+        content: '',
+        creator: {
+          username: ''
+        },
+        createdAt: ''
       },
       search: [{
         _id: 1,
@@ -50,26 +59,15 @@ const props = {
   }
 };
 
-describe('Test the sign in page', () => {
+describe('Test the search page', () => {
   let search;
 
   beforeEach(() => {
-    search = mount(<Search {...props}/>);
-  });
-
-  it('Should render only search inputs', () => {
-    expect(search.find('input').length).toBe(1);
-    expect(search.find('textarea').length).toBe(0);
-    expect(search.find('button').length).toBe(0);
-
-  });
-
-  it('Should contain a search input', () => {
-    search.find('#search').simulate('change', {target: {value: 'A test document', name: 'search'}});
+    search = mount(<Search {...props}/>, testContext);
   });
 
   it('Should contain the correct header title', () => {
-    expect(search.find('.headerClass').text()).toBe('Found 1 Result(s) for Search Word');
+    expect(search.find('.header-class').text()).toBe('Found 1 Result(s) for Search Word');
   });
 
   it('Should not have FAB icon', () => {
@@ -80,7 +78,7 @@ describe('Test the sign in page', () => {
     expect(search.find('.card').length).toBe(1);
     expect(search.find('.card-title').at(0).text()).toBe('new dumb title');
     expect(search.find('.card-title').at(1).text()).toBe('new dumb titleclose');
-    expect(search.find('.card-action').props().children.length).toBe(2);
+    expect(search.find('.card-action').props().children.length).toBe(3);
     expect(search.find('.card-reveal').props().children.length).toBe(2);
   });
 

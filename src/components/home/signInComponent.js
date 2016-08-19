@@ -1,5 +1,5 @@
-import React, {PropTypes, Component} from "react";
-import SignInForm from "./signInForm";
+import React, {PropTypes, Component} from 'react';
+import SignInForm from './signInForm';
 
 export class SignInComponent extends Component {
   constructor() {
@@ -42,7 +42,7 @@ export class SignInComponent extends Component {
     return (
       <div ref='signInContainer'
            style={{display: this.state.displayForm}}
-           className='signup-container'>
+           className='signin-container'>
         <div className='signup-wrapper'>
           <div>Sign in</div>
           <div className='small-signup-text'>

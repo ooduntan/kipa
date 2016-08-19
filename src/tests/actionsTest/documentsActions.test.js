@@ -179,7 +179,7 @@ describe('User actions', () => {
       type: actionTypes.REDIRECT_USER,
       data: {redirect: true}
     };
-    const action = documentActions.InvalidUser();
+    const action = documentActions.invalidUser();
 
     expect(action).toEqual(expectedResult);
   });

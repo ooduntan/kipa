@@ -1,5 +1,5 @@
-import React, {PropTypes, Component} from "react";
-import SignUpForm from "./signUpForm";
+import React, {PropTypes, Component} from 'react';
+import SignUpForm from './signUpForm';
 
 export class SignUpComponent extends Component {
   constructor() {
@@ -81,31 +81,27 @@ export class SignUpComponent extends Component {
       return false;
     }
 
-    this.props.userActions.saveUserData(this.state.user);
+    this.props.userActions.saveUserData(this.state.user, event);
   }
 
   render() {
     const {
       userState: {
         displayLoader,
-        success
+        createUserError
       },
       roles: {roles}
     } = this.props.stateProp;
 
-    if (success) {
-      Materialize.toast('Account successfully created', 4000);
-    }
-
     return (
-      <div ref='signUpComponent' className='hide-element'>
+      <div ref='signUpComponent' className='hide-element signup-container'>
         <div className='signup-wrapper'>
           <div>Sign up for free</div>
           <div className='small-signup-text'>
-            Create a free DocKip account
+            Create a free Kipa account
           </div>
         </div>
-        <div className="row">
+        <div className='row'>
           <SignUpForm
             changeHandler={this.onChangeHandler}
             saveAction={this.saveUser}
@@ -114,6 +110,7 @@ export class SignUpComponent extends Component {
             passwordIsVslid={this.validatePassword}
             passwordHasError={this.state.passwordError}
             matchPasswordError={this.state.confirmPasswordError}
+            errorMessage={createUserError}
             showLoader={displayLoader}
             roles={roles}
             matchPassword={this.confirmPassword}/>

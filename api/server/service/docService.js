@@ -101,7 +101,7 @@
      */
     checkUserAndUpdateDocData: function(docNewData, accessData, docId, cb) {
       var roleId = accessData.accessId;
-      var currentUserRole = accessData.userId.role;
+      var currentUserRole = accessData.userId.role._id;
       var currentUserId = accessData.userId._id;
       var docOwner = accessData.owner;
 
@@ -157,7 +157,8 @@
      * @param  {Function} cb          [Passes result to callback]
      */
     checkUserAccessAndDeleteDoc: function(searchError, userData, docData, cb) {
-      if (docData[0].access.indexOf(userData.role) > -1 ||
+      if (!docData.length) return cb(false, 'Document does not exist!');
+      if (docData[0].access.indexOf(userData.role._id) > -1 ||
         userData._id === docData[0].creator) {
         if (docData.length <= 0 || searchError) {
           return cb(false, 'Not found');

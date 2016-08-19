@@ -1,8 +1,8 @@
-import TinyMCE from "react-tinymce";
-import React, {PropTypes} from "react";
-import {CheckBox} from "../common/input";
+import TinyMCE from 'react-tinymce';
+import React, {PropTypes} from 'react';
+import {CheckBox} from '../common/input';
 import Preloader from '../common/loader';
-import {Input, Row} from "react-materialize";
+import {Input, Row} from 'react-materialize';
 const NewDocumentForm = ({
   CheckboxHandler,
   changeHandler,
@@ -49,7 +49,7 @@ const NewDocumentForm = ({
             showLoader={showLoader}
           />
           <button
-            className='btn custom-create-btn'>Create
+            className='btn custom-create-doc custom-blue '>Create
           </button>
         </div>
       </div>

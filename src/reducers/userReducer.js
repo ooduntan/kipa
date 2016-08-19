@@ -1,5 +1,5 @@
-import * as actionTypes from "../actions/actionType.js";
-import {initialState} from "./initialState";
+import * as actionTypes from '../actions/actionType.js';
+import {initialState} from './initialState';
 
 export default function userReducer(state = initialState, action) {
   switch (action.type) {
@@ -22,6 +22,8 @@ export default function userReducer(state = initialState, action) {
     case actionTypes.UPDATE_USER_STORE:
       return Object.assign({}, state, action.data);
     case actionTypes.UPDATE_FAILED:
+      return Object.assign({}, state, action.data);
+    case actionTypes.CREATE_USER_FAILED:
       return Object.assign({}, state, action.data);
     case actionTypes.UPDATED_USER_DATA:
       return Object.assign({}, state, action.data);

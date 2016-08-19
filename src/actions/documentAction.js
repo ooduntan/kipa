@@ -1,5 +1,5 @@
-import * as actionTypes from "./actionType.js";
-import {apiRequest} from "../utils/apiRequest";
+import * as actionTypes from './actionType.js';
+import {apiRequest} from '../utils/apiRequest';
 
 export function getSharedDocSuccess(sharedDocs) {
   return {
@@ -122,7 +122,7 @@ export function updateSearch() {
   };
 }
 
-export function InvalidUser() {
+export function invalidUser() {
   return {
     type: actionTypes.REDIRECT_USER,
     data: {redirect: true}
@@ -205,12 +205,12 @@ export function deleteDocAction(docId) {
   };
 }
 
-export function createDoc(docData, username) {
+export function createDoc(docData, creatorData) {
   return (dispatch) => {
     dispatch(savingDoc());
     const url = '/api/documents/';
     return apiRequest(docData, 'post', url, function (apiResult) {
-      apiResult.newDoc.creator = {username};
+      apiResult.newDoc.creator = creatorData;
       dispatch(updateStoreWithNewDoc(apiResult));
     });
   };
@@ -226,18 +226,28 @@ export function getUserDocs(userId) {
   };
 }
 
+export function prepareStoreForDocDetails(newDocs) {
+  return {
+    type: actionTypes.ADD_DOC_DETAILS,
+    data: {
+      viewDoc: newDocs,
+      lazyLoading: false
+    }
+  };
+}
+
 export function upadateDocument(newDocData, docId) {
   return (dispatch) => {
     dispatch(updatingDocData());
     const url = '/api/documents/' + docId;
-    return apiRequest(newDocData, 'put', url, function (apiResult) {
+    return apiRequest(newDocData, 'put', url, function () {
       dispatch(getComponentResources({}));
       dispatch(editDocSuccess());
     });
   };
 }
 
-export function ValidateUser() {
+export function validateUser() {
   return (dispatch) => {
     const url = '/api/users/getData';
     return apiRequest(null, 'get', url, function (apiResult) {
@@ -245,7 +255,7 @@ export function ValidateUser() {
         dispatch(updateStoreWithUserData(apiResult.user));
         return dispatch(getComponentResources(apiResult.user));
       }
-      return dispatch(InvalidUser());
+      return dispatch(invalidUser());
     });
   };
 }
@@ -265,6 +275,6 @@ export function getComponentResources(userData) {
       return dispatch(getsharedDocument(userData));
     }
 
-    return dispatch(ValidateUser());
+    return dispatch(validateUser());
   };
 }

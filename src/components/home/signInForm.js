@@ -1,5 +1,5 @@
-import React, {PropTypes} from "react";
-import {InputComponent, ButtonComponent} from "../common/input";
+import React, {PropTypes} from 'react';
+import {InputComponent, ButtonComponent} from '../common/input';
 
 const SignInForm = ({
   changeHandler,

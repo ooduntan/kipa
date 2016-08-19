@@ -1,5 +1,5 @@
-import * as actionTypes from "./actionType.js";
-import {apiRequest} from "../utils/apiRequest";
+import * as actionTypes from './actionType.js';
+import {apiRequest} from '../utils/apiRequest';
 
 export function createUser(user) {
   return {
@@ -12,7 +12,8 @@ export function savingUser() {
   return {
     type: actionTypes.SAVING_USER,
     data: {
-      displayLoader: 'block'
+      displayLoader: '',
+      userCreated: false
     }
   };
 }
@@ -21,7 +22,8 @@ export function saveUserSuccess() {
   return {
     type: actionTypes.SAVE_USER_SUCCESS,
     data: {
-      displayLoader: 'none'
+      displayLoader: 'hide-element',
+      userCreated: true
     }
   };
 }
@@ -89,9 +91,10 @@ export function updatingUserData() {
   };
 }
 
-export function updatedUserData(newUserData) {
+export function updatedUserData(newUserData, roles) {
   return (dispatch) => {
     if (newUserData.user) {
+      newUserData.user.role = roles[newUserData.user.role - 1];
       return dispatch(userUpdataSuccess(newUserData));
     }
 
@@ -109,6 +112,16 @@ export function loginFailed(loginResult) {
   };
 }
 
+export function saveUserFailed() {
+  return {
+    type: actionTypes.CREATE_USER_FAILED,
+    data: {
+      createUserError: 'An error occured. Try again',
+      displayLoader: 'hide-element'
+    }
+  }
+}
+
 export function checkLoginResult(loginData) {
   return (dispatch) => {
     if (loginData.message) {
@@ -122,12 +135,12 @@ export function checkLoginResult(loginData) {
   };
 }
 
-export function updateUserData(newUserData, id) {
+export function updateUserData(newUserData, id, roles) {
   return (dispatch) => {
     dispatch(updatingUserData());
     const url = '/api/users/' + id;
     return apiRequest(newUserData, 'put', url, function (apiResult) {
-      dispatch(updatedUserData(apiResult));
+      dispatch(updatedUserData(apiResult, roles));
     });
   };
 }
@@ -138,7 +151,14 @@ export function saveUserData(user) {
     const url = '/api/users/';
     return apiRequest(user, 'post', url, function (apiResult) {
       dispatch(createUser(apiResult));
-      dispatch(saveUserSuccess());
+      
+      if (apiResult.success) {
+        // dispatch(saveUserSuccess());
+        Materialize.toast('Account successfully created', 4000);
+        return dispatch(loginUser(user));
+      }
+      
+      return dispatch(saveUserFailed());
     });
   };
 }

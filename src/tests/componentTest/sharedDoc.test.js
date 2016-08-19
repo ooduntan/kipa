@@ -1,13 +1,16 @@
-import expect from "expect";
-import "../testUtils/localStorage";
-import React from "react";
-import {mount} from "enzyme";
-import {spy} from "sinon";
-import {SharedDocs} from "../../components/userPage/sharedDocs";
+import expect from 'expect';
+import '../testUtils/localStorage';
+import {testContext} from '../testUtils/contextMock';
+import React from 'react';
+import {mount} from 'enzyme';
+import {spy} from 'sinon';
+import {SharedDocs} from '../../components/userPage/sharedDocs';
 
 const props = {
-  changeHandler: function () {
-    return;
+  documentActions: {
+    editDocSuccess: function () {
+      return;
+    }
   },
   stateProp: {
     userState: {
@@ -18,6 +21,14 @@ const props = {
         _id: '',
         title: '',
         content: ''
+      },
+      viewDoc: {
+        title: '',
+        content: '',
+        creator: {
+          username: ''
+        },
+        createdAt: ''
       },
       docs: [],
       sharedDocs: {
@@ -39,15 +50,15 @@ const props = {
   }
 };
 
-describe('Test the sign in page', () => {
+describe('Shared document page', () => {
   let sharedDocs;
 
   beforeEach(() => {
-    sharedDocs = mount(<SharedDocs {...props}/>);
+    sharedDocs = mount(<SharedDocs {...props}/>, testContext);
   });
 
   it('Should render four inputs', () => {
-    expect(sharedDocs.find('input').length).toBe(4);
+    expect(sharedDocs.find('input').length).toBe(3);
     expect(sharedDocs.find('textarea').length).toBe(1);
   });
 
@@ -60,12 +71,8 @@ describe('Test the sign in page', () => {
     expect(sharedDocs.find('form').length).toBe(1);
   });
 
-  it('Should contain a search input', () => {
-    sharedDocs.find('#search').simulate('change', {target: {value: 'A test document', name: 'search'}});
-  });
-
   it('Should contain the correct header title', () => {
-    expect(sharedDocs.find('.headerClass').text()).toBe('Shared Documents');
+    expect(sharedDocs.find('.header-class').text()).toBe('Shared Documents');
   });
 
   it('Should contain a FAB icon', () => {

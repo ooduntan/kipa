@@ -1,5 +1,5 @@
-import {InputComponent, ButtonComponent, SelectComponent} from "../common/input";
-import React, {PropTypes} from "react";
+import {InputComponent, ButtonComponent, SelectComponent} from '../common/input';
+import React, {PropTypes} from 'react';
 
 const SignUpForm = ({
   roles,
@@ -11,10 +11,11 @@ const SignUpForm = ({
   passwordHasError,
   matchPasswordError,
   matchPassword,
-  showLoader
+  showLoader,
+  errorMessage
 }) => {
   return (
-    <form onSubmit={saveAction} className='col s12 form-container-space'>
+    <form onSubmit={saveAction} id='sign-up' className='col s12 form-container-space'>
       <div className='row'>
         <InputComponent
           name='firstname'
@@ -56,16 +57,14 @@ const SignUpForm = ({
           type='text'
           id='username'
           label='User Name'
-          newClass='s12 form-spacing'
+          newClass='s6 form-spacing'
           onChangeEvent={changeHandler}/>
-      </div>
-      <div className='row'>
         <InputComponent
           name='password'
           type='password'
           id='password'
           label='Password'
-          newClass='s12 form-spacing'
+          newClass='s6 form-spacing'
           errorMessage='Password must have six or more characters'
           inputError={passwordHasError}
           validateFunction={passwordIsVslid}
@@ -83,9 +82,10 @@ const SignUpForm = ({
           validateFunction={matchPassword}
           onChangeEvent={changeHandler}/>
       </div>
-      <div className={`${showLoader} progress`}>
+      <div className={`${showLoader} custom-loader progress`}>
         <div className='indeterminate'></div>
       </div>
+      <div className='error-span-position error-span'>{errorMessage}</div>
       <ButtonComponent
         text='SIGN UP'
         name='sign-up'

@@ -1,5 +1,5 @@
-import expect from "expect";
-import React from "react";
+import expect from 'expect';
+import React from 'react';
 
 describe('Our first test', () => {
   it('should pass', () => {

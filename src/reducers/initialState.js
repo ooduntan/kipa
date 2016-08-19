@@ -2,6 +2,8 @@ export const initialState = {
   success: false,
   error: '',
   displayLoader: 'hide-element',
+  userCreated: false,
+  createUserError: '',
   shouldRedirect: false,
   userData: {},
   displayFeedBack: 'none',
@@ -12,6 +14,12 @@ export const initialState = {
   docs: [],
   sharedDocs: {
     doc: []
+  },
+  viewDoc: {
+    title: '',
+    content: '',
+    access: '',
+    creator: ''
   },
   docSuccess: false,
   editDocumentData: {

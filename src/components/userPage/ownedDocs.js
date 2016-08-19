@@ -1,31 +1,70 @@
-import React, {PropTypes, Component} from "react";
-import SideNav from "./sideNav";
-import NewDocumentForm from "./addDocument";
-import Header from "../common/header";
-import Fab from "../common/fab";
-import {DocController} from "../common/documentController";
-import UserContentPage from "./userContentPage";
-import DeleteModal from "./deleteDoc";
+import React, {PropTypes, Component} from 'react';
+import SideNav from './sideNav';
+import NewDocumentForm from './addDocument';
+import Header from '../common/header';
+import Fab from '../common/fab';
+import ViewDocModal from './viewDocModal';
+import {DocController} from '../common/documentController';
+import UserContentPage from './userContentPage';
+import DeleteModal from './deleteDoc';
 
 export class OwnDocument extends Component {
   constructor() {
     super();
 
+    this.addMoreDocs         = this.addMoreDocs.bind(this);
+    this.viewDocEvent             = this.viewDocEvent.bind(this);
     this.prepareStoreForEdit = this.prepareStoreForEdit.bind(this);
   }
 
-  componentWillReceiveProps(nextPorp, prevProps) {
-    const {userData: {_id}} = this.props.stateProp.userState;
-    const {docs} = this.props.stateProp.userDocs;
+  componentWillMount() {
+    this.props.documentActions.editDocSuccess();
+    if (!window.localStorage.getItem('token')) {
+      this.context.router.push('/');
+    }
+  }
 
-    this.props.lazyLoader('addOwnedDocs', _id, docs);
+  componentDidMount() {
+    $(document).ready(function () {
+      $(window).scroll(this.addMoreDocs);
+      $('.button-collapse').sideNav();
+      $('.button-collapse').sideNav('hide');
+    });
+  }
+
+  componentWillUnmount() {
+    $(window).unbind('scroll');
+  }
+
+  addMoreDocs() {
+      const winObj = $(window);
+      const docObj = $(document);
+      const {lazyLoading, docs} = this.props.stateProp.userDocs;
+      const {_id: userId} = this.props.stateProp.userState.userData;
+
+      if (winObj.scrollTop() + winObj.height() === docObj.height()
+        && !lazyLoading && docs.length > 9) {
+          this
+            .props
+            .documentActions
+            .addOwnedDocs(docs.length, userId);
+      }
+  }
+
+  viewDocEvent(event) {
+    const {id} = event.target;
+    let selectedDocumentData = this.props.stateProp.userDocs.docs[id];
+    selectedDocumentData.index = id;
+
+    this.props.documentActions.prepareStoreForDocDetails(selectedDocumentData)
+    $('#editDocModal').openModal();
   }
 
   prepareStoreForEdit(event) {
     const {id} = event.target;
     let selectedDocumentData = this.props.stateProp.userDocs.docs[id];
 
-    this.props.documentActions.preparePageForEdit(selectedDocumentData);
+    $('#editDocModal').closeModal();
     this.context.router.push({
       pathname: '/docs/edit/owned/' + selectedDocumentData._id
     });
@@ -37,7 +76,8 @@ export class OwnDocument extends Component {
         docSuccess,
         deleteDoc,
         docs,
-        lazyLoading
+        lazyLoading,
+        viewDoc
       },
       roles: {roles},
       userState: {userData}
@@ -46,15 +86,16 @@ export class OwnDocument extends Component {
     return (
       <div className='row'>
         <Header
+          userData={userData}
           searchEvent={this.props.searchEvent}
-          signInEvent={this.props.logoutEvent}
+          logoutEvent={this.props.logoutEvent}
           status/>
-        <SideNav
-          userData={userData}/>
+        <SideNav userData={userData}/>
         <UserContentPage
           header='My Documents'
           doc={docs}
           cardType='owned'
+          viewEvent={this.viewDocEvent}
           lazyLoading={!lazyLoading}
           deleteEvent={this.props.confirmDelete}
           userId={userData._id}
@@ -69,6 +110,9 @@ export class OwnDocument extends Component {
           submitAction={this.props.modalSubmitAction}
           tinymceEvent={this.props.OnchangeTinymce}
           showLoader={docSuccess}/>
+        <ViewDocModal
+          docData={viewDoc}
+          editEvent={this.viewDocEvent}/>
         <DeleteModal
           docData={deleteDoc}
           deleteEvent={this.props.deleteDoc}/>
@@ -84,7 +128,6 @@ OwnDocument.propTypes = {
   fabClick: PropTypes.func,
   OnchangeTinymce: PropTypes.func,
   confirmDelete: PropTypes.func,
-  lazyLoader: PropTypes.func,
   stateProp: PropTypes.object,
   documentActions: PropTypes.object,
   logoutEvent: PropTypes.func,

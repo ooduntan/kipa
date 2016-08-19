@@ -232,36 +232,6 @@
               });
           });
 
-        it('Ensure that the owner of a document can edit or ' +
-          'view a document regardless of his role',
-          function(done) {
-
-            server
-              .put('/api/documents/' + docId._id)
-              .send({ content: 'Testing content' })
-              .set({ token: token })
-              .expect('Content-type', /json/)
-              .end(function(err, res) {
-                res.status.should.equal(200);
-                res.body.doc.content.should.equal('Testing content');
-                done();
-              });
-          });
-
-        it('Ensure that document role can be edited',
-          function(done) {
-
-            server
-              .put('/api/documents/' + docId._id)
-              .send({ access: '2' })
-              .set({ token: token })
-              .expect('Content-type', /json/)
-              .end(function(err, res) {
-                res.status.should.equal(200);
-                res.body.doc.access[0].should.equal('2');
-                done();
-              });
-          });
 
         it('Ensure that document cannot be updated with an invalid role',
           function(done) {
@@ -342,20 +312,6 @@
                   res.status.should.equal(401);
                   res.body.success.should.equal(false);
                   res.body.message.should.equal('FORBIDDEN');
-                  done();
-                });
-            });
-
-          it('Verify if a user can delete a document assigned to them',
-            function(done) {
-
-              server
-                .delete('/api/documents/' + docId._id)
-                .expect('Content-type', /json/)
-                .set({ token: token })
-                .end(function(err, res) {
-                  res.status.should.equal(200);
-                  res.body.doc.should.equal('removed');
                   done();
                 });
             });

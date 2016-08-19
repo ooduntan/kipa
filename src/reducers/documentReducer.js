@@ -1,11 +1,14 @@
-import * as actionTypes from "../actions/actionType.js";
-import {initialState} from "./initialState";
+import * as actionTypes from '../actions/actionType.js';
+import {initialState} from './initialState';
 
 export default function docReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.GETTING_USER_DOCS:
       return Object.assign({}, state);
     case actionTypes.USER_DOCS_SUCCESS:
+      return Object.assign({}, state, action.data);
+    case actionTypes.ADD_DOC_DETAILS:
+      console.log(action, 'this is the reducer');
       return Object.assign({}, state, action.data);
     case actionTypes.SHARED_DOCUMENTS:
       return Object.assign({}, state, action.data);
@@ -27,7 +30,13 @@ export default function docReducer(state = initialState, action) {
     case actionTypes.ADDING_MORE_DOC_TO_STORE:
       return Object.assign({}, state, action.data);
     case actionTypes.ADD_MORE_SHARED_DOCS:
-      return Object.assign({}, state, action.data);
+      return Object.assign({}, state, {
+          sharedDocs: {
+            doc: [...state.sharedDocs.doc, ...action.data.docs]
+          },
+          lazyLoading: action.data.lazyLoading
+        }
+      );
     case actionTypes.ADD_MORE_DOC_TO_STORE:
       return Object.assign({}, state, {
         docs: [...state.docs, ...action.data.docs]

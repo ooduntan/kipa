@@ -1,9 +1,10 @@
-import expect from "expect";
-import "../testUtils/localStorage";
-import React from "react";
-import {mount} from "enzyme";
-import {spy} from "sinon";
-import {EditUserComponent} from "../../components/userPage/editUserDataPage";
+import expect from 'expect';
+import '../testUtils/localStorage';
+import {testContext} from '../testUtils/contextMock';
+import React from 'react';
+import {mount} from 'enzyme';
+import {spy} from 'sinon';
+import {EditUserComponent} from '../../components/userPage/editUserDataPage';
 
 const props = {
   userActions: {
@@ -31,6 +32,13 @@ const props = {
         username: 'tobolowoski'
       }
     },
+    context: {
+      router: {
+        push: function () {
+          return;
+        }
+      }
+    },
     roles: {
       roles: [
         {
@@ -54,7 +62,7 @@ describe('Test edit user data page', () => {
   let editUserComponent;
 
   beforeEach(() => {
-    editUserComponent = mount(<EditUserComponent {...props}/>);
+    editUserComponent = mount(<EditUserComponent {...props}/>, testContext);
   });
 
   it('Should render five inputs', () => {
@@ -76,7 +84,7 @@ describe('Test edit user data page', () => {
   });
 
   it('Should contain the correct header title', () => {
-    expect(editUserComponent.find('.headerClass').text()).toBe('Edit Profile');
+    expect(editUserComponent.find('.header-class').text()).toBe('Edit Profile');
   });
 
   it('Should not contain a FAB icon', () => {

@@ -11,7 +11,7 @@ import {
 
 /* eslint-disable no-console */
 
-const port = 3004;
+const port = process.env.PORT;
 const app = express();
 const compiler = webpack(config);
 

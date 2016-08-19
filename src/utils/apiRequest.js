@@ -1,4 +1,4 @@
-import * as request from "superagent";
+import * as request from 'superagent';
 export function apiRequest(data, type, url, callBack) {
   request[type](url)
     .send(data)
@@ -6,7 +6,6 @@ export function apiRequest(data, type, url, callBack) {
     .set('Accept', 'application/json')
     .end(function (res, result) {
       if (result) {
-        console.log(result, url);
         return callBack(result.body);
       }
 

@@ -1,6 +1,5 @@
 import React, {PropTypes, Component} from 'react';
 import {Link} from 'react-router';
-import userImage from '../../images/testImage.jpg';
 import Preloader from '../common/loader';
 
 const SideNav = ({userData}) => {
@@ -23,19 +22,19 @@ const SideNav = ({userData}) => {
       },
       email
     } = userData;
-
+    
     return (
       <ul id='nav-mobile' className='side-nav fixed'>
         <li>
           <div
             className='logo-name custom-blue-text font-effect-mitosis left-align'>
-            DocKip
+            Kipa
           </div>
         </li>
         <li>
           <div className='user-info-container'>
             <div>
-              <img className='user-image' src={userImage}/>
+              <i className='user-image material-icons'>perm_identity</i>
             </div>
             <div className='username-text center-align'>
               <span>{lastname},</span> {firstname}
