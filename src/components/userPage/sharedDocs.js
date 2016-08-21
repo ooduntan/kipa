@@ -29,12 +29,14 @@ export class SharedDocs extends Component {
     $(window).scroll(this.addMoreSharedDocs);
 
     $(document).ready(function () {
+      $('.shared').addClass('current-menu');
       $('.button-collapse').sideNav();
       $('.button-collapse').sideNav('hide');
     });
   }
 
   componentWillUnmount() {
+    $('.shared').removeClass('current-menu');
     $(window).unbind('scroll');
   }
 
