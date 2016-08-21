@@ -1,6 +1,6 @@
 # Kipa - A Document Management System
 
-[![Build Status](https://travis-ci.org/andela-ooduntan/kipa.svg?branch=master)](https://travis-ci.org/andela-ooduntan/kipa)  [![Code Climate](https://codeclimate.com/github/andela-ooduntan/dockip/badges/gpa.svg)](https://codeclimate.com/github/andela-ooduntan/dockip)  [![codecov](https://codecov.io/gh/andela-ooduntan/kipa/branch/master/graph/badge.svg)](https://codecov.io/gh/andela-ooduntan/kipa) [![HitCount](https://hitt.herokuapp.com/andela-ooduntan/.svg)](https://github.com/andela-ooduntan/dms-api) [![twitter](https://img.shields.io/badge/twitter-%40stephengeek-blue.svg)](https://twitter.com/stephengeek)
+[![Build Status](https://travis-ci.org/andela-ooduntan/kipa.svg?branch=master)](https://travis-ci.org/andela-ooduntan/kipa)  [![Code Climate](https://codeclimate.com/github/andela-ooduntan/dockip/badges/gpa.svg)](https://codeclimate.com/github/andela-ooduntan/dockip)  [![codecov](https://codecov.io/gh/andela-ooduntan/kipa/branch/master/graph/badge.svg)](https://codecov.io/gh/andela-ooduntan/kipa) [![HitCount](https://hitt.herokuapp.com/andela-ooduntan/.svg)](https://github.com/andela-ooduntan/dms-api)
 
 # Description
 Kipa is a document management application built on the MERN stack. It is used to manage sharing of files in a group, consisting of various

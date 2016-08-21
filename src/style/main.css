@@ -252,14 +252,14 @@ nav > .nav-wrapper > .custom-nav-bar {
     font-size: 11px;
     padding: 14px 0px;
 }
-nav > .nav-wrapper > .side-nav > li > .user-info-container > div > i,
+
 .user-info-container > div > i {
     margin: auto;
     display: table;
     font-size: 77px;
 }
 
-.form-container-space > .hide-element , .hide-element {
+.hide-element {
     display: none;
 }
 

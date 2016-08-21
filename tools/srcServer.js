@@ -5,7 +5,9 @@ import webpack from 'webpack';
 import path from 'path';
 import config from '../webpack.config.dev';
 import open from 'open';
-import {api} from '../api/index';
+import {
+  api
+} from '../api/index';
 
 /* eslint-disable no-console */
 
