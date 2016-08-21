@@ -12,7 +12,7 @@ export class SharedDocs extends Component {
   constructor() {
     super();
 
-    this.viewDocEvent             = this.viewDocEvent.bind(this);
+    this.viewDocEvent        = this.viewDocEvent.bind(this);
     this.addMoreSharedDocs   = this.addMoreSharedDocs.bind(this);
     this.prepareStoreForEdit = this.prepareStoreForEdit.bind(this);
   }

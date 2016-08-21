@@ -8,7 +8,6 @@ export default function docReducer(state = initialState, action) {
     case actionTypes.USER_DOCS_SUCCESS:
       return Object.assign({}, state, action.data);
     case actionTypes.ADD_DOC_DETAILS:
-      console.log(action, 'this is the reducer');
       return Object.assign({}, state, action.data);
     case actionTypes.SHARED_DOCUMENTS:
       return Object.assign({}, state, action.data);

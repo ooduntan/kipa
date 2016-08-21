@@ -59,7 +59,7 @@ export class OwnDocument extends Component {
     let selectedDocumentData = this.props.stateProp.userDocs.docs[id];
     selectedDocumentData.index = id;
 
-    this.props.documentActions.prepareStoreForDocDetails(selectedDocumentData)
+    this.props.documentActions.prepareStoreForDocDetails(selectedDocumentData);
     $('#editDocModal').openModal();
   }
 
