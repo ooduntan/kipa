@@ -29,9 +29,14 @@ export class EditUserComponent extends Component {
 
   componentDidMount() {
     $(document).ready(function () {
+      $('.edit').addClass('current-menu');
       $('.button-collapse').sideNav();
       $('.button-collapse').sideNav('hide');
     });
+  }
+
+  componentWillUnmount() {
+    $('.edit').removeClass('current-menu');
   }
 
   onSubmitEditForm(event) {

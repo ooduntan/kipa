@@ -370,6 +370,8 @@ nav > .nav-wrapper > .custom-nav-bar {
 
 .current-menu {
     border-right: #203d73 3px solid;
+    border-radius: 3px;
+    transition: all ease-out .3s;
 }
 
 .small-signup-text {
