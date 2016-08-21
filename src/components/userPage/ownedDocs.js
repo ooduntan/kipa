@@ -25,14 +25,17 @@ export class OwnDocument extends Component {
   }
 
   componentDidMount() {
+    $(window).scroll(this.addMoreDocs);
+
     $(document).ready(function () {
-      $(window).scroll(this.addMoreDocs);
+      $('.documents').addClass('current-menu');
       $('.button-collapse').sideNav();
       $('.button-collapse').sideNav('hide');
     });
   }
 
   componentWillUnmount() {
+    $('.documents').removeClass('current-menu');
     $(window).unbind('scroll');
   }
 
@@ -112,7 +115,7 @@ export class OwnDocument extends Component {
           showLoader={docSuccess}/>
         <ViewDocModal
           docData={viewDoc}
-          editEvent={this.viewDocEvent}/>
+          editEvent={this.prepareStoreForEdit}/>
         <DeleteModal
           docData={deleteDoc}
           deleteEvent={this.props.deleteDoc}/>
