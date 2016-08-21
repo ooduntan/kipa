@@ -53,7 +53,7 @@ const Header = ({status, logoutEvent, searchEvent, userData}) => {
                   <div className='custom-blue-text center-align'>{email}</div>
                 </div>
               </li>
-              <li id='MY_DOCUMENTS' className='bold'>
+              <li id='MY_DOCUMENTS' className='bold documents'>
                 <Link to='/owned-docs'>
                   <div className='custom-div waves-effect'>
                     <i className='sidebar-icon-position material-icons'>description</i>
@@ -61,7 +61,7 @@ const Header = ({status, logoutEvent, searchEvent, userData}) => {
                   </div>
                 </Link>
               </li>
-              <li id='SHARED_DOCUMENTS' className='bold'>
+              <li id='SHARED_DOCUMENTS' className='bold shared'>
                 <Link to='/shared-docs'>
                   <div className='custom-div waves-effect'>
                     <i className='sidebar-icon-position material-icons'>group_work</i>
@@ -69,7 +69,7 @@ const Header = ({status, logoutEvent, searchEvent, userData}) => {
                   </div>
                 </Link>
               </li>
-              <li id='EDIT_PROFILE' className='bold'>
+              <li id='EDIT_PROFILE' className='bold edit'>
                 <Link to='/profile/edit'>
                   <div className='custom-div waves-effect'>
                     <i className='sidebar-icon-position material-icons'>mode_edit</i>
