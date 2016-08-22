@@ -17,7 +17,7 @@ export class EditUserComponent extends Component {
       }
     };
 
-    this.OnChangeHandler = this.OnChangeHandler.bind(this);
+    this.OnChangeHandler  = this.OnChangeHandler.bind(this);
     this.onSubmitEditForm = this.onSubmitEditForm.bind(this);
   }
 

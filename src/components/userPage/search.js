@@ -55,6 +55,7 @@ export class Search extends Component {
     const {search} = this.props.stateProp.userDocs;
     let docIndex = event.target.id;
     let selectedDocumentData = search[docIndex];
+
     this.props.confirmDelete(selectedDocumentData);
   }
 
@@ -79,7 +80,6 @@ export class Search extends Component {
     let selectedDocumentData = this.props.stateProp.userDocs.search[id];
 
     this.props.documentActions.preparePageForEdit(selectedDocumentData);
-
     $('#editDocModal').closeModal();
     this.context.router.push({
       pathname: '/docs/edit/search/' + selectedDocumentData._id
@@ -89,8 +89,8 @@ export class Search extends Component {
   viewDocEvent(event) {
     const {id} = event.target;
     let selectedDocumentData = this.props.stateProp.userDocs.search[id];
-    selectedDocumentData.index = id;
 
+    selectedDocumentData.index = id;
     this.props.documentActions.prepareStoreForDocDetails(selectedDocumentData);
     $('#editDocModal').openModal();
   }

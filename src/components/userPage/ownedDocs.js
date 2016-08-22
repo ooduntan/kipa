@@ -69,6 +69,7 @@ export class OwnDocument extends Component {
     const {docs} = this.props.stateProp.userDocs;
     let docIndex = event.target.id;
     let selectedDocumentData = docs[docIndex];
+
     this.props.confirmDelete(selectedDocumentData);
   }
 

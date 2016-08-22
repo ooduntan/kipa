@@ -62,9 +62,8 @@ export class SharedDocs extends Component {
   viewDocEvent(event) {
     const {id} = event.target;
     let selectedDocumentData = this.props.stateProp.userDocs.sharedDocs.doc[id];
-    selectedDocumentData.index = id;
-    console.log(selectedDocumentData, 'this is the test you are currently testing');
 
+    selectedDocumentData.index = id;
     this.props.documentActions.prepareStoreForDocDetails(selectedDocumentData);
     $('#editDocModal').openModal();
   }
@@ -73,6 +72,7 @@ export class SharedDocs extends Component {
     const {sharedDocs: {doc}} = this.props.stateProp.userDocs;
     let docIndex = event.target.id;
     let selectedDocumentData = doc[docIndex];
+
     this.props.confirmDelete(selectedDocumentData);
   }
 
