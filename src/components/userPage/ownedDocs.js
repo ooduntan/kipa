@@ -12,9 +12,10 @@ export class OwnDocument extends Component {
   constructor() {
     super();
 
-    this.addMoreDocs         = this.addMoreDocs.bind(this);
+    this.addMoreDocs              = this.addMoreDocs.bind(this);
     this.viewDocEvent             = this.viewDocEvent.bind(this);
-    this.prepareStoreForEdit = this.prepareStoreForEdit.bind(this);
+    this.prepareStoreForEdit      = this.prepareStoreForEdit.bind(this);
+    this.getSelectedDocForDelete  = this.getSelectedDocForDelete.bind(this);
   }
 
   componentWillMount() {
@@ -28,9 +29,10 @@ export class OwnDocument extends Component {
     $(window).scroll(this.addMoreDocs);
 
     $(document).ready(function () {
+      const sideNavDom = $('.button-collapse');
       $('.documents').addClass('current-menu');
-      $('.button-collapse').sideNav();
-      $('.button-collapse').sideNav('hide');
+      sideNavDom.sideNav();
+      sideNavDom.sideNav('hide');
     });
   }
 
@@ -59,8 +61,16 @@ export class OwnDocument extends Component {
     let selectedDocumentData = this.props.stateProp.userDocs.docs[id];
     selectedDocumentData.index = id;
 
-    this.props.documentActions.prepareStoreForDocDetails(selectedDocumentData)
+    this.props.documentActions.prepareStoreForDocDetails(selectedDocumentData);
     $('#editDocModal').openModal();
+  }
+
+  getSelectedDocForDelete(event) {
+    const {docs} = this.props.stateProp.userDocs;
+    let docIndex = event.target.id;
+    let selectedDocumentData = docs[docIndex];
+
+    this.props.confirmDelete(selectedDocumentData);
   }
 
   prepareStoreForEdit(event) {
@@ -100,7 +110,7 @@ export class OwnDocument extends Component {
           cardType='owned'
           viewEvent={this.viewDocEvent}
           lazyLoading={!lazyLoading}
-          deleteEvent={this.props.confirmDelete}
+          deleteEvent={this.getSelectedDocForDelete}
           userId={userData._id}
           editCard={this.prepareStoreForEdit}
         />

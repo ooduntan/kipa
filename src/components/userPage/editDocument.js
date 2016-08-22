@@ -13,10 +13,10 @@ export class EditDocument extends Component {
       access: ''
     };
 
-    this.submitForm = this.submitForm.bind(this);
-    this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.onClickCheckBox = this.onClickCheckBox.bind(this);
-    this.textEditorChangeEvent = this.textEditorChangeEvent.bind(this);
+    this.submitForm             = this.submitForm.bind(this);
+    this.onChangeHandler        = this.onChangeHandler.bind(this);
+    this.onClickCheckBox        = this.onClickCheckBox.bind(this);
+    this.textEditorChangeEvent  = this.textEditorChangeEvent.bind(this);
   }
 
   componentWillMount() {
@@ -64,8 +64,9 @@ export class EditDocument extends Component {
 
   componentDidMount() {
     $(document).ready(function () {
-      $('.button-collapse').sideNav();
-      $('.button-collapse').sideNav('hide');
+      const sideNavDom = $('.button-collapse');
+      sideNavDom.sideNav('hide');
+      sideNavDom.sideNav('hide');
     });
   }
 
@@ -81,8 +82,7 @@ export class EditDocument extends Component {
   }
 
   textEditorChangeEvent(event) {
-    const value = event.target.getContent();
-    this.state.content = value;
+    this.state.content = event.target.getContent();
   }
 
   onClickCheckBox(event) {

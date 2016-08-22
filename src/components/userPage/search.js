@@ -10,9 +10,10 @@ export class Search extends Component {
   constructor() {
     super();
 
-    this.viewDocEvent        = this.viewDocEvent.bind(this);
-    this.prepareStoreForEdit =this.prepareStoreForEdit.bind(this);
-    this.addMoreSearchResult = this.addMoreSearchResult.bind(this);
+    this.viewDocEvent             = this.viewDocEvent.bind(this);
+    this.prepareStoreForEdit      = this.prepareStoreForEdit.bind(this);
+    this.addMoreSearchResult      = this.addMoreSearchResult.bind(this);
+    this.getSelectedDocForDelete  = this.getSelectedDocForDelete.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,15 +38,25 @@ export class Search extends Component {
   }
   
   componentDidMount() {
+    $(window).scroll(this.addMoreSearchResult);
+
     $(document).ready(function () {
-      $('.button-collapse').sideNav();
-      $(window).scroll(this.addMoreSearchResult);
-      $('.button-collapse').sideNav('hide');
+      const sideNavDom = $('.button-collapse');
+      sideNavDom.sideNav();
+      sideNavDom.sideNav('hide');
     });
   }
   
   componentWillUnmount() {
     $(window).unbind('scroll');
+  }
+
+  getSelectedDocForDelete(event) {
+    const {search} = this.props.stateProp.userDocs;
+    let docIndex = event.target.id;
+    let selectedDocumentData = search[docIndex];
+
+    this.props.confirmDelete(selectedDocumentData);
   }
 
   addMoreSearchResult() {
@@ -69,7 +80,6 @@ export class Search extends Component {
     let selectedDocumentData = this.props.stateProp.userDocs.search[id];
 
     this.props.documentActions.preparePageForEdit(selectedDocumentData);
-
     $('#editDocModal').closeModal();
     this.context.router.push({
       pathname: '/docs/edit/search/' + selectedDocumentData._id
@@ -79,9 +89,9 @@ export class Search extends Component {
   viewDocEvent(event) {
     const {id} = event.target;
     let selectedDocumentData = this.props.stateProp.userDocs.search[id];
-    selectedDocumentData.index = id;
 
-    this.props.documentActions.prepareStoreForDocDetails(selectedDocumentData)
+    selectedDocumentData.index = id;
+    this.props.documentActions.prepareStoreForDocDetails(selectedDocumentData);
     $('#editDocModal').openModal();
   }
 
@@ -110,7 +120,7 @@ export class Search extends Component {
           header={`Found ${search.length} Result(s) for ${q}`}
           doc={search}
           cardType='search'
-          deleteEvent={this.props.confirmDelete}
+          deleteEvent={this.getSelectedDocForDelete}
           viewEvent={this.viewDocEvent}
           userId={userData._id}
           lazyLoading={!lazyLoading}

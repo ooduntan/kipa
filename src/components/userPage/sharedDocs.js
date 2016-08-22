@@ -13,12 +13,14 @@ export class SharedDocs extends Component {
     super();
 
     this.viewDocEvent             = this.viewDocEvent.bind(this);
-    this.addMoreSharedDocs   = this.addMoreSharedDocs.bind(this);
-    this.prepareStoreForEdit = this.prepareStoreForEdit.bind(this);
+    this.addMoreSharedDocs        = this.addMoreSharedDocs.bind(this);
+    this.prepareStoreForEdit      = this.prepareStoreForEdit.bind(this);
+    this.getSelectedDocForDelete  = this.getSelectedDocForDelete.bind(this);
+
   }
 
   componentWillMount() {
-    this.props.documentActions.editDocSuccess()
+    this.props.documentActions.editDocSuccess();
 
     if (!window.localStorage.getItem('token')) {
       this.context.router.push('/');
@@ -29,9 +31,10 @@ export class SharedDocs extends Component {
     $(window).scroll(this.addMoreSharedDocs);
 
     $(document).ready(function () {
+      const sideNavDom = $('.button-collapse');
       $('.shared').addClass('current-menu');
-      $('.button-collapse').sideNav();
-      $('.button-collapse').sideNav('hide');
+      sideNavDom.sideNav();
+      sideNavDom.sideNav('hide');
     });
   }
 
@@ -59,10 +62,18 @@ export class SharedDocs extends Component {
   viewDocEvent(event) {
     const {id} = event.target;
     let selectedDocumentData = this.props.stateProp.userDocs.sharedDocs.doc[id];
-    selectedDocumentData.index = id;
 
-    this.props.documentActions.prepareStoreForDocDetails(selectedDocumentData)
+    selectedDocumentData.index = id;
+    this.props.documentActions.prepareStoreForDocDetails(selectedDocumentData);
     $('#editDocModal').openModal();
+  }
+
+  getSelectedDocForDelete(event) {
+    const {sharedDocs: {doc}} = this.props.stateProp.userDocs;
+    let docIndex = event.target.id;
+    let selectedDocumentData = doc[docIndex];
+
+    this.props.confirmDelete(selectedDocumentData);
   }
 
   prepareStoreForEdit(event) {
@@ -105,7 +116,7 @@ export class SharedDocs extends Component {
           cardType='shared'
           viewEvent={this.viewDocEvent}
           lazyLoading={!lazyLoading}
-          deleteEvent={this.props.confirmDelete}
+          deleteEvent={this.getSelectedDocForDelete}
           userId={userData._id}
           editCard={this.prepareStoreForEdit}
         />
