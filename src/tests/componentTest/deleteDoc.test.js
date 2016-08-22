@@ -16,7 +16,6 @@ const props = {
     creator: {username: 'Heavywater'}
   },
   deleteEvent: function () {
-    console.log('ksjdkjfk ')
     return;
   }
 };

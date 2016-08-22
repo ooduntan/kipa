@@ -2,7 +2,7 @@ import expect from 'expect';
 import * as actionTypes from '../../actions/actionType';
 import * as searchActions from '../../actions/searchAction';
 
-describe('User actions', () => {
+describe('Search actions', () => {
   const userData = {id: 1, username: 'Stephen', password: 'Odunnnnnta'};
 
   it('Should update the store search result', () => {
