@@ -20,15 +20,15 @@ export const DocController = (ChildComponent) => {
       };
       
 
-      this.logout = this.logout.bind(this);
-      this.fabClick = this.fabClick.bind(this);
-      this.searchDoc = this.searchDoc.bind(this);
-      this.deleteDoc = this.deleteDoc.bind(this);
-      this.confirmDelete = this.confirmDelete.bind(this);
-      this.OnchangeTinymce = this.OnchangeTinymce.bind(this);
-      this.onChangeHandler = this.onChangeHandler.bind(this);
-      this.onClickCheckBox = this.onClickCheckBox.bind(this);
-      this.modalSubmitAction = this.modalSubmitAction.bind(this);
+      this.logout             = this.logout.bind(this);
+      this.fabClick           = this.fabClick.bind(this);
+      this.searchDoc          = this.searchDoc.bind(this);
+      this.deleteDoc          = this.deleteDoc.bind(this);
+      this.confirmDelete      = this.confirmDelete.bind(this);
+      this.OnchangeTinymce    = this.OnchangeTinymce.bind(this);
+      this.onChangeHandler    = this.onChangeHandler.bind(this);
+      this.onClickCheckBox    = this.onClickCheckBox.bind(this);
+      this.modalSubmitAction  = this.modalSubmitAction.bind(this);
     }
 
     componentWillMount() {
@@ -56,10 +56,10 @@ export const DocController = (ChildComponent) => {
         this.props.searchActions.searchDocument(searchValue, roleId);
         this.context.router.push({
           pathname: '/search',
-          query: {q: searchValue}
+          query: {
+            q: searchValue
+          }
         });
-
-        return;
       }
     }
 
@@ -83,11 +83,7 @@ export const DocController = (ChildComponent) => {
       this.state.docData[name] = value;
     }
 
-    confirmDelete(event) {
-      const {userDocs} = this.props.stateProp;
-      let docIndex = event.target.id;
-      let selectedDocumentData = userDocs.docs[docIndex];
-
+    confirmDelete(selectedDocumentData) {
       this.props.documentActions.createModalData(selectedDocumentData);
       $('#deleteDocModal').openModal();
     }
@@ -166,7 +162,6 @@ export const DocController = (ChildComponent) => {
   ParentComponent.propTypes = {
     stateProp: PropTypes.object.isRequired,
     documentActions: PropTypes.object.isRequired
-
   };
 
   const mapDispatchToProps = (dispatch) => {
