@@ -404,6 +404,11 @@ nav > .nav-wrapper > .side-nav > li > .user-info-container > div > i,
 
 .footer > div:last-child {
     margin-top: 13px;
+    padding: 20px;
+}
+
+.desc-app {
+    font-family: Avenir, Roboto;
 }
 
 .footer-text {

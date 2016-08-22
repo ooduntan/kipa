@@ -2,14 +2,14 @@ import expect from 'expect';
 import * as actionTypes from '../../actions/actionType';
 import * as documentActions from '../../actions/documentAction';
 
-describe('User actions', () => {
+describe('Document actions', () => {
   const docs = {
     id: 1,
     content: 'This is the content',
     title: 'This is the title'
   };
 
-  it('Should update store with user searched documents', () => {
+  it('Should update store with user shared documents', () => {
     const expectedResult = {
       type: actionTypes.SHARED_DOCUMENTS,
       data: {
@@ -21,7 +21,7 @@ describe('User actions', () => {
     expect(action).toEqual(expectedResult);
   });
 
-  it('Should dispatch searching user docs', () => {
+  it('Should getting user documents', () => {
     const expectedResult = {
       type: actionTypes.GETTING_USER_DOCS,
     };
